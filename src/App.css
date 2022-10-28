@@ -1,0 +1,62 @@
+.App {
+  text-align: left;
+  background-color: #e6e6e6;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(18px + 3vmin);
+  color: black;
+  padding: 0% 3%;
+}
+
+.content-wrapper {
+  font-family: Roboto;
+  display: flex;
+  flex-direction: column;
+}
+
+.description {
+  max-width: 40%;
+}
+
+h1 {
+  font-family: Archivo;
+}
+
+p {
+  font-size: calc(12px + 0.6vmin);
+}
+
+.normal-weight {
+  font-weight: normal;
+}
+
+.btn_upload {
+  margin-top: 10%;
+  background-color: rgb(2, 2, 211);
+  color: white;
+  border: none;
+  text-align: center;
+  text-decoration: none;
+  align-self: center;
+  padding: 3vmin 10vmin;
+  border-radius: 10vmin;
+  font-size: calc(12px + 3vmin);
+  font-family: Archivo;
+  font-weight: bold;
+}
+
+#uploadedImg {
+  align-self: center;
+  margin: 3% 0;
+  max-width: 80vw;
+  max-height: 60vh;
+}
+
+/* .scene {
+  width: 80vw;
+  height: 80vh;
+  margin: 5% 0;
+} */
