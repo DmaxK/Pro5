@@ -16,8 +16,6 @@ function App() {
         <button onClick={ () => getData() } className='btn_upload'>Upload Image</button>
       </div>
       <img id="uploadedImg" src="" alt="test preview"></img>
-      {/* <div className='scene'>
-      </div> */}
     </div>
   );
 }
