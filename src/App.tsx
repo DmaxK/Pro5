@@ -18,7 +18,7 @@ function App() {
             interactive 3D scene.
           </p>
         </div>
-        <input type="file" onChange={(event) => setData(event.target.files![0])}></input>
+        <input type="file" onChange={(event) => (event.target.files ? setData(event.target.files[0]) : '')}></input>
         <button onClick={() => getData()} className="btn_upload">
           Upload Image
         </button>
@@ -34,8 +34,8 @@ function setData(file: File) {
   const reader = new FileReader();
 
   reader.addEventListener('load', () => {
-    const result: string = reader.result as string;
-    sessionStorage.setItem('myImage', result);
+    //const result: string = reader.result as string;
+    sessionStorage.setItem('myImage', typeof reader.result === 'string' ? reader.result : '');
   });
 
   reader.readAsDataURL(file);
