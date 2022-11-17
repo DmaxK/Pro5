@@ -1,9 +1,9 @@
 import React from 'react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import './App.css';
-import Editor from './components/Editor';
+import Editor from './components/editor/Editor';
 import ErrorPage from './components/error-page';
-import LandingPage from './components/LandingPage';
+import LandingPage from './components/landingPage/LandingPage';
 
 const router = createBrowserRouter([
   {

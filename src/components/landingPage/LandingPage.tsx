@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import '../styles/LandingPage.css';
+import '../../styles/landingPage/LandingPage.css';
 
 function LandingPage() {
   function setData(file: File) {
@@ -34,7 +34,7 @@ function LandingPage() {
         onClick={routeChange}
         style={{ width: '100px', margin: '20px 0px', padding: '5px 0px', alignSelf: 'center' }}
       >
-        Go to Scene
+        Go to Editor
       </button>
       <h1>
         <span className="normal-weight">Graphic Mockups in 3D?</span>
