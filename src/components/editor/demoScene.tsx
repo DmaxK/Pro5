@@ -6,7 +6,7 @@ import React, { useRef } from 'react'
 import { useGLTF } from '@react-three/drei'
 
 function Model() {
-  const { nodes, materials } = useGLTF('../../public/models/demo_scene.glb')
+  const { nodes, materials } = useGLTF('../../../public/models/demo_scene.glb')
   return (
     <group dispose={null}>
       <group position={[-8.31, 0, -10.86]} rotation={[Math.PI, 0, Math.PI]} scale={0.02}>
