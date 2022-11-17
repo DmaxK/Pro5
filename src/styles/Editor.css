@@ -2,9 +2,7 @@
   box-sizing: border-box;
 }
 
-html,
-body,
-#root {
+.Editor {
   width: 100vw;
   height: 100vh;
   margin: 0;

@@ -24,14 +24,16 @@ function Plane() {
 
 function Editor() {
   return (
-    <Canvas>
-      <OrbitControls />
-      <Stars />
-      <ambientLight intensity={0.5} />
-      <spotLight position={[10, 15, 10]} angle={0.3} />
-      <Box />
-      <Plane />
-    </Canvas>
+    <div className="Editor">
+      <Canvas>
+        <OrbitControls />
+        <Stars />
+        <ambientLight intensity={0.5} />
+        <spotLight position={[10, 15, 10]} angle={0.3} />
+        <Box />
+        <Plane />
+      </Canvas>
+    </div>
   );
 }
 
