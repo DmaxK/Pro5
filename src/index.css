@@ -12,10 +12,10 @@ code {
 
 @font-face {
   font-family: 'Archivo';
-  src: local('Archivo'), url(./fonts/Archivo/Archivo-Regular.ttf) format('truetype');
+  src: local('Archivo'), url(./assets/fonts/Archivo/Archivo-Regular.ttf) format('truetype');
 }
 
 @font-face {
   font-family: 'Roboto';
-  src: local('Roboto'), url(./fonts/Roboto/Roboto-Regular.ttf) format('truetype');
+  src: local('Roboto'), url(./assets/fonts/Roboto/Roboto-Regular.ttf) format('truetype');
 }

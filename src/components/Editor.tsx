@@ -2,7 +2,7 @@
 import { OrbitControls, Stars } from '@react-three/drei';
 import { Canvas } from '@react-three/fiber';
 import React from 'react';
-import './Scene.css';
+import '../styles/Editor.css';
 
 function Box() {
   return (
@@ -22,7 +22,7 @@ function Plane() {
   );
 }
 
-function Scene() {
+function Editor() {
   return (
     <Canvas>
       <OrbitControls />
@@ -35,4 +35,4 @@ function Scene() {
   );
 }
 
-export default Scene;
+export default Editor;

@@ -24,7 +24,7 @@ function App() {
 
   const navigate = useNavigate();
   const routeChange = () => {
-    const path = 'scene';
+    const path = 'editor';
     navigate(path);
   };
 

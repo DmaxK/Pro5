@@ -2,9 +2,9 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import App from './App';
-import ErrorPage from './error-page';
+import Editor from './components/Editor';
+import ErrorPage from './components/error-page';
 import './index.css';
-import Scene from './Scene';
 
 const router = createBrowserRouter([
   {
@@ -13,8 +13,8 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />,
   },
   {
-    path: '/scene',
-    element: <Scene />,
+    path: '/editor',
+    element: <Editor />,
   },
 ]);
 
