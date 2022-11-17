@@ -3,6 +3,7 @@ import { OrbitControls, Stars } from '@react-three/drei';
 import { Canvas } from '@react-three/fiber';
 import React from 'react';
 import '../styles/Editor.css';
+import Model from './demoScene.js';
 
 function Box() {
   return (
@@ -30,6 +31,7 @@ function Editor() {
       <ambientLight intensity={0.5} />
       <spotLight position={[10, 15, 10]} angle={0.3} />
       <Box />
+      <Model />
       <Plane />
     </Canvas>
   );
