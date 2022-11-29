@@ -1,20 +1,32 @@
 import React, { useState } from 'react';
 import '../../styles/editor/PlaceImage.scss';
+import DropDownArrow from '../../assets/svgs/DropDownArrow.svg';
+import TestPosterThumbnail from '../../assets/images/testPosterThumbnail.jpg';
 
 const PlaceImage = (props: any) => {
-  const [expanded, setExpanded] = useState(false);
+    const [expanded, setExpanded] = useState(false);
 
-  return (
-    <div className="placeImage">
-      <button className="place" onClick={() => alert('Placing Image!!')}>
-        Place
-      </button>
-      <button className="dropdown" onClick={() => setExpanded(!expanded)}>
-        {expanded ? <div>&lt;</div> : <div>&gt;</div>}
-      </button>
-      {expanded && <div className="dropdownContent">Here are multiple images</div>}
-    </div>
-  );
+    return (
+        <div className="placeImage">
+            <button className="place" onClick={() => alert('Placing Image!!')}>
+                <div>
+                    Place
+                </div>
+                <img src={TestPosterThumbnail}>
+                </img>
+            </button>
+            <button className="dropDown" >
+                {expanded &&
+                    <div className='images'>
+                        bruh!
+                    </div>
+                }
+                <img src={DropDownArrow} className={expanded ? 'left' : 'right'} onClick={() => setExpanded(!expanded)} />
+
+            </button>
+
+        </div>
+    );
 };
 
 export default PlaceImage;

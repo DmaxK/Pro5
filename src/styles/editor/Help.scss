@@ -1,3 +1,40 @@
+@import '../sass/variables';
+
 .help {
     pointer-events: auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-end;
+
+    .helpButton {
+        width: 30px;
+        height: 30px;
+        margin: 0;
+        border-radius: $border-radius;
+        border: none;
+        background-color: $primaryBlack;
+        color: $primaryWhite;
+        font-size: 0.6em;
+        font-family: $body-font-family;
+    }
+
+    .helpContent {
+        margin-left: 5px;
+        font-size: 0.4em;
+        font-weight: 100;
+        background-color: $primaryBlack;
+        border-radius: $border-radius;
+
+        ul{
+            list-style: none;
+            padding: 4px 6px;
+            margin: 0;
+
+            li {
+                padding: 0;
+                margin: 10px;
+            }
+        }    
+    }
 }

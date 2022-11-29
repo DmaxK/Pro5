@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import '../../styles/editor/SceneSettings.scss';
+import DropDownArrow from '../../assets/svgs/DropDownArrow.svg';
+
 
 const SceneSettings = () => {
   const [expanded, setExpanded] = useState(false);
@@ -7,7 +9,10 @@ const SceneSettings = () => {
   return (
     <div className="sceneSettings">
       <button className="settingsButton" onClick={() => setExpanded(!expanded)}>
-        Settings
+        <div className='text'>
+            Settings
+        </div>
+        <img className={expanded ? 'up' : 'down'} src={DropDownArrow} />
       </button>
       {expanded && (
         <div className="settingsContent">

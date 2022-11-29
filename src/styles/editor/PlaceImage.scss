@@ -1,3 +1,57 @@
+@import '../sass/variables';
+
 .placeImage {
     pointer-events: auto;
+    margin-top: 10px;
+    display: flex;
+    height: 40px;
+
+    .place {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        padding: 8px;
+        
+        background-color: $primaryBlack;
+        color: $primaryWhite;
+        border-radius: $border-radius $border-radius-small $border-radius-small $border-radius;
+        border: none;
+
+        font-family: $body-font-family;
+        font-size: 0.6em;
+        font-weight: 400;
+
+        img {
+            height: 100%;
+            margin-left: 8px;
+        }
+    }
+
+    .dropDown {
+        padding: 8px 0 8px 0;
+        margin-left: 2px;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+
+        background-color: $primaryBlack;
+        color: $primaryWhite;
+        border: none;
+        border-radius: $border-radius-small $border-radius $border-radius $border-radius-small;
+
+        img {
+            padding: 2px 0 2px 0;
+            height: 100%;
+        }
+
+        img.left {
+            transform: rotate(90deg);
+            transition: transform 0.1s;
+        }
+        img.right {
+            transform: rotate(-90deg);
+            transition: transform 0.1s;
+        }
+    }
+
 }
