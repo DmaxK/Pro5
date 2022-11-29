@@ -44,7 +44,7 @@ const subsetOfTHREE = {
 CameraControlsDefault.install({ THREE: subsetOfTHREE });
 extend({ CameraControlsDefault });
 
-export const CameraControls = forwardRef<CameraControlsDefault, unknown>((_, ref) => {
+export const CameraControlsWrapper = forwardRef<CameraControlsDefault, unknown>((_, ref) => {
 	const cameraControls = useRef<CameraControlsDefault | null>(null);
 	const camera = useThree((state) => state.camera);
 	const renderer = useThree((state) => state.gl);

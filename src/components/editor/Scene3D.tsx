@@ -1,6 +1,7 @@
 import { OrbitControls, PerspectiveCamera, Stars } from '@react-three/drei';
 import { Canvas, useFrame } from '@react-three/fiber';
 import React, { useRef } from 'react';
+import Camera from './Camera.js';
 import '../../styles/editor/Scene3D.scss';
 import Model from './demoScene.js';
 
@@ -26,7 +27,7 @@ function Controls(){
   const orbitControlsRef = useRef(null);
   return(
     <>
-      <perspectiveCamera makeDefault position-z={0.01} aspect={innerWidth/innerHeight} fov={90}/>
+      <perspectiveCamera position-z={0.01} aspect={innerWidth/innerHeight} fov={90}/>
       <OrbitControls ref={orbitControlsRef} enableZoom={false} enablePan={false} enableDamping={true} rotateSpeed={-0.25}/>
     </>
   )
@@ -37,7 +38,7 @@ const Scene3D = () => {
   return (
     <div className="scene3D">
       <Canvas>
-        <Controls/>
+        <Camera/>
         {/* <Stars /> */}
         <ambientLight intensity={0.5} />
         <spotLight position={[10, 15, 10]} angle={0.3} />
