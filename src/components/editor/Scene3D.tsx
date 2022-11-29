@@ -1,6 +1,7 @@
-import { OrbitControls, Stars } from '@react-three/drei';
-import { Canvas } from '@react-three/fiber';
-import React from 'react';
+import { OrbitControls, PerspectiveCamera, Stars } from '@react-three/drei';
+import { Canvas, useFrame } from '@react-three/fiber';
+import React, { useRef } from 'react';
+import Camera from './Camera.js';
 import '../../styles/editor/Scene3D.scss';
 import Model from './demoScene.js';
 
@@ -23,10 +24,11 @@ function Plane() {
 }
 
 const Scene3D = () => {
+  
   return (
     <div className="scene3D">
       <Canvas>
-        <OrbitControls />
+        <Camera/>
         {/* <Stars /> */}
         <ambientLight intensity={0.5} />
         <spotLight position={[10, 15, 10]} angle={0.3} />
