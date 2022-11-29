@@ -4,13 +4,13 @@
     pointer-events: auto;
     margin-top: 10px;
     display: flex;
-    height: 40px;
+    height: 50px;
 
     .place {
         display: flex;
         flex-direction: row;
         align-items: center;
-        padding: 8px;
+        padding: 5px 15px 5px 15px;
         
         background-color: $primaryBlack;
         color: $primaryWhite;
@@ -21,14 +21,33 @@
         font-size: 0.6em;
         font-weight: 400;
 
-        img {
-            height: 100%;
-            margin-left: 8px;
+        cursor: pointer;
+
+        .imageContainer {
+            margin-left: 6px;
+            height: 40px;
+            width: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            img {
+                width: 100%;
+                height: 100%;
+                object-fit: contain;
+                margin-left: 5px;
+                margin-right: 4px;
+                border-radius: 2px;
+                filter: drop-shadow(0 0 4px $secondaryBlack);
+                border-radius: $border-radius-small;
+            }
         }
+
+  
     }
 
     .dropDown {
-        padding: 8px 4px 8px 4px;
+        padding: 3px;
         margin-left: 2px;
         display: flex;
         flex-direction: row;
@@ -39,18 +58,25 @@
         border: none;
         border-radius: $border-radius-small $border-radius $border-radius $border-radius-small;
 
-        img {
-            padding: 2px 0 2px 0;
+        .dropDownContainer {
+            cursor: pointer;
+            padding: 10px 0px;
             height: 100%;
-        }
+            width: 30px;
 
-        img.left {
-            transform: rotate(90deg);
-            transition: transform 0.1s;
-        }
-        img.right {
-            transform: rotate(-90deg);
-            transition: transform 0.1s;
+            img {
+                height: 100%;
+
+            }
+    
+            img.left {
+                transform: rotate(90deg);
+                transition: transform 0.1s;
+            }
+            img.right {
+                transform: rotate(-90deg);
+                transition: transform 0.1s;
+            }
         }
         
         .images {
@@ -58,19 +84,33 @@
             display: flex;
             flex-direction: row;
             align-items: center;
+            margin-left: 8px;
 
             .imageContainer {
                 box-sizing: content-box;
-                margin: 2px 3px 2px 3px;
+                margin: 4px;
+                // padding: 4px 0px;
                 border-radius: 1px;
                 height: 80%;
+
+                cursor: pointer;
+
+                opacity: 0.4;
+
                 img {
                     padding: 0;
+                    height: 100%;
+                    border-radius: 2px;
+                    // max-width: 40px;
                 }
+                
 
             }
             .imageContainer.selected {
-                border: 2px solid $tertiaryWhite;
+                // border-bottom: 2px solid $secondaryWhite;
+                // border-top: 2px solid $secondaryWhite;
+                filter: drop-shadow(0 0 5px $tertiaryBlack);
+                opacity: 1;
             }
 
         }

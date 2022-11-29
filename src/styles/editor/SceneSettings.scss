@@ -5,26 +5,27 @@
     margin-top: 10px;
 
     .settingsButton {
-        height: 26px;
-        width: 100px;
         margin-top: 10px;
-        padding: 8px;
+        padding: 8px 14px;
         border-radius: $border-radius;
         border: none;
         background-color: $primaryBlack;
         color: $primaryWhite;
 
         font-family: $body-font-family;
-        font-size: 0.4em;
+        font-size: 0.45em;
 
         display: flex;
         flex-direction: row;
         justify-content: space-between;
         align-items: center;
 
+        cursor: pointer;
+
         img {
-            width: 16px;
-            height: 16px;
+            margin-left: 12px;
+            width: 22px;
+            height: 22px;
         }
 
         img.down{
@@ -40,7 +41,7 @@
     }
 
     .settingsContent {
-        margin-top: 5px;
+        margin-top: 2px;
         font-size: 0.4em;
         font-weight: 100;
         padding: 40px;
