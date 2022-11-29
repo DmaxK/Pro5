@@ -1,0 +1,11 @@
+.rotatingImages {
+  position: absolute;
+  right: 12%;
+  top: 15%;
+}
+
+@media only screen and (max-width: 1250px) {
+  .rotatingImages {
+    position: static;
+  }
+}

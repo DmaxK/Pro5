@@ -4,7 +4,7 @@
 input[type='file'] {
   display: none;
 }
-.customFileUpload {
+.uploadButton {
   background-color: $button-upload-bg-color;
   color: $button-upload-color;
   padding: 1.7vmin 3vmin;
@@ -23,4 +23,8 @@ input[type='file'] {
   &:active {
     @include active($body-bg-color);
   }
+}
+
+.customFileUpload {
+  margin-bottom: 6%;
 }

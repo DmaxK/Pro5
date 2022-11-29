@@ -2,8 +2,10 @@ import React, { useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../../styles/landingPage/LandingPage.scss';
 import Description from './sections/Description';
+import Footer from './sections/Footer';
 import Headline from './sections/Headline';
 import BtnEditor from './ui/BtnEditor';
+import RotatingImages from './ui/RotatingImages';
 import SceneGallery from './ui/SceneGallery';
 import ScrollDownArrow from './ui/ScrollDownArrow';
 import UploadButton from './ui/UploadButton';
@@ -47,22 +49,15 @@ function LandingPage() {
       <div className="content-limiter">
         <Headline />
         <Description />
+        <RotatingImages />
         <ScrollDownArrow onClick={handleScrollClick} />
         <h2 ref={ref}>1. Upload your design</h2>
         <UploadButton />
-        <img id="uploadedImg" src="" alt="test preview"></img>
+        <img id="uploadedImg" src="" alt="uploaded image preview"></img>
         <h2>2. Select 3D scene</h2>
         <SceneGallery />
       </div>
-      footer stuff
-      <br />
-      copyright stuff
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      bruh
+      <Footer />
     </div>
   );
 }

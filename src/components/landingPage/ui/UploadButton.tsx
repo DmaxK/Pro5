@@ -26,8 +26,8 @@ function UploadButton() {
   }
 
   return (
-    <div>
-      <label htmlFor="file-upload" className="customFileUpload">
+    <div className="customFileUpload">
+      <label htmlFor="file-upload" className="uploadButton">
         Upload Image
       </label>
       <input
