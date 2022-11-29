@@ -20,6 +20,6 @@
   }
 
   &:active {
-    @include active($body-bg-color);
+    border-color: $body-bg-color;
   }
 }

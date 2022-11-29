@@ -4,10 +4,6 @@
 }
 
 @mixin hover($color) {
-  background-color: rgba($color, 0.8);
-  border-color: rgba($color, 0.8);
-}
-
-@mixin active($color) {
-  border-color: rgba($color, 0.8);
+  background-color: darken($color, 20);
+  border-color: darken($color, 20);
 }
