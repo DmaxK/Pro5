@@ -21,3 +21,8 @@ code {
   font-family: 'Roboto';
   src: local('Roboto'), url(./assets/fonts/Roboto/Roboto-Regular.ttf) format('truetype');
 }
+
+@font-face {
+  font-family: 'Work Sans';
+  src: local('Work Sans'), url(./assets/fonts/WorkSans/WorkSans-Regular.ttf) format('truetype');
+}

@@ -1,0 +1,25 @@
+@import '../../sass/variables';
+@import '../../sass/mixins';
+
+.btnEditor {
+  background-color: $button-editor-bg-color;
+  color: $button-editor-color;
+  align-self: flex-end;
+  padding: 1vmin 3vmin;
+  border: 2px solid $button-editor-bg-color;
+  border-radius: 10vmin;
+  font-family: $button-font-family;
+  font-size: calc(12px + 1.2vmin);
+  font-weight: bold;
+  @include font-super-bold($button-editor-color);
+  cursor: pointer;
+  transition-duration: 0.3s;
+
+  &:hover {
+    @include hover($button-editor-bg-color);
+  }
+
+  &:active {
+    @include active($body-bg-color);
+  }
+}

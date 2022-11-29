@@ -1,0 +1,37 @@
+@import '../sass/variables';
+.content-wrapper {
+  display: flex;
+  flex-direction: column;
+  padding: 2% 3%;
+}
+
+.content-limiter {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  overflow: hidden;
+  padding: 2% 10%;
+}
+
+.normal-weight {
+  font-weight: normal;
+}
+
+#uploadedImg {
+  align-self: center;
+  margin: 3% 0;
+  max-width: 80vw;
+  max-height: 60vh;
+  display: none;
+}
+
+h2 {
+  color: $tertiaryWhite;
+  font-weight: 100;
+}
+
+/* .scene {
+    width: 80vw;
+    height: 80vh;
+    margin: 5% 0;
+  } */

@@ -1,0 +1,39 @@
+@import '../../sass/variables';
+.arrow {
+  background: $scroll-down-arrow-color;
+  height: 5px;
+  width: 40px;
+  transform: rotate(90deg);
+  cursor: pointer;
+  margin: 7% 0;
+  transition-duration: 0.3s;
+
+  &:before,
+  &:after {
+    content: '';
+    background: $scroll-down-arrow-color;
+    position: absolute;
+    height: 5px;
+    width: 20px;
+  }
+
+  &:before {
+    right: -4px;
+    bottom: -5.5px;
+    transform: rotate(-45deg);
+  }
+
+  &:after {
+    right: -4px;
+    top: -5.5px;
+    transform: rotate(45deg);
+  }
+
+  &:hover {
+    filter: brightness(140%);
+  }
+
+  &:active {
+    filter: brightness(300%);
+  }
+}

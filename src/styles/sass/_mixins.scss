@@ -1,0 +1,13 @@
+@mixin font-super-bold($color) {
+  text-shadow: -0.3px 0 $color, 0 0.3px $color, 0.3px 0 $color, 0 -0.3px $color, -0.3px -0.3px $color,
+    0.3px 0.3px $color, -0.3px 0.3px $color, 0.3px -0.3px $color;
+}
+
+@mixin hover($color) {
+  background-color: rgba($color, 0.8);
+  border-color: rgba($color, 0.8);
+}
+
+@mixin active($color) {
+  border-color: rgba($color, 0.8);
+}

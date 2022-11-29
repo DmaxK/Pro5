@@ -1,6 +1,6 @@
 import React from 'react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import './App.css';
+import './App.scss';
 import Editor from './components/editor/Editor';
 import ErrorPage from './components/error-page';
 import LandingPage from './components/landingPage/LandingPage';

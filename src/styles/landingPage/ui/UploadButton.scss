@@ -1,0 +1,26 @@
+@import '../../sass/variables';
+@import '../../sass/mixins';
+
+input[type='file'] {
+  display: none;
+}
+.customFileUpload {
+  background-color: $button-upload-bg-color;
+  color: $button-upload-color;
+  padding: 1.7vmin 3vmin;
+  border: 4px solid $button-upload-bg-color;
+  border-radius: 10vmin;
+  font-family: $button-font-family;
+  font-size: calc(12px + 1.8vmin);
+  font-weight: bold;
+  cursor: pointer;
+  transition-duration: 0.3s;
+
+  &:hover {
+    @include hover($button-upload-bg-color);
+  }
+
+  &:active {
+    @include active($body-bg-color);
+  }
+}

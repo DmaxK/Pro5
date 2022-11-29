@@ -1,0 +1,9 @@
+@import './styles/sass/_variables.scss';
+.App {
+  background-color: $body-bg-color;
+  color: $body-text-color;
+  font-size: $body-font-size;
+  font-family: $body-font-family;
+  text-align: left;
+  min-height: 100vh;
+}
