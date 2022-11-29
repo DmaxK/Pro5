@@ -1,6 +1,6 @@
 /* eslint-disable react/no-unknown-property */
 
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../../styles/editor/Editor.scss';
 import Help from './Help';
@@ -10,14 +10,15 @@ import SceneSettings from './SceneSettings';
 
 function Editor() {
     const navigate = useNavigate();
+    const [selectedImageKey, setSelectedImageKey] = useState<string>((sessionStorage.key(0) || '').toString());
 
     return (
         <div className="Editor">
             <div className='UItop'>
-                <div className="logo" onClick={() => {navigate('/')}}>
+                <div className="logo" onClick={() => { navigate('/') }}>
                     Logo
                 </div>
-                <PlaceImage />
+                <PlaceImage selectedImageKey={selectedImageKey}/>
                 <SceneSettings />
             </div>
             <div className='UIbottom'>
@@ -25,6 +26,7 @@ function Editor() {
             </div>
             <Scene3D />
         </div>
+
     );
 }
 

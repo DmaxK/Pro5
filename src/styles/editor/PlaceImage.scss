@@ -28,7 +28,7 @@
     }
 
     .dropDown {
-        padding: 8px 0 8px 0;
+        padding: 8px 4px 8px 4px;
         margin-left: 2px;
         display: flex;
         flex-direction: row;
@@ -51,6 +51,36 @@
         img.right {
             transform: rotate(-90deg);
             transition: transform 0.1s;
+        }
+        
+        .images {
+            height: 100%;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+
+            .imageContainer {
+                box-sizing: content-box;
+                margin: 2px 3px 2px 3px;
+                border-radius: 1px;
+                height: 80%;
+                img {
+                    padding: 0;
+                }
+
+            }
+            .imageContainer.selected {
+                border: 2px solid $tertiaryWhite;
+            }
+
+        }
+
+        .plus {
+            padding: 4px;
+        }
+
+        label {
+            height: 100%;
         }
     }
 
