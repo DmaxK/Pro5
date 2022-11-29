@@ -43,6 +43,7 @@ const PlaceImage: React.FC<{ selectedImageKey: string, setSelectedImageKey: Disp
         setKeys(temp);
     }
 
+    // sessionStorage.clear();
     return (
         <div className="placeImage">
             <button className="place" onClick={() => alert('Placing Image!!')}>
