@@ -15,7 +15,6 @@ const Camera = () => {
       if(cameraControls.current){
         cameraControls.current.dollyToCursor = true;
         cameraControls.current.infinityDolly = true;
-        cameraControls
         cameraControls.current.minDistance = cameraControls.current.maxDistance = 0.3;
         cameraControls.current.azimuthRotateSpeed = - 0.3; // negative value to invert rotation direction
         cameraControls.current.polarRotateSpeed   = - 0.3; // negative value to invert rotation direction
@@ -27,6 +26,7 @@ const Camera = () => {
         cameraControls.current.mouseButtons.right = CameraControls.ACTION.NONE;
         cameraControls.current.mouseButtons.middle = CameraControls.ACTION.NONE;
         cameraControls.current.touches.two = CameraControls.ACTION.TOUCH_DOLLY_TRUCK;
+        cameraControls.current.dolly(0.01, true);
         cameraControls.current.saveState();
     }
   }, []);

@@ -23,16 +23,6 @@ function Plane() {
   );
 }
 
-function Controls(){
-  const orbitControlsRef = useRef(null);
-  return(
-    <>
-      <perspectiveCamera position-z={0.01} aspect={innerWidth/innerHeight} fov={90}/>
-      <OrbitControls ref={orbitControlsRef} enableZoom={false} enablePan={false} enableDamping={true} rotateSpeed={-0.25}/>
-    </>
-  )
-}
-
 const Scene3D = () => {
   
   return (
