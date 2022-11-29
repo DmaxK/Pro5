@@ -1,7 +1,7 @@
 import React, { Dispatch, useEffect, useState } from 'react';
 import '../../styles/editor/PlaceImage.scss';
 import DropDownArrow from '../../assets/svgs/DropDownArrow.svg';
-import Plus from '../../assets/svgs/Plus.svg';
+// import Plus from '../../assets/svgs/Plus.svg';
 import TestPosterThumbnail from '../../assets/images/testPosterThumbnail.jpg';
 import { getStaticContextFromError } from '@remix-run/router';
 
@@ -67,7 +67,7 @@ const PlaceImage: React.FC<{ selectedImageKey: string, setSelectedImageKey: Disp
                             }
                         </div>
                         <label htmlFor="file-upload-editor">
-                            <img src={Plus} className='plus' />
+                            <img src={'/images/Plus.svg'} className='plus' />
                         </label>
                         <input id='file-upload-editor' type={'file'} onChange={(event) => (event.target.files ? setData(event.target.files[0]) : console.log(event))} />
                     </>
