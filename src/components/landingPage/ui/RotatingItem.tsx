@@ -1,8 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react';
 import '../../../styles/landingPage/ui/RotatingItem.scss';
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-function RotatingItem(props: any) {
+interface RotatingItemProps {
+  URL: string;
+  alt: string;
+}
+
+function RotatingItem(props: RotatingItemProps) {
   //const [mousePos, setMousePos] = useState({});
   const constrain = 20;
   const imgRef = useRef<HTMLImageElement>(null);
@@ -11,14 +15,12 @@ function RotatingItem(props: any) {
   const [isHovered, setHovered] = useState(false);
 
   useEffect(() => {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const handleMouseMove = (e: any) => {
+    const handleMouseMove = (e: MouseEvent) => {
       //setMousePos({ x: e.clientX, y: e.clientY });
-      const img = imgRef.current as unknown as HTMLImageElement;
-      const bg = bgRef.current as unknown as HTMLImageElement;
+      const img = imgRef.current as HTMLImageElement;
+      const bg = bgRef.current as HTMLImageElement;
 
-      const xy = [e.clientX, e.clientY];
-      const position = xy.concat([img]);
+      const position = [e.clientX, e.clientY];
 
       window.requestAnimationFrame(function () {
         transformElement(img, position);
@@ -41,10 +43,10 @@ function RotatingItem(props: any) {
     return 'perspective(100px) ' + ' rotateX(' + calcX + 'deg)' + ' rotateY(' + calcY + 'deg)';
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  function transformElement(el: HTMLImageElement, xyEl: any) {
-    // eslint-disable-next-line prefer-spread
-    el.style.transform = transforms.apply(null, xyEl);
+  function transformElement(el: HTMLImageElement, positions: number[]) {
+    if (el) {
+      el.style.transform = transforms(positions[0], positions[1], el);
+    }
   }
 
   return (

@@ -1,7 +1,6 @@
 import React from 'react';
 import '../../../styles/landingPage/ui/UploadButton.scss';
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function UploadButton() {
   function setData(file: File) {
     const reader = new FileReader();

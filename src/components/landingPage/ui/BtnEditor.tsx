@@ -1,8 +1,11 @@
 import React from 'react';
 import '../../../styles/landingPage/ui/BtnEditor.scss';
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-function BtnEditor(props: any) {
+interface BtnEditorProps {
+  onClick: React.MouseEventHandler<HTMLButtonElement>;
+}
+
+function BtnEditor(props: BtnEditorProps) {
   return (
     <button className="btnEditor" onClick={props.onClick}>
       Editor
