@@ -17,14 +17,26 @@
   background: #272727;
 }
 
-.UI {
+.UItop {
     position: fixed;
-    width: 100vw;
-    height: 100vh;
+    padding: 10px;
+    top: 0;
+    z-index: 2;
+    pointer-events: none;
+
+    .logo {
+        pointer-events: auto;
+        font-size: 0.6em;
+        width: min-content;
+        margin: 0;
+    }
+}
+
+.UIbottom {
+    position: fixed;
+    bottom: 0;
+    padding: 10px;
     z-index: 2;
     pointer-events: none;
 }
 
-.logo {
-    pointer-events: auto;
-}

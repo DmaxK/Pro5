@@ -1,3 +1,50 @@
+@import '../sass/variables';
+
 .sceneSettings {
     pointer-events: auto;
+    margin-top: 10px;
+
+    .settingsButton {
+        height: 26px;
+        width: 100px;
+        margin-top: 10px;
+        padding: 8px;
+        border-radius: $border-radius;
+        border: none;
+        background-color: $primaryBlack;
+        color: $primaryWhite;
+
+        font-family: $body-font-family;
+        font-size: 0.4em;
+
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+
+        img {
+            width: 16px;
+            height: 16px;
+        }
+
+        img.down{
+            transform: none;
+            transition: transform 0.1s;
+        }
+
+        img.up {
+            transform: rotate(180deg);
+            transition: transform 0.1s;
+        }
+
+    }
+
+    .settingsContent {
+        margin-top: 5px;
+        font-size: 0.4em;
+        font-weight: 100;
+        padding: 40px;
+        background-color: $primaryBlack;
+        border-radius: $border-radius;
+    }
 }
