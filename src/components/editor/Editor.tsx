@@ -9,7 +9,7 @@ import Scene3D from './Scene3D';
 import SceneSettings from './SceneSettings';
 
 function Editor() {
-    const [editorState, setEditorState] = useState<string>('edit') 
+    const [editorState, setEditorState] = useState<string>('navigate') 
     // editorState can be either:
     // - 'navigate' -> looking around and moving through scene
     // - 'place'    -> actively placing an image

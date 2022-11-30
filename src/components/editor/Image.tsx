@@ -1,6 +1,7 @@
 import React, { Dispatch, SetStateAction, useState } from 'react'
-import { Vector3 } from 'three'
-import { PivotControls, Center, calcPosFromAngles } from '@react-three/drei'
+import * as THREE from 'three'
+import { PivotControls, Center, calcPosFromAngles, TransformControls } from '@react-three/drei'
+import { DoubleSide } from 'three'
 
 const Image: React.FC<{
     spawnPosition: THREE.Vector3,
@@ -9,7 +10,7 @@ const Image: React.FC<{
     setEditorState: Dispatch<SetStateAction<string>>
 }> = ({ spawnPosition, pivotEnabled, editorState, setEditorState }) => {
 
-    const [pos, setPos] = useState<Vector3>(spawnPosition);
+    const [pos, setPos] = useState<THREE.Vector3>(spawnPosition);
 
     function imageHandleState(state: string) {
         if (state == 'navigate') return 'edit';
@@ -18,26 +19,18 @@ const Image: React.FC<{
         else return 'ERROR: WRONG STATE INPUT! Check for misspells where you set the editorState'
     }
 
+    const image_MAT = new THREE.MeshStandardMaterial({ color: 'green', side: DoubleSide });
+
     return (
-        <>
-            {(editorState === 'edit' && pivotEnabled) ?
-                <PivotControls activeAxes={[true, true, false]} depthTest={false} anchor={[0, 0, 0]} scale={0.75}>
-                    <Center top position={pos}>
-                        <mesh onClick={() => setEditorState(imageHandleState(editorState))}>
-                            <planeGeometry args={[1.0, 1.0]} />
-                            <meshStandardMaterial color="white" />
-                        </mesh>
-                    </Center>
-                </PivotControls>
-                :
-                <Center top position={pos}>
-                    <mesh onClick={() => setEditorState(imageHandleState(editorState))}>
-                        <planeGeometry args={[1.0, 1.0]} />
-                        <meshStandardMaterial color="white" />
-                    </mesh>
-                </Center>
-            }
-        </>
+        <PivotControls fixed={editorState === 'navigate'} activeAxes={[true, true, false]} depthTest={false} anchor={[0, 0, 0]} scale={10}>
+        {/* <TransformControls enabled={editorState==='edit'} showX={editorState==='edit'} showZ={false} showY={editorState==='edit'}> */}
+            <Center top position={[-2, 1, 1]}>
+            <mesh onClick={() => setEditorState(imageHandleState(editorState))} material={image_MAT}>
+                <planeGeometry args={[1.0, 1.0]} />
+            </mesh>
+            </Center>
+        {/* </TransformControls> */}
+        </PivotControls>
     )
 }
 

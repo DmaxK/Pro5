@@ -32,12 +32,12 @@ const Scene3D: React.FC<{
     setEditorState: React.Dispatch<SetStateAction<string>>
 }> = ({ editorState, setEditorState }) => {
 
-    const [cameraPosition, setCameraPosition] = useState<Vector3>(new Vector3(0, 1, 0));
+    const [cameraPosition, setCameraPosition] = useState<Vector3>(new Vector3(0, 2, 0));
 
     return (
         <div className="scene3D">
             <Canvas >
-                <Camera cameraPosition={cameraPosition} />
+                <Camera cameraPosition={cameraPosition} editorState={editorState} />
                 {/* <Stars /> */}
                 <ambientLight intensity={0.5} />
                 <spotLight position={[10, 15, 10]} angle={0.3} />
