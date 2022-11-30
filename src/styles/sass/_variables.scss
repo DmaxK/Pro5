@@ -1,11 +1,13 @@
 // Colors
 $primaryPink: #f88dd5;
 $primaryWhite: #f4f4f4;
-$primaryBlack: #1e1e1e;
+$primaryBlack: #131313;
 $secondaryWhite: #f6f6f6;
 $secondaryBlack: #2e2e2e;
 $tertiaryWhite: #b7b7b7;
+$tertiaryBlack: #454545;
 $primaryGrey: #727272;
+$shadowCol: hsla(0, 0%, 3%, 0.2);
 
 // Global
 $body-bg-color: $primaryBlack;
@@ -24,5 +26,8 @@ $button-upload-color: $primaryBlack;
 $scroll-down-arrow-color: $secondaryBlack;
 
 // Editor
-$border-radius: 8px;
-$border-radius-small: 2px;
+$border-radius: 12px;
+$border-radius-small: 4px;
+$drop-shadow: drop-shadow(0 0 10px $shadowCol);
+$border-grey: 2px solid #242424;
+

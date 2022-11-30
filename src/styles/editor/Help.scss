@@ -8,8 +8,8 @@
     align-items: flex-end;
 
     .helpButton {
-        width: 30px;
-        height: 30px;
+        width: 38px;
+        height: 38px;
         margin: 0;
         border-radius: $border-radius;
         border: none;
@@ -17,14 +17,21 @@
         color: $primaryWhite;
         font-size: 0.6em;
         font-family: $body-font-family;
+
+        cursor: pointer;
+
+        filter: $drop-shadow;
+        border: $border-grey;
     }
 
     .helpContent {
-        margin-left: 5px;
+        margin-left: 2px;
         font-size: 0.4em;
         font-weight: 100;
         background-color: $primaryBlack;
         border-radius: $border-radius;
+        filter: $drop-shadow;
+        border: $border-grey;
 
         ul{
             list-style: none;

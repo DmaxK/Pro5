@@ -23,6 +23,10 @@ const PlaceImage: React.FC<{ selectedImageKey: string, setSelectedImageKey: Disp
     function setData(file: File) {
         const reader = new FileReader();
 
+        if (sessionStorage.length === 0) {
+            setSelectedImageKey(file.name);
+        }
+
         reader.addEventListener('load', () => {
             sessionStorage.setItem(file.name, typeof reader.result === 'string' ? reader.result : '');
             updateKeys();
@@ -31,7 +35,7 @@ const PlaceImage: React.FC<{ selectedImageKey: string, setSelectedImageKey: Disp
     }
 
 
-    function updateKeys(){
+    function updateKeys() {
         let temp = [];
         for (let i = 0; i < sessionStorage.length; i++) {
             temp.push((sessionStorage.key(i) || ''));
@@ -39,19 +43,25 @@ const PlaceImage: React.FC<{ selectedImageKey: string, setSelectedImageKey: Disp
         setKeys(temp);
     }
 
+    // sessionStorage.clear();
     return (
         <div className="placeImage">
             <button className="place" onClick={() => alert('Placing Image!!')}>
                 <div>
                     Place
                 </div>
-                {
-                    getImage(selectedImageKey) !== '' &&
-                    <img src={getImage(selectedImageKey)} />
-                }
+                <div className='imageContainer'>
+                    {
+                        getImage(selectedImageKey) !== '' &&
+                        <img src={getImage(selectedImageKey)} />
+                    }
+                </div>
 
             </button>
             <button className="dropDown" >
+                <div className='dropDownContainer'>
+                    <img src={DropDownArrow} className={expanded ? 'left' : 'right'} onClick={() => setExpanded(!expanded)} />
+                </div>
                 {expanded &&
                     <>
                         <div className='images'>
@@ -59,7 +69,7 @@ const PlaceImage: React.FC<{ selectedImageKey: string, setSelectedImageKey: Disp
                                 keys.map((key, item) =>
                                     <div
                                         key={key}
-                                        onClick={() => setSelectedImageKey(key)}
+                                        onClick={() => {setSelectedImageKey(key); setExpanded(!expanded)}}
                                         className={'imageContainer ' + (key == selectedImageKey ? 'selected' : '')} >
                                         <img key={key} src={getImage(key)}></img>
                                     </div>
@@ -72,7 +82,7 @@ const PlaceImage: React.FC<{ selectedImageKey: string, setSelectedImageKey: Disp
                         <input id='file-upload-editor' type={'file'} onChange={(event) => (event.target.files ? setData(event.target.files[0]) : console.log(event))} />
                     </>
                 }
-                <img src={DropDownArrow} className={expanded ? 'left' : 'right'} onClick={() => setExpanded(!expanded)} />
+
             </button>
         </div >
     );

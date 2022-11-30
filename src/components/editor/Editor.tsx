@@ -14,6 +14,7 @@ function Editor() {
 
     return (
         <div className="Editor">
+            
             <div className='UItop'>
                 <div className="logo" onClick={() => { navigate('/') }}>
                     Logo
