@@ -9,12 +9,17 @@ import Scene3D from './Scene3D';
 import SceneSettings from './SceneSettings';
 
 function Editor() {
+    const [editorState, setEditorState] = useState<string>('edit') 
+    // editorState can be either:
+    // - 'navigate' -> looking around and moving through scene
+    // - 'place'    -> actively placing an image
+    // - 'edit'     -> edit and image's position or scale
+
     const navigate = useNavigate();
     const [selectedImageKey, setSelectedImageKey] = useState<string>((sessionStorage.key(0) || '').toString());
 
     return (
         <div className="Editor">
-            
             <div className='UItop'>
                 <div className="logo" onClick={() => { navigate('/') }}>
                     Logo
@@ -25,7 +30,12 @@ function Editor() {
             <div className='UIbottom'>
                 <Help />
             </div>
-            <Scene3D />
+            <div className='UIdebug'>
+                --- DEBUG --- <br/><br/>
+                editorState = {editorState} <br/>
+                selectedImageKey = {selectedImageKey}
+            </div>
+            <Scene3D editorState={editorState} setEditorState={setEditorState}/>
         </div>
 
     );
