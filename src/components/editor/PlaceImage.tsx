@@ -43,45 +43,55 @@ const PlaceImage: React.FC<{ selectedImageKey: string, setSelectedImageKey: Disp
 
     // sessionStorage.clear();
     return (
-        <div className="placeImage">
-            <button className="place" onClick={() => alert('Placing Image!!')}>
-                <div>
+        <div className="placeImage" >
+            <button className={(keys.length === 0 && 'noImages') + " place"} >
+                <div onClick={() => keys.length > 0 ? alert('Placing Image!!') : alert('Please upload an Image first.')}>
                     Place
                 </div>
-                <div className='imageContainer'>
-                    {
-                        getImage(selectedImageKey) !== '' &&
-                        <img src={getImage(selectedImageKey)} />
-                    }
-                </div>
-
-            </button>
-            <button className="dropDown" >
-                <div className='dropDownContainer'>
-                    <img src={DropDownArrow} className={expanded ? 'left' : 'right'} onClick={() => setExpanded(!expanded)} />
-                </div>
-                {expanded &&
+                {keys.length > 0 ?
+                    <div className='imageContainer' onClick={() => keys.length > 0 ? alert('Placing Image!!') : alert('Please upload an Image first.')}>
+                        {
+                            getImage(selectedImageKey) !== '' &&
+                            <img src={getImage(selectedImageKey)} />
+                        }
+                    </div>
+                    :
                     <>
-                        <div className='images'>
-                            {
-                                keys.map((key, item) =>
-                                    <div
-                                        key={key}
-                                        onClick={() => {setSelectedImageKey(key); setExpanded(!expanded)}}
-                                        className={'imageContainer ' + (key == selectedImageKey ? 'selected' : '')} >
-                                        <img key={key} src={getImage(key)}></img>
-                                    </div>
-                                )
-                            }
-                        </div>
-                        <label htmlFor="file-upload-editor">
+                        <label htmlFor="file-upload-editor" >
                             <img src={'/images/Plus.svg'} className='plus' />
                         </label>
                         <input id='file-upload-editor' type={'file'} onChange={(event) => (event.target.files ? setData(event.target.files[0]) : console.log(event))} />
                     </>
                 }
-
             </button>
+            {keys.length > 0 &&
+                <button className="dropDown" >
+                    <div className='dropDownContainer'>
+                        <img src={DropDownArrow} className={expanded ? 'left' : 'right'} onClick={() => setExpanded(!expanded)} />
+                    </div>
+                    {expanded &&
+                        <>
+                            <div className='images'>
+                                {
+                                    keys.map((key, item) =>
+                                        <div
+                                            key={key}
+                                            onClick={() => { setSelectedImageKey(key); setExpanded(!expanded) }}
+                                            className={'imageContainer ' + (key == selectedImageKey ? 'selected' : '')} >
+                                            <img key={key} src={getImage(key)}></img>
+                                        </div>
+                                    )
+                                }
+                            </div>
+                            <label htmlFor="file-upload-editor">
+                                <img src={'/images/Plus.svg'} className='plus' />
+                            </label>
+                            <input id='file-upload-editor' type={'file'} onChange={(event) => (event.target.files ? setData(event.target.files[0]) : console.log(event))} />
+                        </>
+                    }
+
+                </button>
+            }
         </div >
     );
 };

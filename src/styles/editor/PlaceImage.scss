@@ -47,7 +47,28 @@
             }
         }
 
-  
+        label {
+
+            height: 100%;
+            width: 40px;
+    
+            cursor: pointer;
+    
+            .plus {
+                padding: 8px 0px;
+                height: 100%;
+            }
+        }
+
+    }
+
+    .place.noImages {
+        border-radius: $border-radius;
+        padding-right: 6px;
+
+        label {
+            margin-left: 4px;
+        }
     }
 
     .dropDown {
@@ -119,19 +140,22 @@
             }
 
         }
-
         label {
 
             height: 100%;
             width: 40px;
-
+    
             cursor: pointer;
-
+    
             .plus {
                 padding: 12px 0px;
                 height: 100%;
             }
         }
+
+
     }
+
+    
 
 }
