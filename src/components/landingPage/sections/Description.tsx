@@ -6,9 +6,9 @@ function Description() {
     <div className="description">
       <p>
         Mockapp lets you view your graphic designs in an
-        <br />
+        <br className="descriptionBr" />
         interactive 3D scene. Simply upload the design,
-        <br />
+        <br className="descriptionBr" />
         choose a scene and place the image on any surface.
       </p>
     </div>
