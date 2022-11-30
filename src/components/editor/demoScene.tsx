@@ -45,6 +45,6 @@ function Model() {
   )
 }
 
-useGLTF.preload('../../public/models/demo_scene.glb')
+useGLTF.preload('../../../public/models/demo_scene.glb')
 
 export default Model;

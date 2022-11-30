@@ -1,13 +1,12 @@
-import { OrbitControls, PerspectiveCamera, Stars } from '@react-three/drei';
-import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import React, { useEffect, useRef } from 'react';
-import * as THREE from 'three';
 import { CameraControlsWrapper } from './camera-controls';
 import CameraControls from 'camera-controls';
+import { Vector3 } from 'three';
+
 
 //CameraControls.install( { THREE: THREE } );
 
-const Camera = () => {
+const Camera: React.FC<{cameraPosition: Vector3}> = ({cameraPosition}) => {
     
     const cameraControls = useRef<CameraControls | null>(null);
     
@@ -30,6 +29,11 @@ const Camera = () => {
         cameraControls.current.saveState();
     }
   }, []);
+  useEffect(() => {
+    if(cameraControls.current){
+      cameraControls.current.moveTo(cameraPosition.x, cameraPosition.y, cameraPosition.z, true);
+    }
+  }, [cameraPosition])
     return(
         <CameraControlsWrapper ref={cameraControls}/>
     );
