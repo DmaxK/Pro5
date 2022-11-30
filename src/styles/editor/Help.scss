@@ -19,6 +19,9 @@
         font-family: $body-font-family;
 
         cursor: pointer;
+
+        filter: $drop-shadow;
+        border: $border-grey;
     }
 
     .helpContent {
@@ -27,6 +30,8 @@
         font-weight: 100;
         background-color: $primaryBlack;
         border-radius: $border-radius;
+        filter: $drop-shadow;
+        border: $border-grey;
 
         ul{
             list-style: none;

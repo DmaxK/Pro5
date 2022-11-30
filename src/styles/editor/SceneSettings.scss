@@ -11,6 +11,8 @@
         border: none;
         background-color: $primaryBlack;
         color: $primaryWhite;
+        filter: $drop-shadow;
+        border: $border-grey;
 
         font-family: $body-font-family;
         font-size: 0.45em;
@@ -47,5 +49,7 @@
         padding: 40px;
         background-color: $primaryBlack;
         border-radius: $border-radius;
+        filter: $drop-shadow;
+        border: $border-grey;
     }
 }

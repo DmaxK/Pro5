@@ -7,6 +7,7 @@ $secondaryBlack: #2e2e2e;
 $tertiaryWhite: #b7b7b7;
 $tertiaryBlack: #454545;
 $primaryGrey: #727272;
+$shadowCol: hsla(0, 0%, 3%, 0.2);
 
 // Global
 $body-bg-color: $primaryBlack;
@@ -27,3 +28,6 @@ $scroll-down-arrow-color: $secondaryBlack;
 // Editor
 $border-radius: 12px;
 $border-radius-small: 4px;
+$drop-shadow: drop-shadow(0 0 10px $shadowCol);
+$border-grey: 2px solid #242424;
+
