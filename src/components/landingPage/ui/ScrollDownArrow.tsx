@@ -7,7 +7,11 @@ interface ScrollDownArrowProps {
 }
 
 function ScrollDownArrow(props: ScrollDownArrowProps) {
-  return <div className="arrow" onClick={props.onClick}></div>;
+  return (
+    <div className="arrowHitbox" onClick={props.onClick}>
+      <div className="arrow" />
+    </div>
+  );
 }
 
 export default ScrollDownArrow;

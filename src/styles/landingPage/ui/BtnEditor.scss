@@ -10,8 +10,8 @@
   border-radius: 10vmin;
   font-family: $button-font-family;
   font-size: calc(12px + 1.2vmin);
-  font-weight: bold;
-  @include font-super-bold($button-editor-color);
+  font-weight: 900;
+  //@include font-super-bold($button-editor-color);
   cursor: pointer;
   transition-duration: 0.3s;
 
