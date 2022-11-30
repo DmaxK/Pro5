@@ -24,18 +24,23 @@
         border: $border-grey;
     }
 
+    .helpButton:active {
+        color: $primaryPink;
+    }
+
     .helpContent {
         margin-left: 2px;
+        max-width: 50vw;
         font-size: 0.4em;
         font-weight: 100;
         background-color: $primaryBlack;
         border-radius: $border-radius;
         filter: $drop-shadow;
         border: $border-grey;
-
-        ul{
-            list-style: none;
-            padding: 4px 6px;
+    
+        ol{
+            // list-style: none;
+            padding: 10px 15px 10px 30px;;
             margin: 0;
 
             li {

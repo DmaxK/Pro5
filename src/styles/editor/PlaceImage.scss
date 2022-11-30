@@ -12,14 +12,13 @@
         align-items: center;
         padding: 5px 15px 5px 15px;
         z-index: 1;
-        
+
         background-color: $primaryBlack;
         color: $primaryWhite;
         border-radius: $border-radius $border-radius-small $border-radius-small $border-radius;
         border: none;
         filter: $drop-shadow;
         border: $border-grey;
-
 
         font-family: $body-font-family;
         font-size: 0.6em;
@@ -47,7 +46,33 @@
             }
         }
 
-  
+        label {
+            height: 100%;
+            width: 40px;
+            cursor: pointer;
+
+            .plus {
+                padding: 8px 0px;
+                height: 100%;
+            }
+        }
+    }
+
+    .place.noImages {
+        border-radius: $border-radius;
+        padding-right: 6px;
+
+        label {
+            margin-left: 4px;
+        }
+    }
+
+    .place div:active {
+        color: $primaryPink;
+    }
+
+    .place label:active {
+        filter: $svg-pink-filter;
     }
 
     .dropDown {
@@ -71,19 +96,24 @@
             width: 30px;
 
             img {
-                height: 100%;
+                height: 100%; 
             }
-    
+
+            img:active {
+                filter: $svg-pink-filter;
+            }
+
             img.left {
                 transform: rotate(90deg);
                 transition: transform 0.1s;
             }
+
             img.right {
                 transform: rotate(-90deg);
                 transition: transform 0.1s;
             }
         }
-        
+
         .images {
             height: 100%;
             display: flex;
@@ -108,16 +138,14 @@
                     border-radius: 2px;
                     // max-width: 40px;
                 }
-                
-
             }
+
             .imageContainer.selected {
                 // border-bottom: 2px solid $secondaryWhite;
                 // border-top: 2px solid $secondaryWhite;
                 filter: drop-shadow(0 0 5px $tertiaryBlack);
                 opacity: 1;
             }
-
         }
 
         label {
@@ -130,8 +158,13 @@
             .plus {
                 padding: 12px 0px;
                 height: 100%;
+            } 
+        }
+
+        label:active {
+            img {
+                filter: $svg-pink-filter
             }
         }
     }
-
 }
