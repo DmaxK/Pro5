@@ -42,6 +42,14 @@
 
     }
 
+    .settingsButton:active {
+        color: $primaryPink;
+
+        img {
+            filter: $svg-pink-filter;
+        }
+    }
+
     .settingsContent {
         margin-top: 2px;
         font-size: 0.4em;
