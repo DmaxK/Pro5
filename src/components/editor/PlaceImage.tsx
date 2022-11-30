@@ -44,7 +44,7 @@ const PlaceImage: React.FC<{ selectedImageKey: string, setSelectedImageKey: Disp
     // sessionStorage.clear();
     return (
         <div className="placeImage" >
-            <button className={(keys.length === 0 && 'noImages') + " place"} >
+            <button className={(keys.length === 0 ? 'noImages' : 'images') + " place"} >
                 <div onClick={() => keys.length > 0 ? alert('Placing Image!!') : alert('Please upload an Image first.')}>
                     Place
                 </div>
