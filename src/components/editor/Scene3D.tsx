@@ -7,23 +7,24 @@ import { StreetSceneCompressed } from './Final_scene_5.js';
 import POI from './POI.js';
 import Noon from './lighting/noon.js';
 import Goldenhour from './lighting/golden-hour.js';
-import { Vector3 } from 'three';
+import Midnight from './lighting/midnight.js';
+import { AxesHelper, Vector3 } from 'three';
 import { useState } from 'react';
 
 function Box() {
   return (
-    <mesh>
+    <mesh castShadow position={[0,2,0]}>
       <boxBufferGeometry attach="geometry" />
-      <meshLambertMaterial attach="material" color="FireBrick" />
+      <meshStandardMaterial attach="material" color="FireBrick" />
     </mesh>
   );
 }
 
 function Plane() {
   return (
-    <mesh position={[0, -1, 0]} rotation={[-Math.PI / 2, 0, 0]}>
+    <mesh receiveShadow position={[0, 1, 0]} rotation={[-Math.PI / 2, 0, 0]}>
       <boxBufferGeometry attach="geometry" args={[20, 20]} />
-      <meshLambertMaterial attach="material" color="LightSlateGrey" />
+      <meshStandardMaterial attach="material" color="LightSlateGrey" />
     </mesh>
   );
 }
@@ -33,9 +34,12 @@ const Scene3D = () => {
   return (
     <div className="scene3D">
       <Canvas shadows={true}>
+        <axesHelper/>
         <Camera cameraPosition={cameraPosition}/>
         {/* <Stars /> */}
-        <Goldenhour/>
+        <Midnight/>
+        <Plane/>
+        <Box/>
         <StreetSceneCompressed />
         <POI position = {new Vector3(1,2,1)} setCameraPosition = {setCameraPosition}/>
       </Canvas>
