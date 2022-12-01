@@ -8,7 +8,7 @@ import { useGLTF } from '@react-three/drei'
 export function DemoScene2() {
   const { nodes, materials } = useGLTF('../../../public/models/demo_scene_2_no_texture_compressed.glb')
   return (
-    <group dispose={null}>
+    <group castShadow dispose={null}>
       <group position={[20.78, 5.52, -0.03]} rotation={[0, -1.48, -Math.PI / 2]} scale={0.04}>
         <mesh geometry={nodes.Cylinder005001.geometry} material={materials.Iron_se4objgc} position={[0, -0.21, 1.39]} rotation={[-1.4, 0, 0]} scale={0.49} />
       </group>
@@ -23,7 +23,7 @@ export function DemoScene2() {
       </group>
       <mesh geometry={nodes.wPlane001.geometry} material={materials.Patterned_Stone_vjqqcck} scale={30} />
       <group position={[-0.74, -0.02, 21.94]} rotation={[Math.PI / 2, 0, 0]} scale={0.13}>
-        <mesh geometry={nodes.Mesh001.geometry} material={materials['Wood.002']} />
+        <mesh castShadow geometry={nodes.Mesh001.geometry} material={materials['Wood.002']} />
         <mesh geometry={nodes.Mesh001_1.geometry} material={materials['Red_Metal.002']} />
         <mesh geometry={nodes.Mesh001_2.geometry} material={materials['Wood_2.002']} />
         <mesh geometry={nodes.Mesh001_3.geometry} material={materials['Lamp.002']} />
