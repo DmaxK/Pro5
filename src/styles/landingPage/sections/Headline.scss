@@ -2,4 +2,24 @@
   span {
     font-style: italic;
   }
+
+  font-size: calc(18px + 7vmin);
 }
+
+@media only screen and (min-width: 1024px) {
+  .headline {
+    max-width: 50%;
+  }
+}
+
+@media only screen and (min-width: 1440px) {
+  .headline {
+    max-width: 100%;
+  }
+}
+
+// @media only screen and (min-width: 1500px) {
+//   .headline {
+//     max-width: 100%;
+//   }
+// }

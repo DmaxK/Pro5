@@ -13,6 +13,7 @@ function RotatingItem(props: RotatingItemProps) {
   const bgRef = useRef<HTMLImageElement>(null);
 
   const [isHovered, setHovered] = useState(false);
+  //let fadeOutTimer: number | undefined;
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
@@ -38,7 +39,9 @@ function RotatingItem(props: RotatingItemProps) {
   function transforms(x: number, y: number, el: HTMLElement) {
     const box = el.getBoundingClientRect();
     const calcX = -(y - box.y - box.height / 2) / constrain;
-    const calcY = (x - box.x - box?.width / 2) / constrain;
+    const calcY = (x - box.x - box.width / 2) / constrain;
+    //console.log('x: ' + calcX);
+    //console.log('y: ' + calcY);
 
     return 'perspective(100px) ' + ' rotateX(' + calcX + 'deg)' + ' rotateY(' + calcY + 'deg)';
   }
@@ -49,10 +52,31 @@ function RotatingItem(props: RotatingItemProps) {
     }
   }
 
+  function changeClassOfImg(el: HTMLImageElement, remove: string, add: string) {
+    if (el?.classList.contains(remove)) {
+      el?.classList.remove(remove);
+    }
+    el?.classList.add(add);
+  }
+
   return (
-    <div className="rotatingItemContainer" onMouseOver={() => setHovered(true)} onMouseLeave={() => setHovered(false)}>
+    <div
+      className="rotatingItemContainer"
+      onMouseOver={() => {
+        if (bgRef.current == null) return;
+        changeClassOfImg(bgRef.current, 'fadeOut', 'fadeIn');
+        bgRef.current?.classList.add('bgHover');
+      }}
+      onMouseLeave={() => {
+        if (bgRef.current == null) return;
+        changeClassOfImg(bgRef.current, 'fadeIn', 'fadeOut');
+        if (bgRef.current?.classList.contains('bgHover')) {
+          bgRef.current?.classList.remove('bgHover');
+        }
+      }}
+    >
       <div className="rotatingItem" style={{ border: isHovered ? 'none' : '' }}>
-        {isHovered && <img className="bg" src={props.URL} alt={props.alt} ref={bgRef} />}
+        <img className="bg" src={props.URL} alt={props.alt} ref={bgRef} />
         <img className="rotatingImg" src={props.URL} alt={props.alt} ref={imgRef} />
       </div>
     </div>
