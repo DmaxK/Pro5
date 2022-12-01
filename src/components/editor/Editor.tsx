@@ -14,6 +14,7 @@ function Editor() {
     // - 'navigate' -> looking around and moving through scene
     // - 'place'    -> actively placing an image
     // - 'edit'     -> actively editing an images position or scale (when you are dragging along the gizmo)
+
     const navigate = useNavigate();
     const [selectedImageKey, setSelectedImageKey] = useState<string>((sessionStorage.key(0) || '').toString());
 
@@ -34,7 +35,7 @@ function Editor() {
                 editorState = {editorState} <br/>
                 selectedImageKey = {selectedImageKey}
             </div>
-            <Scene3D editorState={editorState} setEditorState={setEditorState}/>
+            <Scene3D editorState={editorState} setEditorState={setEditorState} selectedImageKey={selectedImageKey}/>
         </div>
 
     );
