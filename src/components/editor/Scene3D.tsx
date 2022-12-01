@@ -37,7 +37,7 @@ const Scene3D = () => {
         <axesHelper/>
         <Camera cameraPosition={cameraPosition}/>
         {/* <Stars /> */}
-        <Midnight/>
+        <Noon/>
         <Plane/>
         <Box/>
         <StreetSceneCompressed />
