@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import '../../../styles/landingPage/ui/RotatingItem.scss';
 
 interface RotatingItemProps {
@@ -12,7 +12,7 @@ function RotatingItem(props: RotatingItemProps) {
   const imgRef = useRef<HTMLImageElement>(null);
   const bgRef = useRef<HTMLImageElement>(null);
 
-  const [isHovered, setHovered] = useState(false);
+  //const [isHovered, setHovered] = useState(false);
   //let fadeOutTimer: number | undefined;
 
   useEffect(() => {
@@ -75,7 +75,7 @@ function RotatingItem(props: RotatingItemProps) {
         }
       }}
     >
-      <div className="rotatingItem" style={{ border: isHovered ? 'none' : '' }}>
+      <div className="rotatingItem">
         <img className="bg" src={props.URL} alt={props.alt} ref={bgRef} />
         <img className="rotatingImg" src={props.URL} alt={props.alt} ref={imgRef} />
       </div>
