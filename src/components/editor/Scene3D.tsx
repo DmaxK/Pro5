@@ -8,6 +8,7 @@ import Image from './Image.js'
 import { DemoScene2 } from './Demo_scene_2_no_texture_compressed.js';
 import { StreetSceneCompressed } from './Final_scene_5.js';
 import '../../styles/editor/Scene3D.scss';
+import {Sky, Cloud, Sparkles} from '@react-three/drei';
 
 function Box() {
     return (
@@ -34,9 +35,18 @@ const Scene3D: React.FC<{
 
     const [cameraPosition, setCameraPosition] = useState<Vector3>(new Vector3(0, 2, 0));
 
+    function handleSceenClick() {
+
+    }
+
+    function missedCanvasHandleState() {
+        // handle how the editor state should change when nothing is clicked
+
+    }
+
     return (
         <div className="scene3D">
-            <Canvas >
+            <Canvas>
                 <Camera cameraPosition={cameraPosition} editorState={editorState} />
                 {/* <Stars /> */}
                 <ambientLight intensity={0.5} />
@@ -48,8 +58,7 @@ const Scene3D: React.FC<{
                     setCameraPosition={setCameraPosition}
                 />
                 <Image
-                    spawnPosition={new Vector3(1, 1, -3)}
-                    pivotEnabled={true}
+                    spawnPosition={new Vector3(1, 5, 1)}
                     editorState={editorState}
                     setEditorState={setEditorState}
                 />
