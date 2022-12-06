@@ -12,7 +12,7 @@ const Image: React.FC<{
     pivotEnabled: boolean,
     enableThisPivot: (arg0: number, arg1: boolean) => void,
     sessionStorageKey: string,
-    lookAtPoint: Vector3
+    lookAtPoint: THREE.Vector3
 }> = ({ index, spawnPosition, editorState, setEditorState, pivotEnabled, enableThisPivot, sessionStorageKey, lookAtPoint }) => {
 
     const [draggingGizmo, setDraggingGizmo] = useState<boolean>(false); // is the gizmo currently being interacted with?
@@ -33,6 +33,10 @@ const Image: React.FC<{
         // create materials and geometry
         if (meshRef.current) {
             groupRef.current.position.set(spawnPosition.x, spawnPosition.y, spawnPosition.z);
+
+            // printVector('lookAtPoint', lookAtPoint);
+            // printVector('spawnPosition', spawnPosition);
+
             groupRef.current.lookAt(lookAtPoint);
 
 
@@ -81,6 +85,10 @@ const Image: React.FC<{
 
     }
 
+    function printVector (text: string, v: Vector3){
+        console.log(text + ' = \n ' + v.x + '\n ' + v.y + '\n ' + v.z + '\n ');
+    }
+
     return (
         // <PivotControls
         //     fixed={false}
@@ -113,11 +121,11 @@ const Image: React.FC<{
                 <mesh
                     ref={meshRef}
                     onClick={() => handleImageClick()}>
-                    {/* <planeGeometry /> */}
-                    <boxGeometry />
+                    <planeGeometry />
+                    {/* <boxGeometry /> */}
                     {/* <meshStandardMaterial side={THREE.DoubleSide}/> */}
                 </mesh>
-                <axesHelper args={[2]} />
+                {/* <axesHelper args={[2]} /> */}
             </group>
 
         </PivotControls>

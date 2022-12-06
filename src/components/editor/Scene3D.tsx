@@ -72,25 +72,38 @@ const Scene3D: React.FC<{
     }
 
     const addImage = (e: ThreeEvent<MouseEvent>) => {
-        e.intersections.forEach(intersection => {
-            if (intersection.object.name === 'scene') {
-                console.log(intersection);
-                if (intersection.face) {
-                    const normal = intersection.face.normal;
-                    const newPosition = 0;//add currect calculation!;
+        // console.log(e);
+        if (e.intersections[0].object.name === 'scene') {
+            disableAllPivots();
+            const intersection = e.intersections[0];
+            if (intersection.face) {       
+                
+                const newPosition = intersection.point.multiplyScalar(1);
+                const lookAt = intersection.point.multiplyScalar(4)
 
-                    // const newImage = {
-                    //     position: intersection.point,
-                    //     pivotEnabled: false,
-                    //     sessionStorageKey: selectedImageKey,
-                    //     lookAtPoint: //add correct calucation!
-                    // }
-                    // setImages([...images, newImage]);
-                    // console.log(images);
+                printVector('newPosition', newPosition);
+                printVector('lookAt', lookAt);
+                
+                const newImage = {
+                    position: new Vector3(newPosition.x, newPosition.y, newPosition.z),
+                    pivotEnabled: false,
+                    sessionStorageKey: selectedImageKey,
+                    lookAtPoint: new Vector3(lookAt.x, lookAt.y, lookAt.z)
                 }
-
+                // const newImage = {
+                //     position: new Vector3(1,0,0),
+                //     pivotEnabled: false,
+                //     sessionStorageKey: selectedImageKey,
+                //     lookAtPoint: new Vector3(0,1,0)
+                // }
+                setImages([...images, newImage]);
             }
-        });
+
+        }
+    }
+
+    const printVector = (text: string, v: Vector3) => {
+        console.log(text + ' = \n ' + v.x + '\n ' + v.y + '\n ' + v.z + '\n ');
     }
 
     const handleSceneClicked = (e: ThreeEvent<MouseEvent>) => {
@@ -107,13 +120,13 @@ const Scene3D: React.FC<{
                     <spotLight position={[10, 15, 10]} angle={0.3} />
                     <directionalLight position={[0, 10, 0]} intensity={1} />
                     <StreetSceneCompressed />
-                    {POIsEnabled && 
-                    <group>
-                        <POI
-                            position={new Vector3(4, 2, 1)}
-                            setCameraPosition={setCameraPosition}
-                        />
-                    </group>
+                    {POIsEnabled &&
+                        <group>
+                            <POI
+                                position={new Vector3(4, 2, 1)}
+                                setCameraPosition={setCameraPosition}
+                            />
+                        </group>
                     }
 
                     {images.map((image, i) => (
@@ -128,7 +141,7 @@ const Scene3D: React.FC<{
                             sessionStorageKey={image.sessionStorageKey}
                             lookAtPoint={image.lookAtPoint} />
                     ))}
-                    <mesh name='scene' rotation-y={1} position={[0, 2, -4]} scale={[3, 3, 3]} onClick={(e) => handleSceneClicked(e)}>
+                    <mesh name='scene' position={[0, 2, -4]} scale={[3, 3, 3]} onClick={(e) => handleSceneClicked(e)}>
                         <boxGeometry />
                         <meshStandardMaterial color='grey' />
                     </mesh>
