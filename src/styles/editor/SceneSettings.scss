@@ -3,6 +3,7 @@
 .sceneSettings {
     pointer-events: auto;
     margin-top: 10px;
+    max-width: 40vw;
 
     .settingsButton {
         margin-top: 10px;
@@ -30,7 +31,7 @@
             height: 22px;
         }
 
-        img.down{
+        img.down {
             transform: none;
             transition: transform 0.1s;
         }
@@ -52,12 +53,104 @@
 
     .settingsContent {
         margin-top: 2px;
-        font-size: 0.4em;
-        font-weight: 100;
-        padding: 40px;
         background-color: $primaryBlack;
         border-radius: $border-radius;
         filter: $drop-shadow;
         border: $border-grey;
+
+        .section {
+            margin: 20px 20px 30px 20px;
+
+            .title {
+                font-size: 0.45em;
+                color: $tertiaryWhite;
+                display: block;
+                margin-bottom: 10px;
+
+            }
+        }
+
+        .scene {
+            .scenes {
+                display: flex;
+                flex-direction: row;
+                justify-content: space-between;
+
+                .thumbnail {
+                    width: 31%;
+                    max-width: 10vw;
+
+                    img {
+                        width: 100%;
+                        height: 100%;
+                        border-radius: $border-radius-small;
+                    }
+
+                    img.selected {
+                        border: solid $primaryPink 1px;
+                    }
+                }
+            }
+        }
+
+        .lighting {
+            .modes {
+                line-height: 0.00;
+                .mode {
+                    font-size: 0.35em;
+                    line-height: 1;
+                    display: inline-block;
+                    border: solid $tertiaryWhite 1px;
+                    border-radius: 100px;
+                    padding: 6px 9px 6px 9px;
+                    margin-right: 6px;
+                    margin-bottom: 6px;
+                    color: $secondaryWhite
+                }
+                .mode.selected {
+                    border: solid $primaryPink 1px;
+                    color: $primaryWhite
+                }
+            }
+        }
+
+        .POI {
+            line-height: 0;
+            margin-bottom: 12px;
+            .title {
+                display: inline-block;
+                line-height: 1;
+                width: auto;
+            }
+
+            .toggle {
+                display: inline-block;
+                line-height: 1;
+                margin-left: 20px;
+                transform: translateY(2px);
+                .outer {
+                    background-color: $tertiaryBlack;
+                    height: 15px;
+                    width: 30px;
+                    border-radius: 100px;
+                    padding: 2px;
+
+                   .pin {
+                        background-color: $secondaryWhite;
+                        width: 11px;
+                        height: 11px;
+                        border-radius: 100px;
+                    }
+                }
+                .outer.enabled {
+                    background-color: $primaryPink;
+
+                    .pin {
+                        transform: translateX(14px);
+                    }
+                }     
+            }
+
+        }
     }
 }

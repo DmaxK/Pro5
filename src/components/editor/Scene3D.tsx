@@ -32,8 +32,10 @@ function Plane() {
 const Scene3D: React.FC<{
     editorState: string,
     setEditorState: React.Dispatch<SetStateAction<string>>,
-    selectedImageKey: string
-}> = ({ editorState, setEditorState, selectedImageKey }) => {
+    selectedImageKey: string,
+    lighting: string,
+    POIsEnabled: boolean
+}> = ({ editorState, setEditorState, selectedImageKey, lighting, POIsEnabled }) => {
 
     const [cameraPosition, setCameraPosition] = useState<Vector3>(new Vector3(0, 2, 0));
 
@@ -49,7 +51,7 @@ const Scene3D: React.FC<{
             position: new Vector3(1, 2, 3),
             pivotEnabled: false,
             sessionStorageKey: selectedImageKey,
-            lookAtPoint: new Vector3(1,2,3)
+            lookAtPoint: new Vector3(1, 2, 3)
         }
     ]
 
@@ -73,18 +75,18 @@ const Scene3D: React.FC<{
         e.intersections.forEach(intersection => {
             if (intersection.object.name === 'scene') {
                 console.log(intersection);
-                if(intersection.face){
+                if (intersection.face) {
                     const normal = intersection.face.normal;
-                    const newPosition = //add currect calculation!;
+                    const newPosition = 0;//add currect calculation!;
 
-                    const newImage = {
-                        position: intersection.point,
-                        pivotEnabled: false,
-                        sessionStorageKey: selectedImageKey,
-                        lookAtPoint: //add correct calucation!
-                    }
-                    setImages([...images, newImage]);
-                    console.log(images);
+                    // const newImage = {
+                    //     position: intersection.point,
+                    //     pivotEnabled: false,
+                    //     sessionStorageKey: selectedImageKey,
+                    //     lookAtPoint: //add correct calucation!
+                    // }
+                    // setImages([...images, newImage]);
+                    // console.log(images);
                 }
 
             }
@@ -105,10 +107,15 @@ const Scene3D: React.FC<{
                     <spotLight position={[10, 15, 10]} angle={0.3} />
                     <directionalLight position={[0, 10, 0]} intensity={1} />
                     <StreetSceneCompressed />
-                    <POI
-                        position={new Vector3(4, 2, 1)}
-                        setCameraPosition={setCameraPosition}
-                    />
+                    {POIsEnabled && 
+                    <group>
+                        <POI
+                            position={new Vector3(4, 2, 1)}
+                            setCameraPosition={setCameraPosition}
+                        />
+                    </group>
+                    }
+
                     {images.map((image, i) => (
                         <Image
                             key={i}
@@ -121,7 +128,7 @@ const Scene3D: React.FC<{
                             sessionStorageKey={image.sessionStorageKey}
                             lookAtPoint={image.lookAtPoint} />
                     ))}
-                    <mesh name='scene' rotation-y={1} position={[0,2,-4]} scale={[3, 3, 3]} onClick={(e) => handleSceneClicked(e)}>
+                    <mesh name='scene' rotation-y={1} position={[0, 2, -4]} scale={[3, 3, 3]} onClick={(e) => handleSceneClicked(e)}>
                         <boxGeometry />
                         <meshStandardMaterial color='grey' />
                     </mesh>
