@@ -77,28 +77,21 @@ const Scene3D: React.FC<{
             disableAllPivots();
             const intersection = e.intersections[0];
             if (intersection.face) {       
-                
-                const newPosition = intersection.point.multiplyScalar(1);
-                const lookAt = intersection.point.multiplyScalar(4)
-
-                printVector('newPosition', newPosition);
-                printVector('lookAt', lookAt);
+                const newPosition = intersection.point.clone();
+                const lookAt = intersection.point.clone();
+                const normal = intersection.face.normal.clone();
+                newPosition.add(normal.multiplyScalar(randFloat(0.01, 0.05)));
+                lookAt.add(normal.multiplyScalar(50));
                 
                 const newImage = {
-                    position: new Vector3(newPosition.x, newPosition.y, newPosition.z),
+                    position: newPosition, 
                     pivotEnabled: false,
                     sessionStorageKey: selectedImageKey,
-                    lookAtPoint: new Vector3(lookAt.x, lookAt.y, lookAt.z)
+                    lookAtPoint: lookAt
                 }
-                // const newImage = {
-                //     position: new Vector3(1,0,0),
-                //     pivotEnabled: false,
-                //     sessionStorageKey: selectedImageKey,
-                //     lookAtPoint: new Vector3(0,1,0)
-                // }
+
                 setImages([...images, newImage]);
             }
-
         }
     }
 
@@ -108,7 +101,6 @@ const Scene3D: React.FC<{
 
     const handleSceneClicked = (e: ThreeEvent<MouseEvent>) => {
         addImage(e);
-
     }
 
     return (

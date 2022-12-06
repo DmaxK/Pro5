@@ -22,23 +22,14 @@ const Image: React.FC<{
     const meshRef = useRef<THREE.Mesh>(null!);
 
     useEffect(() => {
-        // position image at spawn
-        if (centerRef.current) {
-            // centerRef.current.position.set(spawnPosition.x, spawnPosition.y, spawnPosition.z);
-            // centerRef.current.lookAt(lookAtPoint);
-            // console.log('lookatpoint: ' + lookAtPoint);
+        // position and rotate image correctly
+        if (groupRef.current) {
+            groupRef.current.position.set(spawnPosition.x, spawnPosition.y, spawnPosition.z);
+            groupRef.current.lookAt(lookAtPoint);
         }
-
 
         // create materials and geometry
         if (meshRef.current) {
-            groupRef.current.position.set(spawnPosition.x, spawnPosition.y, spawnPosition.z);
-
-            // printVector('lookAtPoint', lookAtPoint);
-            // printVector('spawnPosition', spawnPosition);
-
-            groupRef.current.lookAt(lookAtPoint);
-
 
             const material = new THREE.MeshPhongMaterial({ side: DoubleSide });
 
@@ -85,10 +76,6 @@ const Image: React.FC<{
 
     }
 
-    function printVector (text: string, v: Vector3){
-        console.log(text + ' = \n ' + v.x + '\n ' + v.y + '\n ' + v.z + '\n ');
-    }
-
     return (
         // <PivotControls
         //     fixed={false}
@@ -127,7 +114,6 @@ const Image: React.FC<{
                 </mesh>
                 {/* <axesHelper args={[2]} /> */}
             </group>
-
         </PivotControls>
 
 
