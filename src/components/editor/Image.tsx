@@ -31,7 +31,7 @@ const Image: React.FC<{
         // create materials and geometry
         if (meshRef.current) {
 
-            const material = new THREE.MeshPhongMaterial({ side: DoubleSide });
+            const material = new THREE.MeshStandardMaterial({ side: DoubleSide });
 
             const img = document.createElement('img');
             const texture = new THREE.Texture(img);
@@ -42,12 +42,22 @@ const Image: React.FC<{
                 meshRef.current.material = material;
 
                 meshRef.current.visible = true;
+
+                const imageWidth = texture.image.width;
+                const imageHeight = texture.image.height;
+                console.log(imageWidth, imageHeight);
+                const largerSide = Math.max(imageWidth, imageHeight);
+                const scaledWidth = imageWidth / largerSide;
+                const scaledHeight = imageHeight / largerSide;
+
+
+                meshRef.current.geometry = new THREE.PlaneGeometry(scaledWidth, scaledHeight);
+
             };
             img.src = (sessionStorage.getItem(sessionStorageKey) || '');
 
             //geometry
-            // const imageWidth = texture.image.width;
-            // const imageHeight = texture.image.height;
+
 
             // const largerSide = Math.max(imageWidth, imageHeight);
             // const scaledWidth = imageWidth / largerSide;
@@ -108,9 +118,6 @@ const Image: React.FC<{
                 <mesh
                     ref={meshRef}
                     onClick={() => handleImageClick()}>
-                    <planeGeometry />
-                    {/* <boxGeometry /> */}
-                    {/* <meshStandardMaterial side={THREE.DoubleSide}/> */}
                 </mesh>
                 {/* <axesHelper args={[2]} /> */}
             </group>
