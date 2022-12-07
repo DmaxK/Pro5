@@ -1,15 +1,19 @@
 import { Canvas, ThreeEvent } from '@react-three/fiber';
 import { ImageLoader, Vector3 } from 'three';
 import React, { SetStateAction, useState, Suspense } from 'react';
-import Model from './demoScene.js';
+import Model from './Scenes/demoScene.js';
 import POI from './POI.js';
 import Camera from './Camera.js';
 import Image from './Image.js'
-import { DemoScene2 } from './Demo_scene_2_no_texture_compressed.js';
-import { StreetSceneCompressed } from './Final_scene_5.js';
+import { DemoScene2 } from './Scenes/Demo_scene_2_no_texture_compressed.js';
+import { StreetSceneCompressed } from './Scenes/Final_scene_5.js';
 import '../../styles/editor/Scene3D.scss';
 import { Sky, Cloud, Sparkles } from '@react-three/drei';
 import { randFloat } from 'three/src/math/MathUtils.js';
+import Noon from './lighting/noon.js';
+import Goldenhour from './lighting/golden-hour.js';
+import Midnight from './lighting/midnight.js';
+import { Scene1 } from './Scenes/Scene_1_comp.js';
 
 function Box() {
     return (
@@ -105,13 +109,10 @@ const Scene3D: React.FC<{
 
     return (
         <div className="scene3D">
-            <Canvas>
+            <Canvas shadows>
                 <Suspense fallback={null}>
                     <Camera cameraPosition={cameraPosition} editorState={editorState} />
-                    <ambientLight intensity={0.5} />
-                    <spotLight position={[10, 15, 10]} angle={0.3} />
-                    <directionalLight position={[0, 10, 0]} intensity={1} />
-                    <StreetSceneCompressed />
+                    <Scene1 />
                     {POIsEnabled &&
                         <group>
                             <POI
@@ -120,7 +121,21 @@ const Scene3D: React.FC<{
                             />
                         </group>
                     }
-
+                    {lighting == 'noon' &&
+                      <>
+                      <Noon/>
+                      </>
+                    }
+                    {lighting == 'goldenHour' &&
+                      <>
+                      <Goldenhour/>
+                      </>
+                    }
+                    {lighting == 'midnight' &&
+                      <>
+                      <Midnight/>
+                      </>
+                    }
                     {images.map((image, i) => (
                         <Image
                             key={i}
