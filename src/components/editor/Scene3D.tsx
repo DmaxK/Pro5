@@ -1,14 +1,10 @@
 import { Canvas, ThreeEvent } from '@react-three/fiber';
 import { ImageLoader, Vector3 } from 'three';
 import React, { SetStateAction, useState, Suspense } from 'react';
-import Model from './Scenes/demoScene.js';
 import POI from './POI.js';
 import Camera from './Camera.js';
 import Image from './Image.js'
-import { DemoScene2 } from './Scenes/Demo_scene_2_no_texture_compressed.js';
-import { StreetSceneCompressed } from './Scenes/Final_scene_5.js';
 import '../../styles/editor/Scene3D.scss';
-import { Sky, Cloud, Sparkles } from '@react-three/drei';
 import { randFloat } from 'three/src/math/MathUtils.js';
 import Noon from './lighting/noon.js';
 import Goldenhour from './lighting/golden-hour.js';
@@ -112,7 +108,7 @@ const Scene3D: React.FC<{
             <Canvas shadows>
                 <Suspense fallback={null}>
                     <Camera cameraPosition={cameraPosition} editorState={editorState} />
-                    <Scene1 />
+                    <Scene1/>
                     {POIsEnabled &&
                         <group>
                             <POI
@@ -148,8 +144,12 @@ const Scene3D: React.FC<{
                             sessionStorageKey={image.sessionStorageKey}
                             lookAtPoint={image.lookAtPoint} />
                     ))}
-                    <mesh name='scene' position={[0, 2, -4]} scale={[3, 3, 3]} onClick={(e) => handleSceneClicked(e)}>
+                    <mesh castShadow name='scene' position={[0, 2, -4]} scale={[3, 3, 3]} onClick={(e) => handleSceneClicked(e)}>
                         <boxGeometry />
+                        <meshStandardMaterial color='grey' />
+                    </mesh> 
+                    <mesh castShadow receiveShadow position={[0, 1, -4]} scale={[5, 5, 5]} rotation={[-90,0,0]}>
+                        <planeGeometry/>
                         <meshStandardMaterial color='grey' />
                     </mesh>
                 </Suspense>

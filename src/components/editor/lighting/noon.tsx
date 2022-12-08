@@ -4,7 +4,7 @@ import { Environment, Sky, Cloud } from '@react-three/drei'
 const Noon = () => {
     return(
         <>
-        <directionalLight color={"#fffbd4"} castShadow position={[2, 10, 2]} intensity = {0.7}/>
+        <directionalLight color={"#fffbd4"} castShadow position={[20, 100, 20]} intensity = {0.7}/>
         <Environment files="../../../../public/images/cloudy_sky.hdr"/>
         < Sky distance={30000} inclination={1} turbidity={0.1} azimuth={-90} rayleigh={0.07} mieCoefficient={0.01} mieDirectionalG={0.3} sunPosition={[2, 10, 2]}/>
         <Cloud position={[40, 50, 20]} speed={0.1} opacity={1} segments={8}  width={30}/>
