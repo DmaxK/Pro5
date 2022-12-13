@@ -44,6 +44,7 @@ const Scene3D: React.FC<{
         pivotEnabled: boolean;
         sessionStorageKey: string;
         lookAtPoint: Vector3;
+        normal: Vector3
     }
 
     const bruh = [
@@ -51,7 +52,8 @@ const Scene3D: React.FC<{
             position: new Vector3(1, 2, 3),
             pivotEnabled: false,
             sessionStorageKey: selectedImageKey,
-            lookAtPoint: new Vector3(1, 2, 3)
+            lookAtPoint: new Vector3(1, 2, 3),
+            normal: new Vector3(1,1,1)
         }
     ]
 
@@ -80,14 +82,16 @@ const Scene3D: React.FC<{
                 const newPosition = intersection.point.clone();
                 const lookAt = intersection.point.clone();
                 const normal = intersection.face.normal.clone();
-                newPosition.add(normal.multiplyScalar(randFloat(0.01, 0.05)));
-                lookAt.add(normal.multiplyScalar(50));
+                const normalClone = normal.clone();
+                newPosition.add(normalClone.multiplyScalar(randFloat(0.01, 0.05)));
+                lookAt.add(normalClone.multiplyScalar(50));
                 
                 const newImage = {
                     position: newPosition, 
                     pivotEnabled: false,
                     sessionStorageKey: selectedImageKey,
-                    lookAtPoint: lookAt
+                    lookAtPoint: lookAt,
+                    normal: normal
                 }
 
                 setImages([...images, newImage]);
@@ -131,7 +135,8 @@ const Scene3D: React.FC<{
                             pivotEnabled={image.pivotEnabled}
                             enableThisPivot={enableThisPivot}
                             sessionStorageKey={image.sessionStorageKey}
-                            lookAtPoint={image.lookAtPoint} />
+                            lookAtPoint={image.lookAtPoint}
+                            normal={image.normal} />
                     ))}
                     <mesh name='scene' position={[0, 2, -4]} scale={[3, 3, 3]} onClick={(e) => handleSceneClicked(e)}>
                         <boxGeometry />
