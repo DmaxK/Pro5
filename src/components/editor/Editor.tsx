@@ -21,6 +21,8 @@ function Editor() {
 
     const [POIsEnabled, setPOIsEnabled] = useState<boolean>(true)
 
+    const [scene, setScene] = useState<string>('scene1');
+
     const navigate = useNavigate();
 
     return (
@@ -30,7 +32,7 @@ function Editor() {
                     Logo
                 </div>
                 <PlaceImage selectedImageKey={selectedImageKey} setSelectedImageKey={setSelectedImageKey}/>
-                <SceneSettings lighting={lighting} setLighting={setLighting} POIsEnabled={POIsEnabled} setPOIsEnabled={setPOIsEnabled}/>
+                <SceneSettings lighting={lighting} setLighting={setLighting} POIsEnabled={POIsEnabled} setPOIsEnabled={setPOIsEnabled} scene={scene} setScene={setScene}/>
             </div>
             <div className='UIbottom'>
                 <Help />
@@ -40,7 +42,7 @@ function Editor() {
                 editorState = {editorState} <br/>
                 selectedImageKey = {selectedImageKey}
             </div>
-            <Scene3D editorState={editorState} setEditorState={setEditorState} selectedImageKey={selectedImageKey} lighting={lighting} POIsEnabled={POIsEnabled}/>
+            <Scene3D editorState={editorState} setEditorState={setEditorState} selectedImageKey={selectedImageKey} lighting={lighting} POIsEnabled={POIsEnabled} scene={scene}/>
         </div>
 
     );
