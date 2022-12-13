@@ -10,6 +10,7 @@ import Noon from './lighting/noon.js';
 import Goldenhour from './lighting/golden-hour.js';
 import Midnight from './lighting/midnight.js';
 import { Scene1 } from './Scenes/Scene_1_comp.js';
+import { TestMesh } from './Scenes/TestMeshes.js';
 
 function Box() {
     return (
@@ -22,10 +23,13 @@ function Box() {
 
 function Plane() {
     return (
-        <mesh position={[0, -1, 0]} rotation={[-Math.PI / 2, 0, 0]}>
-            <boxBufferGeometry attach="geometry" args={[20, 20]} />
+        <>
+        <mesh receiveShadow position={[0, -1, 0]} rotation={[-Math.PI / 2, 0, 0]}>
+            <boxBufferGeometry attach="geometry" args={[25, 25]} />
             <meshLambertMaterial attach="material" color="LightSlateGrey" />
         </mesh>
+        <TestMesh/>
+        </>
     );
 }
 
@@ -103,6 +107,17 @@ const Scene3D: React.FC<{
         addImage(e);
     }
 
+    /*
+    <mesh castShadow name='scene' position={[0, 2, -4]} scale={[3, 3, 3]} onClick={(e) => handleSceneClicked(e)}>
+                        <boxGeometry />
+                        <meshStandardMaterial color='grey' />
+                    </mesh> 
+                    <mesh castShadow receiveShadow position={[0, 1, -4]} scale={[5, 5, 5]} rotation={[-90,0,0]}>
+                        <planeGeometry/>
+                        <meshStandardMaterial color='grey' />
+                    </mesh>
+                    */
+
     return (
         <div className="scene3D">
             <Canvas shadows>
@@ -148,10 +163,6 @@ const Scene3D: React.FC<{
                         <boxGeometry />
                         <meshStandardMaterial color='grey' />
                     </mesh> 
-                    <mesh castShadow receiveShadow position={[0, 1, -4]} scale={[5, 5, 5]} rotation={[-90,0,0]}>
-                        <planeGeometry/>
-                        <meshStandardMaterial color='grey' />
-                    </mesh>
                 </Suspense>
             </Canvas>
         </div>
