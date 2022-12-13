@@ -38,8 +38,9 @@ const Scene3D: React.FC<{
     setEditorState: React.Dispatch<SetStateAction<string>>,
     selectedImageKey: string,
     lighting: string,
-    POIsEnabled: boolean
-}> = ({ editorState, setEditorState, selectedImageKey, lighting, POIsEnabled }) => {
+    POIsEnabled: boolean,
+    scene: string
+}> = ({ editorState, setEditorState, selectedImageKey, lighting, POIsEnabled, scene }) => {
 
     const [cameraPosition, setCameraPosition] = useState<Vector3>(new Vector3(0, 2, 0));
 
@@ -122,8 +123,22 @@ const Scene3D: React.FC<{
         <div className="scene3D">
             <Canvas shadows>
                 <Suspense fallback={null}>
-                    <Camera cameraPosition={cameraPosition} editorState={editorState} />
-                    <Scene1/>
+                    <Camera cameraPosition={cameraPosition} editorState={editorState} scene={scene}/>
+                    {scene == 'scene1' &&
+                        <>
+                        <Scene1/>
+                        </>
+                    }
+                    {scene == 'scene2' &&
+                        <>
+                        <Box/>
+                        </>
+                    }
+                    {scene == 'scene3' &&
+                        <>
+                        <Plane/>
+                        </>
+                    }
                     {POIsEnabled &&
                         <group>
                             <POI

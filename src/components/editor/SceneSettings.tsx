@@ -8,8 +8,10 @@ const SceneSettings: React.FC<{
     lighting: string,
     setLighting: Dispatch<SetStateAction<string>>,
     POIsEnabled: boolean,
-    setPOIsEnabled: Dispatch<SetStateAction<boolean>>
-}> = ({ lighting, setLighting, POIsEnabled, setPOIsEnabled }) => {
+    setPOIsEnabled: Dispatch<SetStateAction<boolean>>,
+    scene:string,
+    setScene: Dispatch<SetStateAction<string>>
+}> = ({ lighting, setLighting, POIsEnabled, setPOIsEnabled, scene, setScene }) => {
 
     const [expanded, setExpanded] = useState(false);
 
@@ -26,9 +28,9 @@ const SceneSettings: React.FC<{
                     <div className='section scene' >
                         <div className='title'>Scene</div>
                         <div className='scenes'>
-                            <div className='thumbnail'><img className='selected' src='/images/summonersrift.jpg'></img></div>
-                            <div className='thumbnail'><img src='/images/rocketleague.jpg'></img></div>
-                            <div className='thumbnail'><img src='/images/kingsrow.jpg'></img></div>
+                            <div className='thumbnail'><img className={scene === 'scene1' ?'selected' : ''} src='/images/summonersrift.jpg' onClick={() => setScene('scene1')}></img></div>
+                            <div className='thumbnail'><img className={scene === 'scene2' ?'selected' : ''} src='/images/rocketleague.jpg' onClick={() => setScene('scene2')}></img></div>
+                            <div className='thumbnail'><img className={scene === 'scene3' ?'selected' : ''} src='/images/kingsrow.jpg' onClick={() => setScene('scene3')}></img></div>
                         </div>
                     </div>
                     <div className='section lighting' >
