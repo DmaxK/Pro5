@@ -5,7 +5,11 @@ import DropDownArrow from '../../assets/svgs/DropDownArrow.svg';
 import TestPosterThumbnail from '../../assets/images/testPosterThumbnail.jpg';
 import { getStaticContextFromError } from '@remix-run/router';
 
-const PlaceImage: React.FC<{ selectedImageKey: string, setSelectedImageKey: Dispatch<React.SetStateAction<string>> }> = ({ selectedImageKey, setSelectedImageKey }) => {
+const PlaceImage: React.FC<{ 
+    selectedImageKey: string, 
+    setSelectedImageKey: Dispatch<React.SetStateAction<string>>,
+    setEditorState: Dispatch<React.SetStateAction<string>>
+ }> = ({ selectedImageKey, setSelectedImageKey, setEditorState }) => {
     const [expanded, setExpanded] = useState(false);
     const [loading, setLoading] = useState(false);
     const [keys, setKeys] = useState<Array<string>>([])
@@ -45,10 +49,10 @@ const PlaceImage: React.FC<{ selectedImageKey: string, setSelectedImageKey: Disp
     return (
         <div className="placeImage" >
             <button className={(keys.length === 0 ? 'noImages' : 'images') + " place"} >
-                <div onClick={() => keys.length > 0 ? alert('Placing Image!!') : alert('Please upload an Image first.')}>
+                <div onClick={() => keys.length > 0 ? setEditorState('place') : alert('Please upload an Image first.')}>
                     Place
                 </div>
-                {keys.length > 0 ?
+                {keys.length > 0 ?  
                     <div className='imageContainer' onClick={() => keys.length > 0 ? alert('Placing Image!!') : alert('Please upload an Image first.')}>
                         {
                             getImage(selectedImageKey) !== '' &&

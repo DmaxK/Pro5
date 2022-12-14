@@ -49,20 +49,11 @@ const Scene3D: React.FC<{
         pivotEnabled: boolean;
         sessionStorageKey: string;
         lookAtPoint: Vector3;
-        normal: Vector3
+        normal: Vector3;
+        distanceFromWall: number;
     }
 
-    const bruh = [
-        {
-            position: new Vector3(1, 2, 3),
-            pivotEnabled: false,
-            sessionStorageKey: selectedImageKey,
-            lookAtPoint: new Vector3(1, 2, 3),
-            normal: new Vector3(1,1,1)
-        }
-    ]
-
-    const [images, setImages] = useState<Array<ImageData>>(bruh);
+    const [images, setImages] = useState<Array<ImageData>>([]);
 
 
     const enableThisPivot = (thisIndex: number, enabled: boolean) => {
@@ -79,7 +70,6 @@ const Scene3D: React.FC<{
     }
 
     const addImage = (e: ThreeEvent<MouseEvent>) => {
-        // console.log(e);
         if (e.intersections[0].object.name === 'scene') {
             disableAllPivots();
             const intersection = e.intersections[0];
@@ -88,7 +78,8 @@ const Scene3D: React.FC<{
                 const lookAt = intersection.point.clone();
                 const normal = intersection.face.normal.clone();
                 const normalClone = normal.clone();
-                newPosition.add(normalClone.multiplyScalar(randFloat(0.01, 0.05)));
+                const d = randFloat(0.01, 0.02);
+                newPosition.add(normalClone.multiplyScalar(d));
                 lookAt.add(normalClone.multiplyScalar(50));
                 
                 const newImage = {
@@ -96,7 +87,8 @@ const Scene3D: React.FC<{
                     pivotEnabled: false,
                     sessionStorageKey: selectedImageKey,
                     lookAtPoint: lookAt,
-                    normal: normal
+                    normal: normal,
+                    distanceFromWall: d
                 }
 
                 setImages([...images, newImage]);
@@ -109,7 +101,10 @@ const Scene3D: React.FC<{
     }
 
     const handleSceneClicked = (e: ThreeEvent<MouseEvent>) => {
-        addImage(e);
+        if(editorState === 'place') {
+            addImage(e);
+            setEditorState('navigate');
+        }
     }
 
     /*
@@ -177,7 +172,8 @@ const Scene3D: React.FC<{
                             enableThisPivot={enableThisPivot}
                             sessionStorageKey={image.sessionStorageKey}
                             lookAtPoint={image.lookAtPoint}
-                            normal={image.normal} />
+                            normal={image.normal}
+                            distanceFromWall={image.distanceFromWall} />
                     ))}
                     <mesh castShadow name='scene' position={[0, 2, -4]} scale={[3, 3, 3]} onClick={(e) => handleSceneClicked(e)}>
                         <boxGeometry />

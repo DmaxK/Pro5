@@ -31,7 +31,7 @@ function Editor() {
                 <div className="logo" onClick={() => { navigate('/') }}>
                     Logo
                 </div>
-                <PlaceImage selectedImageKey={selectedImageKey} setSelectedImageKey={setSelectedImageKey}/>
+                <PlaceImage selectedImageKey={selectedImageKey} setSelectedImageKey={setSelectedImageKey} setEditorState={setEditorState}/>
                 <SceneSettings lighting={lighting} setLighting={setLighting} POIsEnabled={POIsEnabled} setPOIsEnabled={setPOIsEnabled} scene={scene} setScene={setScene}/>
             </div>
             <div className='UIbottom'>

@@ -2,8 +2,9 @@ import React, { Dispatch, SetStateAction, useEffect, useRef, useState } from 're
 import * as THREE from 'three'
 import { PivotControls, Center, calcPosFromAngles, TransformControls } from '@react-three/drei'
 import { DoubleSide, MeshStandardMaterial, Vector3 } from 'three'
-import { ThreeElements, useFrame } from '@react-three/fiber'
-import { useGesture, useDrag } from 'react-use-gesture'
+import { events, ThreeElements, useFrame, ThreeEvent, useThree } from '@react-three/fiber'
+import { useGesture, useDrag } from '@use-gesture/react'
+import { randFloat } from 'three/src/math/MathUtils.js';
 
 
 const Image: React.FC<{
@@ -15,33 +16,25 @@ const Image: React.FC<{
     enableThisPivot: (arg0: number, arg1: boolean) => void,
     sessionStorageKey: string,
     lookAtPoint: THREE.Vector3,
-    normal: THREE.Vector3
-}> = ({ index, spawnPosition, editorState, setEditorState, pivotEnabled, enableThisPivot, sessionStorageKey, lookAtPoint, normal }) => {
+    normal: THREE.Vector3,
+    distanceFromWall: number
+}> = ({ index, spawnPosition, editorState, setEditorState, pivotEnabled, enableThisPivot, sessionStorageKey, lookAtPoint, normal, distanceFromWall }) => {
 
-    const [draggingGizmo, setDraggingGizmo] = useState<boolean>(false); // is the gizmo currently being interacted with?
+    const [isDragging, setIsDragging] = useState<boolean>(false); // is the gizmo currently being interacted with?
+    const [position, setPosition] = useState<Vector3>(spawnPosition);
     const [scale, setScale] = useState<Vector3>(new Vector3(1, 1, 1));
-    const [pivotRotation, setPivotRotation] = useState<[number, number, number]>([1,2,3]);
 
-    const pivotRef = useRef<THREE.Group>(null);
     const groupRef = useRef<THREE.Group>(null!);
     const meshRef = useRef<THREE.Mesh>(null!);
+    const raycasterRef = useRef<THREE.Raycaster>(null!);
+
+    const { camera, scene } = useThree();
 
     useEffect(() => {
         // position and rotate image correctly
-        if (groupRef.current && pivotRef.current) {
+        if (groupRef.current) {
             groupRef.current.position.set(spawnPosition.x, spawnPosition.y, spawnPosition.z);
             groupRef.current.lookAt(lookAtPoint);
-
-            // rotate pivot correctly .... bruh 
-            const q = new THREE.Quaternion();
-            const pivotDirection = new THREE.Vector3();
-            pivotRef.current.getWorldDirection(pivotDirection);
-            q.setFromUnitVectors(pivotDirection, normal);
-
-            const e = new THREE.Euler();
-            e.setFromQuaternion(q);
-
-            setPivotRotation([e.x, e.y, e.z]);
         }
 
         // create materials and geometry
@@ -75,24 +68,38 @@ const Image: React.FC<{
     function handleImageClick() {
         let newEnabled = false
         if (pivotEnabled) {
-            if (draggingGizmo) newEnabled = true;
+            if (isDragging) newEnabled = true;
         } else {
             newEnabled = true;
         }
         enableThisPivot(index, newEnabled);
     }
 
-    function handleSceneClick() {
-
-    }
-
-    const bind = useDrag(({ active, movement: [x, y] }) => {
+    const bind = useDrag(({ active, movement: [x, y], timeStamp, event }) => {
         if (active) {
-            if (editorState != 'edit') {
+            if (editorState !== 'edit' && pivotEnabled) {
                 setEditorState('edit');
-            } else {
-                const d = Math.sqrt((x ** 2 + y ** 2)) * 0.03;
-                setScale(new Vector3(1 + d, 1 + d, 1 + d));
+            }
+            if (pivotEnabled) {
+                const threeEvent = event as unknown as ThreeEvent<MouseEvent>;  
+                if(raycasterRef.current){
+                    raycasterRef.current.set(threeEvent.ray.origin, threeEvent.ray.direction);
+
+                    const intersects = raycasterRef.current.intersectObjects( scene.children, true );
+                    intersects.forEach((intersect) => {
+                        if(intersect.object.name === 'scene') {
+                            const point = intersect.point.clone();
+                            if(intersect.face){
+                                const normal = intersect.face?.normal.clone();
+                                setPosition(point.add(normal.multiplyScalar(distanceFromWall)));
+                            }
+
+                        }
+                    })
+
+
+                    // SET ROTATION!
+                }
             }
         } else {
             setEditorState('navigate')
@@ -100,38 +107,24 @@ const Image: React.FC<{
     })
 
     return (
-        <PivotControls
-            rotation={pivotRotation}
-            ref={pivotRef}
-            fixed={false}
-            activeAxes={[true, true, false]}
-            depthTest={false}
-            anchor={[0, 0, 0]}
-            scale={pivotEnabled ? 1 : 0}
-            onDragStart={() => { setEditorState('edit'); setDraggingGizmo(true) }}
-            onDragEnd={() => { setEditorState('navigate'); setDraggingGizmo(false) }}
-            axisColors={['red', 'blue', 'purple']}
-        >
-
-            <group ref={groupRef}>
-                <mesh
-                    scale={scale}
-
-                    ref={meshRef}
-                    onClick={() => handleImageClick()}
-                >
+        <>
+        <group ref={groupRef} position={position}>
+            <mesh
+                scale={scale}
+                {...bind()}
+                ref={meshRef}
+                onClick={() => handleImageClick()}
+            >
+            </mesh>
+            {pivotEnabled && 
+                <mesh scale={0.1}>
+                    <boxGeometry />
+                    <meshPhongMaterial color={'red'} />
                 </mesh>
-                {pivotEnabled &&
-                    <mesh
-                        scale={0.2}
-                        {...bind()}
-                    >
-                        <meshPhongMaterial color={'purple'} />
-                        <boxGeometry />
-                    </mesh>
-                }
-            </group>
-        </PivotControls>
+            }
+        </group>
+        <raycaster ref={raycasterRef} />
+        </>
     )
 }
 
