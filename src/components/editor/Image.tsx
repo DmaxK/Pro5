@@ -15,10 +15,10 @@ const Image: React.FC<{
     pivotEnabled: boolean,
     enableThisPivot: (arg0: number, arg1: boolean) => void,
     sessionStorageKey: string,
-    lookAtPoint: THREE.Vector3,
-    normal: THREE.Vector3,
+    spawnLookAtPoint: THREE.Vector3,
+    spawnNormal: THREE.Vector3,
     distanceFromWall: number
-}> = ({ index, spawnPosition, editorState, setEditorState, pivotEnabled, enableThisPivot, sessionStorageKey, lookAtPoint, normal, distanceFromWall }) => {
+}> = ({ index, spawnPosition, editorState, setEditorState, pivotEnabled, enableThisPivot, sessionStorageKey, spawnLookAtPoint, spawnNormal, distanceFromWall }) => {
 
     const [isDragging, setIsDragging] = useState<boolean>(false); // is the gizmo currently being interacted with?
     const [position, setPosition] = useState<Vector3>(spawnPosition);
@@ -33,8 +33,8 @@ const Image: React.FC<{
     useEffect(() => {
         // position and rotate image correctly
         if (groupRef.current) {
-            groupRef.current.position.set(spawnPosition.x, spawnPosition.y, spawnPosition.z);
-            groupRef.current.lookAt(lookAtPoint);
+            setPosition(new Vector3(spawnPosition.x, spawnPosition.y, spawnPosition.z));
+            groupRef.current.lookAt(spawnLookAtPoint);
         }
 
         // create materials and geometry
@@ -86,17 +86,24 @@ const Image: React.FC<{
                     raycasterRef.current.set(threeEvent.ray.origin, threeEvent.ray.direction);
 
                     const intersects = raycasterRef.current.intersectObjects( scene.children, true );
-                    intersects.forEach((intersect) => {
+                    for (const intersect of intersects) {
                         if(intersect.object.name === 'scene') {
                             const point = intersect.point.clone();
                             if(intersect.face){
                                 const normal = intersect.face?.normal.clone();
+                                const normalClone = normal.clone();
                                 setPosition(point.add(normal.multiplyScalar(distanceFromWall)));
+                                const newLookAt = intersect.point.clone();
+                                newLookAt.add(normalClone.multiplyScalar(10));
+                                if(groupRef.current){
+                                    groupRef.current.lookAt(newLookAt);
+                                }
+
+
                             }
-
+                            return;
                         }
-                    })
-
+                    }
 
                     // SET ROTATION!
                 }

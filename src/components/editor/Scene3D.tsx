@@ -48,8 +48,8 @@ const Scene3D: React.FC<{
         position: Vector3;
         pivotEnabled: boolean;
         sessionStorageKey: string;
-        lookAtPoint: Vector3;
-        normal: Vector3;
+        spawnLookAtPoint: Vector3;
+        spawnNormal: Vector3;
         distanceFromWall: number;
     }
 
@@ -86,8 +86,8 @@ const Scene3D: React.FC<{
                     position: newPosition, 
                     pivotEnabled: false,
                     sessionStorageKey: selectedImageKey,
-                    lookAtPoint: lookAt,
-                    normal: normal,
+                    spawnLookAtPoint: lookAt,
+                    spawnNormal: normal,
                     distanceFromWall: d
                 }
 
@@ -171,13 +171,17 @@ const Scene3D: React.FC<{
                             pivotEnabled={image.pivotEnabled}
                             enableThisPivot={enableThisPivot}
                             sessionStorageKey={image.sessionStorageKey}
-                            lookAtPoint={image.lookAtPoint}
-                            normal={image.normal}
+                            spawnLookAtPoint={image.spawnLookAtPoint}
+                            spawnNormal={image.spawnNormal}
                             distanceFromWall={image.distanceFromWall} />
                     ))}
-                    <mesh castShadow name='scene' position={[0, 2, -4]} scale={[3, 3, 3]} onClick={(e) => handleSceneClicked(e)}>
-                        <boxGeometry />
-                        <meshStandardMaterial color='grey' />
+                    <mesh castShadow name='scene' position={[-2, 2, -2.5]} scale={1} onClick={(e) => handleSceneClicked(e)}>
+                        <sphereGeometry />
+                        <meshPhongMaterial color='grey' flatShading={true} />
+                    </mesh> 
+                    <mesh castShadow name='scene' position={[0, 2, -3]} scale={2} onClick={(e) => handleSceneClicked(e)}>
+                        <sphereGeometry />
+                        <meshPhongMaterial color='grey' flatShading={true} />
                     </mesh> 
                 </Suspense>
             </Canvas>
