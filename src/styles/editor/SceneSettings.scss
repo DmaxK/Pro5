@@ -100,16 +100,23 @@
                     font-size: 0.35em;
                     line-height: 1;
                     display: inline-block;
-                    border: solid $tertiaryWhite 1px;
-                    border-radius: 100px;
-                    padding: 6px 9px 6px 9px;
-                    margin-right: 6px;
-                    margin-bottom: 6px;
-                    color: $secondaryWhite
+                    margin: 10px;
+                
+                    img {
+                        height: 30px;
+                        transition: transform 0.15s;
+                    }
+
+
+                    
                 }
                 .mode.selected {
-                    border: solid $primaryPink 1px;
-                    color: $primaryWhite
+                    img {
+                        transform: scale(1.4);
+                        border-radius: 50%;
+                        border: 1px solid $primaryPink;
+                        transition: transform 0.15s;
+                    }
                 }
             }
         }

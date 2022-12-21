@@ -185,7 +185,7 @@ const Scene3D: React.FC<{
                             distanceFromWall={image.distanceFromWall} />
                     ))}
 
-                    <EffectComposer multisampling={8} autoClear={false}>
+                    {/* <EffectComposer multisampling={8} autoClear={false}>
                         <Outline
                             selection={outlineRef}
                             selectionLayer={10}
@@ -194,17 +194,17 @@ const Scene3D: React.FC<{
                             blur={true}
                              />
     
-                    </EffectComposer>
+                    </EffectComposer> */}
 
 
-                    {/* <mesh castShadow name='scene' position={[-2, 2, -2.5]} scale={1} onClick={(e) => handleSceneClicked(e)}>
+                    <mesh castShadow name='scene' position={[-2, 2, -2.5]} scale={1} onClick={(e) => handleSceneClicked(e)}>
                         <sphereGeometry />
                         <meshPhongMaterial color='grey' flatShading={true} />
                     </mesh>
                     <mesh castShadow name='scene' position={[0, 2, -3]} scale={2} onClick={(e) => handleSceneClicked(e)}>
                         <sphereGeometry />
                         <meshPhongMaterial color='grey' flatShading={true} />
-                    </mesh> */}
+                    </mesh>
 
                     <mesh ref={outlineRef} castShadow name='scene' position={[0, 2, -1]} scale={2} >
                         <planeGeometry />
