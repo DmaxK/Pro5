@@ -7,9 +7,8 @@ const POI: React.FC<{position: Vector3, setCameraPosition: Dispatch<React.SetSta
 	const mat = useRef<MeshPhongMaterial | null>(null);
 
 	useEffect(() => {
-  		document.body.style.cursor = hovered ? 'pointer' : 'auto'
+  		document.body.style.cursor = hovered ? "url('public/images/teleport_icon.cur'), pointer" : 'auto'
 		if(mat.current){
-			console.log("bruh")
 			mat.current.opacity = hovered ? 0.8 : 0.5;
 			mat.current.color = hovered ? new Color(0xF88DDF)  : new Color(0xF88DD5);
 		}
@@ -23,3 +22,4 @@ const POI: React.FC<{position: Vector3, setCameraPosition: Dispatch<React.SetSta
 }
 
 export default POI;
+
