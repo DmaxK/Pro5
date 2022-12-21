@@ -3,7 +3,7 @@
 .sceneSettings {
     pointer-events: auto;
     margin-top: 10px;
-    max-width: 40vw;
+    max-width: 35vw;
 
     .settingsButton {
         margin-top: 10px;
@@ -78,7 +78,6 @@
 
                 .thumbnail {
                     width: 31%;
-                    max-width: 10vw;
 
                     img {
                         width: 100%;
@@ -96,11 +95,12 @@
         .lighting {
             .modes {
                 line-height: 0.00;
+                margin-left: 3px;
                 .mode {
                     font-size: 0.35em;
                     line-height: 1;
                     display: inline-block;
-                    margin: 10px;
+                    margin: 5px 20px 0px 0;
                 
                     img {
                         height: 30px;
