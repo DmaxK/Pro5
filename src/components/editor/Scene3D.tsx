@@ -146,7 +146,7 @@ const Scene3D: React.FC<{
                     {POIsEnabled &&
                         <group>
                             <POI
-                                position={new Vector3(4, 2, 1)}
+                                position={new Vector3(4, 0, 1)}
                                 setCameraPosition={setCameraPosition}
                             />
                         </group>
