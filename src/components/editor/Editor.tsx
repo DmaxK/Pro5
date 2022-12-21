@@ -7,6 +7,7 @@ import Help from './Help';
 import PlaceImage from './PlaceImage';
 import Scene3D from './Scene3D';
 import SceneSettings from './SceneSettings';
+import logo from '../../assets/svgs/logoBright.svg';
 
 function Editor() {
     const [editorState, setEditorState] = useState<string>('navigate') 
@@ -29,7 +30,7 @@ function Editor() {
         <div className="Editor">
             <div className='UItop'>
                 <div className="logo" onClick={() => { navigate('/') }}>
-                    Logo
+                    <img src={logo} />
                 </div>
                 <PlaceImage selectedImageKey={selectedImageKey} setSelectedImageKey={setSelectedImageKey} setEditorState={setEditorState}/>
                 <SceneSettings lighting={lighting} setLighting={setLighting} POIsEnabled={POIsEnabled} setPOIsEnabled={setPOIsEnabled} scene={scene} setScene={setScene}/>
