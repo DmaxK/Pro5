@@ -3,7 +3,7 @@
 .sceneSettings {
     pointer-events: auto;
     margin-top: 10px;
-    max-width: 40vw;
+    max-width: 35vw;
 
     .settingsButton {
         margin-top: 10px;
@@ -78,7 +78,6 @@
 
                 .thumbnail {
                     width: 31%;
-                    max-width: 10vw;
 
                     img {
                         width: 100%;
@@ -96,20 +95,28 @@
         .lighting {
             .modes {
                 line-height: 0.00;
+                margin-left: 3px;
                 .mode {
                     font-size: 0.35em;
                     line-height: 1;
                     display: inline-block;
-                    border: solid $tertiaryWhite 1px;
-                    border-radius: 100px;
-                    padding: 6px 9px 6px 9px;
-                    margin-right: 6px;
-                    margin-bottom: 6px;
-                    color: $secondaryWhite
+                    margin: 5px 20px 0px 0;
+                
+                    img {
+                        height: 30px;
+                        transition: transform 0.15s;
+                    }
+
+
+                    
                 }
                 .mode.selected {
-                    border: solid $primaryPink 1px;
-                    color: $primaryWhite
+                    img {
+                        transform: scale(1.4);
+                        border-radius: 50%;
+                        border: 1px solid $primaryPink;
+                        transition: transform 0.15s;
+                    }
                 }
             }
         }

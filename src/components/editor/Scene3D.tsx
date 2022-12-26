@@ -1,16 +1,20 @@
+import React, { SetStateAction, useState, Suspense, useRef } from 'react';
+import { Vector3 } from 'three';
+import { EffectComposer, Outline } from '@react-three/postprocessing'
+import { randFloat } from 'three/src/math/MathUtils.js';
 import { Canvas, ThreeEvent } from '@react-three/fiber';
-import { ImageLoader, Vector3 } from 'three';
-import React, { SetStateAction, useState, Suspense } from 'react';
+
 import POI from './POI.js';
 import Camera from './Camera.js';
 import Image from './Image.js'
-import '../../styles/editor/Scene3D.scss';
-import { randFloat } from 'three/src/math/MathUtils.js';
+
 import Noon from './lighting/noon.js';
 import Goldenhour from './lighting/golden-hour.js';
 import Midnight from './lighting/midnight.js';
 import { Scene1 } from './Scenes/Scene_1_comp.js';
 import { TestMesh } from './Scenes/TestMeshes.js';
+
+import '../../styles/editor/Scene3D.scss';
 
 function Box() {
     return (
@@ -24,14 +28,15 @@ function Box() {
 function Plane() {
     return (
         <>
-        <mesh receiveShadow position={[0, -1, 0]} rotation={[-Math.PI / 2, 0, 0]}>
-            <boxBufferGeometry attach="geometry" args={[25, 25]} />
-            <meshLambertMaterial attach="material" color="LightSlateGrey" />
-        </mesh>
-        <TestMesh/>
+            <mesh receiveShadow position={[0, -1, 0]} rotation={[-Math.PI / 2, 0, 0]}>
+                <boxBufferGeometry attach="geometry" args={[25, 25]} />
+                <meshLambertMaterial attach="material" color="LightSlateGrey" />
+            </mesh>
+            <TestMesh />
         </>
     );
 }
+
 
 const Scene3D: React.FC<{
     editorState: string,
@@ -48,22 +53,17 @@ const Scene3D: React.FC<{
         position: Vector3;
         pivotEnabled: boolean;
         sessionStorageKey: string;
-        lookAtPoint: Vector3;
-        normal: Vector3
+        spawnLookAtPoint: Vector3;
+        spawnNormal: Vector3;
+        distanceFromWall: number;
+        roughness: number;
     }
 
-    const bruh = [
-        {
-            position: new Vector3(1, 2, 3),
-            pivotEnabled: false,
-            sessionStorageKey: selectedImageKey,
-            lookAtPoint: new Vector3(1, 2, 3),
-            normal: new Vector3(1,1,1)
-        }
-    ]
+    const [images, setImages] = useState<Array<ImageData>>([]);
 
-    const [images, setImages] = useState<Array<ImageData>>(bruh);
+    const [outlinedObjects, setOutlinedObjects] = useState<any>(null!);
 
+    const outlineRef = useRef<THREE.Mesh>(null);
 
     const enableThisPivot = (thisIndex: number, enabled: boolean) => {
         const temp = [...images];
@@ -79,24 +79,26 @@ const Scene3D: React.FC<{
     }
 
     const addImage = (e: ThreeEvent<MouseEvent>) => {
-        // console.log(e);
         if (e.intersections[0].object.name === 'scene') {
             disableAllPivots();
             const intersection = e.intersections[0];
-            if (intersection.face) {       
+            if (intersection.face) {
                 const newPosition = intersection.point.clone();
                 const lookAt = intersection.point.clone();
                 const normal = intersection.face.normal.clone();
                 const normalClone = normal.clone();
-                newPosition.add(normalClone.multiplyScalar(randFloat(0.01, 0.05)));
+                const d = randFloat(0.01, 0.02);
+                newPosition.add(normalClone.multiplyScalar(d));
                 lookAt.add(normalClone.multiplyScalar(50));
-                
+
                 const newImage = {
-                    position: newPosition, 
+                    position: newPosition,
                     pivotEnabled: false,
                     sessionStorageKey: selectedImageKey,
-                    lookAtPoint: lookAt,
-                    normal: normal
+                    spawnLookAtPoint: lookAt,
+                    spawnNormal: normal,
+                    distanceFromWall: d,
+                    roughness: 0.5
                 }
 
                 setImages([...images, newImage]);
@@ -109,7 +111,10 @@ const Scene3D: React.FC<{
     }
 
     const handleSceneClicked = (e: ThreeEvent<MouseEvent>) => {
-        addImage(e);
+        if (editorState === 'place') {
+            addImage(e);
+            setEditorState('navigate');
+        }
     }
 
     /*
@@ -125,22 +130,22 @@ const Scene3D: React.FC<{
 
     return (
         <div className="scene3D">
-            <Canvas shadows>
+            <Canvas shadows >
                 <Suspense fallback={null}>
-                    <Camera cameraPosition={cameraPosition} editorState={editorState} scene={scene}/>
+                    <Camera cameraPosition={cameraPosition} editorState={editorState} scene={scene} />
                     {scene == 'scene1' &&
                         <>
-                        <Scene1/>
+                            <Scene1 />
                         </>
                     }
                     {scene == 'scene2' &&
                         <>
-                        <Box/>
+                            <Box />
                         </>
                     }
                     {scene == 'scene3' &&
                         <>
-                        <Plane/>
+                            <Plane />
                         </>
                     }
                     {POIsEnabled &&
@@ -152,20 +157,21 @@ const Scene3D: React.FC<{
                         </group>
                     }
                     {lighting == 'noon' &&
-                      <>
-                      <Noon/>
-                      </>
+                        <>
+                            <Noon />
+                        </>
                     }
                     {lighting == 'goldenHour' &&
-                      <>
-                      <Goldenhour/>
-                      </>
+                        <>
+                            <Goldenhour />
+                        </>
                     }
                     {lighting == 'midnight' &&
-                      <>
-                      <Midnight/>
-                      </>
+                        <>
+                            <Midnight />
+                        </>
                     }
+
                     {images.map((image, i) => (
                         <Image
                             key={i}
@@ -176,13 +182,40 @@ const Scene3D: React.FC<{
                             pivotEnabled={image.pivotEnabled}
                             enableThisPivot={enableThisPivot}
                             sessionStorageKey={image.sessionStorageKey}
-                            lookAtPoint={image.lookAtPoint}
-                            normal={image.normal} />
+                            spawnLookAtPoint={image.spawnLookAtPoint}
+                            spawnNormal={image.spawnNormal}
+                            distanceFromWall={image.distanceFromWall}
+                            roughness={image.roughness} />
                     ))}
-                    <mesh castShadow name='scene' position={[0, 2, -4]} scale={[3, 3, 3]} onClick={(e) => handleSceneClicked(e)}>
-                        <boxGeometry />
-                        <meshStandardMaterial color='grey' />
-                    </mesh> 
+
+                    {/* <EffectComposer multisampling={8} autoClear={false}>
+                        <Outline
+                            selection={outlineRef}
+                            selectionLayer={10}
+                            visibleEdgeColor={0xf88dd5}
+                            edgeStrength={2}
+                            blur={true}
+                             />
+    
+                    </EffectComposer> */}
+
+
+                    <mesh castShadow name='scene' position={[-2, 2, -2.5]} scale={1} onClick={(e) => handleSceneClicked(e)}>
+                        <sphereGeometry />
+                        <meshPhongMaterial color='grey' flatShading={true} />
+                    </mesh>
+                    <mesh castShadow name='scene' position={[0, 2, -3]} scale={2} onClick={(e) => handleSceneClicked(e)}>
+                        <sphereGeometry />
+                        <meshPhongMaterial color='grey' flatShading={true} />
+                    </mesh>
+
+                    <mesh ref={outlineRef} castShadow name='scene' position={[0, 2, -1]} scale={2} >
+                        <planeGeometry />
+                        <meshPhongMaterial color='grey' flatShading={true} />
+                    </mesh>
+
+
+
                 </Suspense>
             </Canvas>
         </div>
