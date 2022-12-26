@@ -6,6 +6,26 @@ import { events, ThreeElements, useFrame, ThreeEvent, useThree } from '@react-th
 import { useGesture, useDrag } from '@use-gesture/react'
 import { randFloat } from 'three/src/math/MathUtils.js';
 
+const CornerPivot: React.FC<{
+    spawnPosition: THREE.Vector3
+//parameters
+}> = ({spawnPosition}) => {
+
+    const meshRef = useRef<THREE.Mesh>(null);
+
+    useEffect(() => {
+        if(meshRef.current){
+            meshRef.current.position.set(spawnPosition.x, spawnPosition.y, spawnPosition.z);
+        }
+    }, []);
+
+  return (
+    <mesh ref={meshRef}>
+        <planeGeometry args={[0.1,0.1]}/>
+        <meshBasicMaterial color={'#0000ff'}/>
+    </mesh>
+  )
+}
 
 const Image: React.FC<{
     index: number,
@@ -17,8 +37,9 @@ const Image: React.FC<{
     sessionStorageKey: string,
     spawnLookAtPoint: THREE.Vector3,
     spawnNormal: THREE.Vector3,
-    distanceFromWall: number
-}> = ({ index, spawnPosition, editorState, setEditorState, pivotEnabled, enableThisPivot, sessionStorageKey, spawnLookAtPoint, spawnNormal, distanceFromWall }) => {
+    distanceFromWall: number,
+    roughness: number,
+}> = ({ index, spawnPosition, editorState, setEditorState, pivotEnabled, enableThisPivot, sessionStorageKey, spawnLookAtPoint, spawnNormal, distanceFromWall, roughness }) => {
 
     const [isDragging, setIsDragging] = useState<boolean>(false); // is the gizmo currently being interacted with?
     const [position, setPosition] = useState<Vector3>(spawnPosition);
@@ -48,7 +69,9 @@ const Image: React.FC<{
                 texture.needsUpdate = true;
 
                 material.map = texture;
+                material.roughness = roughness;
                 meshRef.current.material = material;
+            
 
                 meshRef.current.visible = true;
 

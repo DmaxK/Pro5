@@ -56,6 +56,7 @@ const Scene3D: React.FC<{
         spawnLookAtPoint: Vector3;
         spawnNormal: Vector3;
         distanceFromWall: number;
+        roughness: number;
     }
 
     const [images, setImages] = useState<Array<ImageData>>([]);
@@ -96,7 +97,8 @@ const Scene3D: React.FC<{
                     sessionStorageKey: selectedImageKey,
                     spawnLookAtPoint: lookAt,
                     spawnNormal: normal,
-                    distanceFromWall: d
+                    distanceFromWall: d,
+                    roughness: 0.5
                 }
 
                 setImages([...images, newImage]);
@@ -182,7 +184,8 @@ const Scene3D: React.FC<{
                             sessionStorageKey={image.sessionStorageKey}
                             spawnLookAtPoint={image.spawnLookAtPoint}
                             spawnNormal={image.spawnNormal}
-                            distanceFromWall={image.distanceFromWall} />
+                            distanceFromWall={image.distanceFromWall}
+                            roughness={image.roughness} />
                     ))}
 
                     {/* <EffectComposer multisampling={8} autoClear={false}>
