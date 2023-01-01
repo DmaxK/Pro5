@@ -15,18 +15,15 @@ const CornerPivot: React.FC<{
     scale: Vector3,
     setCornerPivotScale: Dispatch<SetStateAction<THREE.Vector3>>,
     groupScale: THREE.Vector3,
-    setGroupScale: Dispatch<SetStateAction<THREE.Vector3>>,
-
-    //parameters
+    setGroupScale: Dispatch<SetStateAction<THREE.Vector3>>
 }> = ({ spawnPosition, enabled, editorState, setEditorState, imagePos, scale, setCornerPivotScale, groupScale, setGroupScale }) => {
 
     const meshRef = useRef<THREE.Mesh>(null);
 
-    // const [scale, setScale] = useState<THREE.Vector3>(new Vector3(1,1,1));
     const [latestCenter, setLatestCenter] = useState<THREE.Vector3>(new Vector3(0, 0, 0));
     const [latestCorner, setLatestCorner] = useState<THREE.Vector3>(new Vector3(0, 0, 0));
-    const [latestGroupScale, setLatestGroupScale] = useState<THREE.Vector3>(new Vector3(0, 0, 0));
-    const [latestCornerPivotScale, setLatestCornerPivotScale] = useState<THREE.Vector3>(new Vector3(0, 0, 0));
+    const [latestGroupScale, setLatestGroupScale] = useState<THREE.Vector3>(new Vector3(1, 1, 1));
+    const [latestCornerPivotScale, setLatestCornerPivotScale] = useState<THREE.Vector3>(new Vector3(1, 1, 1));
 
     const { camera } = useThree();
 
@@ -72,11 +69,17 @@ const CornerPivot: React.FC<{
 
             const distanceCenterCorner = Math.sqrt(Math.pow(latestCenter.x - latestCorner.x, 2) + Math.pow(latestCenter.y - latestCorner.y, 2))
             const distanceCenterPointer = Math.sqrt(Math.pow(latestCenter.x - x, 2) + Math.pow(latestCenter.y - y, 2));
-            const scaleFactor = distanceCenterPointer / distanceCenterCorner;
+            let scaleFactor = distanceCenterPointer / distanceCenterCorner;
+            if (!isFinite(scaleFactor)) {
+                scaleFactor = 1;
+            }
+            console.log(scaleFactor);
             const invScaleFactor = 1 / scaleFactor;
+
+            // console.log(latestCenter.x);
+
             setGroupScale(new Vector3(latestGroupScale.x * scaleFactor, latestGroupScale.y * scaleFactor, latestGroupScale.z));
             setCornerPivotScale(new Vector3(latestCornerPivotScale.x * invScaleFactor, latestCornerPivotScale.y * invScaleFactor, latestCornerPivotScale.z)); // resize corner pivots so that they stay constant in size when parent group is scaled
-            // setScale(new Vector3(latestScale.x * invScaleFactor, latestScale.y * invScaleFactor, latestScale.z))
 
         } else {
             setEditorState('navigate')
@@ -110,13 +113,13 @@ const Image: React.FC<{
     const [meshScale, setMeshScale] = useState<Vector3>(new Vector3(1, 1, 1));
     const [groupScale, setGroupScale] = useState<Vector3>(new Vector3(1, 1, 1));
     const [cornerPivotPositions, setCornerPivotPositions] = useState<Array<THREE.Vector3>>([]);
-    const [cornerPivotScale, setCornerPivotScale] = useState<THREE.Vector3>(new Vector3(1,1,1));
+    const [cornerPivotScale, setCornerPivotScale] = useState<THREE.Vector3>(new Vector3(1, 1, 1));
 
     const groupRef = useRef<THREE.Group>(null!);
     const meshRef = useRef<THREE.Mesh>(null!);
     const raycasterRef = useRef<THREE.Raycaster>(null!);
 
-    const { camera, scene } = useThree();
+    const { scene } = useThree();
 
     useEffect(() => {
         // position and rotate image correctly
