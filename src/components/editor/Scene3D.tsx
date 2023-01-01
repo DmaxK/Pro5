@@ -98,7 +98,7 @@ const Scene3D: React.FC<{
                     spawnLookAtPoint: lookAt,
                     spawnNormal: normal,
                     distanceFromWall: d,
-                    roughness: 0.5
+                    roughness: 1
                 }
 
                 setImages([...images, newImage]);

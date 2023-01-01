@@ -15,7 +15,6 @@ const SceneSettings: React.FC<{
     scene: string,
     setScene: Dispatch<SetStateAction<string>>
 }> = ({ lighting, setLighting, POIsEnabled, setPOIsEnabled, scene, setScene }) => {
-
     const [expanded, setExpanded] = useState(false);
 
     return (
