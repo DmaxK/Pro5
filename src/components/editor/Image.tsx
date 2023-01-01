@@ -1,10 +1,8 @@
 import React, { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react'
 import * as THREE from 'three'
-import { PivotControls, Center, calcPosFromAngles, TransformControls } from '@react-three/drei'
 import { DoubleSide, MeshStandardMaterial, Vector3 } from 'three'
-import { events, ThreeElements, useFrame, ThreeEvent, useThree } from '@react-three/fiber'
-import { useGesture, useDrag } from '@use-gesture/react'
-import { randFloat } from 'three/src/math/MathUtils.js';
+import { ThreeEvent, useThree } from '@react-three/fiber'
+import { useDrag } from '@use-gesture/react'
 
 const CornerPivot: React.FC<{
     spawnPosition: THREE.Vector3,
@@ -73,13 +71,13 @@ const CornerPivot: React.FC<{
             if (!isFinite(scaleFactor)) {
                 scaleFactor = 1;
             }
-            console.log(scaleFactor);
             const invScaleFactor = 1 / scaleFactor;
 
-            // console.log(latestCenter.x);
-
-            setGroupScale(new Vector3(latestGroupScale.x * scaleFactor, latestGroupScale.y * scaleFactor, latestGroupScale.z));
-            setCornerPivotScale(new Vector3(latestCornerPivotScale.x * invScaleFactor, latestCornerPivotScale.y * invScaleFactor, latestCornerPivotScale.z)); // resize corner pivots so that they stay constant in size when parent group is scaled
+            // the following if fixes the problem that latestGroupScale isnt updated in the same frame as setLatestGroupScale is called 
+            if (!first) {
+                setGroupScale(new Vector3(latestGroupScale.x * scaleFactor, latestGroupScale.y * scaleFactor, latestGroupScale.z));
+                setCornerPivotScale(new Vector3(latestCornerPivotScale.x * invScaleFactor, latestCornerPivotScale.y * invScaleFactor, latestCornerPivotScale.z)); // resize corner pivots so that they stay constant in size when parent group is scaled
+            }
 
         } else {
             setEditorState('navigate')
@@ -89,10 +87,20 @@ const CornerPivot: React.FC<{
     return (
         <mesh {...bind()} scale={scale} ref={meshRef} visible={enabled}>
             <planeGeometry args={[0.1, 0.1]} />
-            <meshBasicMaterial color={'#4422f0'} />
+            <meshBasicMaterial color={'#f88dd5'} />
         </mesh>
     )
 }
+
+
+
+
+
+//--------------------------------------------------------------------
+
+
+
+
 
 const Image: React.FC<{
     index: number,
@@ -105,15 +113,17 @@ const Image: React.FC<{
     spawnLookAtPoint: THREE.Vector3,
     spawnNormal: THREE.Vector3,
     distanceFromWall: number,
-    roughness: number,
+    roughness: number
 }> = ({ index, spawnPosition, editorState, setEditorState, pivotEnabled, enableThisPivot, sessionStorageKey, spawnLookAtPoint, spawnNormal, distanceFromWall, roughness }) => {
 
-    const [isDragging, setIsDragging] = useState<boolean>(false); // is the gizmo currently being interacted with?
+    // const [isDragging, setIsDragging] = useState<boolean>(false); // is the gizmo currently being interacted with?
     const [position, setPosition] = useState<Vector3>(spawnPosition);
     const [meshScale, setMeshScale] = useState<Vector3>(new Vector3(1, 1, 1));
     const [groupScale, setGroupScale] = useState<Vector3>(new Vector3(1, 1, 1));
     const [cornerPivotPositions, setCornerPivotPositions] = useState<Array<THREE.Vector3>>([]);
     const [cornerPivotScale, setCornerPivotScale] = useState<THREE.Vector3>(new Vector3(1, 1, 1));
+
+    const [pointerMoved, setPointerMoved] = useState<boolean>(false);
 
     const groupRef = useRef<THREE.Group>(null!);
     const meshRef = useRef<THREE.Mesh>(null!);
@@ -168,41 +178,59 @@ const Image: React.FC<{
         }
     }, []);
 
-    function handleImageClick() {
-        let newEnabled = false
-        if (pivotEnabled) {
-            if (isDragging) newEnabled = true;
-        } else {
-            newEnabled = true;
+    function handleImageUp() {
+        if (!pointerMoved) {
+            if (pivotEnabled) {
+                enableThisPivot(index, false);
+            } else {
+                enableThisPivot(index, true);
+            }
+
+            setEditorState('navigate');
         }
-        enableThisPivot(index, newEnabled);
+    }
+
+    function handleImageDown() {
+        setPointerMoved(false)
+    }
+
+    function handleImageMissed(e: Event) {
+        // if(pivotEnabled){
+        //     enableThisPivot(index, false);
+        // }
+        // console.log(e)        
+
+        // FIX THIS!!!
     }
 
     const bind = useDrag(({ active, movement: [x, y], timeStamp, event }) => {
         if (active) {
+
             if (editorState !== 'edit' && pivotEnabled) {
                 setEditorState('edit');
             }
             if (pivotEnabled) {
-                const threeEvent = event as unknown as ThreeEvent<MouseEvent>;
-                if (raycasterRef.current) {
-                    raycasterRef.current.set(threeEvent.ray.origin, threeEvent.ray.direction);
+                if (x !== 0 && y !== 0) {
+                    const threeEvent = event as unknown as ThreeEvent<MouseEvent>;
+                    if (raycasterRef.current) {
+                        raycasterRef.current.set(threeEvent.ray.origin, threeEvent.ray.direction);
 
-                    const intersects = raycasterRef.current.intersectObjects(scene.children, true);
-                    for (const intersect of intersects) {
-                        if (intersect.object.name === 'scene') {
-                            const point = intersect.point.clone();
-                            if (intersect.face) {
-                                const normal = intersect.face?.normal.clone();
-                                const normalClone = normal.clone();
-                                setPosition(point.add(normal.multiplyScalar(distanceFromWall)));
-                                const newLookAt = intersect.point.clone();
-                                newLookAt.add(normalClone.multiplyScalar(10));
-                                if (groupRef.current) {
-                                    groupRef.current.lookAt(newLookAt);
+                        const intersects = raycasterRef.current.intersectObjects(scene.children, true);
+                        for (const intersect of intersects) {
+                            if (intersect.object.name === 'scene') {
+                                const point = intersect.point.clone();
+                                if (intersect.face) {
+                                    const normal = intersect.face?.normal.clone();
+                                    const normalClone = normal.clone();
+                                    setPosition(point.add(normal.multiplyScalar(distanceFromWall)));
+                                    const newLookAt = intersect.point.clone();
+                                    newLookAt.add(normalClone.multiplyScalar(10));
+                                    if (groupRef.current) {
+                                        groupRef.current.lookAt(newLookAt);
+                                    }
                                 }
+                                return;
                             }
-                            return;
                         }
                     }
                 }
@@ -215,37 +243,29 @@ const Image: React.FC<{
 
     return (
         <>
-            <group scale={groupScale} ref={groupRef} position={position}>
+            <group scale={groupScale} ref={groupRef} position={position} {...bind()}>
                 <mesh
                     scale={meshScale}
-                    {...bind()}
                     ref={meshRef}
-                    onClick={() => handleImageClick()}
-                >
-                </mesh>
-
+                    onPointerDown={() => handleImageDown()}
+                    onPointerMove={() => setPointerMoved(true)}
+                    onPointerUp={() => handleImageUp()}
+                    onPointerMissed={(e) => handleImageMissed(e)}
+                />
                 {pivotEnabled &&
-                    <>
-                        <mesh scale={0.1} position={[0, 0, 0.01]}>
-                            <planeGeometry args={[1, 1]} />
-                            <meshBasicMaterial color={'#ff3322'} />
-                        </mesh>
-                        {
-                            cornerPivotPositions.map((pos, i) => (
-                                <CornerPivot
-                                    key={i}
-                                    spawnPosition={pos}
-                                    enabled={pivotEnabled}
-                                    editorState={editorState}
-                                    setEditorState={setEditorState}
-                                    imagePos={position}
-                                    scale={cornerPivotScale}
-                                    setCornerPivotScale={setCornerPivotScale}
-                                    groupScale={groupScale}
-                                    setGroupScale={setGroupScale} />
-                            ))
-                        }
-                    </>
+                    cornerPivotPositions.map((pos, i) => (
+                        <CornerPivot
+                            key={i}
+                            spawnPosition={pos}
+                            enabled={pivotEnabled}
+                            editorState={editorState}
+                            setEditorState={setEditorState}
+                            imagePos={position}
+                            scale={cornerPivotScale}
+                            setCornerPivotScale={setCornerPivotScale}
+                            groupScale={groupScale}
+                            setGroupScale={setGroupScale} />
+                    ))
                 }
             </group>
             <raycaster ref={raycasterRef} />

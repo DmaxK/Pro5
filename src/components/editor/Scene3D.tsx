@@ -7,6 +7,7 @@ import { Canvas, ThreeEvent } from '@react-three/fiber';
 import POI from './POI.js';
 import Camera from './Camera.js';
 import Image from './Image.js'
+import PreviewImage from './PreviewImage.js';
 
 import Noon from './lighting/noon.js';
 import Goldenhour from './lighting/golden-hour.js';
@@ -61,8 +62,6 @@ const Scene3D: React.FC<{
 
     const [images, setImages] = useState<Array<ImageData>>([]);
 
-    const [outlinedObjects, setOutlinedObjects] = useState<any>(null!);
-
     const outlineRef = useRef<THREE.Mesh>(null);
 
     const enableThisPivot = (thisIndex: number, enabled: boolean) => {
@@ -79,6 +78,8 @@ const Scene3D: React.FC<{
     }
 
     const addImage = (e: ThreeEvent<MouseEvent>) => {
+
+        console.log(e.intersections[0].object.name)
         if (e.intersections[0].object.name === 'scene') {
             disableAllPivots();
             const intersection = e.intersections[0];
@@ -127,6 +128,8 @@ const Scene3D: React.FC<{
                         <meshStandardMaterial color='grey' />
                     </mesh>
                     */
+
+
 
     return (
         <div className="scene3D">
@@ -187,6 +190,11 @@ const Scene3D: React.FC<{
                             distanceFromWall={image.distanceFromWall}
                             roughness={image.roughness} />
                     ))}
+                    <PreviewImage
+                        // enabled={true}
+                        enabled={editorState === 'place'}
+                    />
+
 
                     {/* <EffectComposer multisampling={8} autoClear={false}>
                         <Outline
@@ -195,10 +203,8 @@ const Scene3D: React.FC<{
                             visibleEdgeColor={0xf88dd5}
                             edgeStrength={2}
                             blur={true}
-                             />
-    
+                        />
                     </EffectComposer> */}
-
 
                     <mesh castShadow name='scene' position={[-2, 2, -2.5]} scale={1} onClick={(e) => handleSceneClicked(e)}>
                         <sphereGeometry />
@@ -209,11 +215,10 @@ const Scene3D: React.FC<{
                         <meshPhongMaterial color='grey' flatShading={true} />
                     </mesh>
 
-                    <mesh ref={outlineRef} castShadow name='scene' position={[0, 2, -1]} scale={2} >
+                    {/* <mesh ref={outlineRef} castShadow name='scene' position={[0, 2, -1]} scale={2} >
                         <planeGeometry />
                         <meshPhongMaterial color='grey' flatShading={true} />
-                    </mesh>
-
+                    </mesh> */}
 
 
                 </Suspense>
