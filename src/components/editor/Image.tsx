@@ -296,7 +296,7 @@ const Image: React.FC<{
                         />
                     ))
                 }
-                {/* {pivotEnabled &&
+                {pivotEnabled &&
                     <ImageUI 
                     position={UIPosition}
                     scale={UIScale}
@@ -305,22 +305,8 @@ const Image: React.FC<{
                     roughness={roughness}
                     setRoughness={setRoughness}
                     />
-                } */}
+                }
 
-            </group>
-            <group position={new Vector3(0.05, 0, 0)}>
-                <group scale={groupScale} position={position}>
-                    {pivotEnabled &&
-                        <ImageUI
-                            position={UIPosition}
-                            scale={UIScale}
-                            deleteImage={deleteImage}
-                            index={index}
-                            roughness={roughness}
-                            setRoughness={setRoughness}
-                        />
-                    }
-                </group>
             </group>
             <raycaster ref={raycasterRef} />
         </>
