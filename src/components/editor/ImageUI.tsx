@@ -9,8 +9,10 @@ const ImageUI: React.FC<{
     deleteImage: (thisIndex: number) => void,
     index: number,
     roughness: number,
-    setRoughness: React.Dispatch<React.SetStateAction<number>>
-}> = ({ position, scale, deleteImage, index, roughness, setRoughness }) => {
+    setRoughness: React.Dispatch<React.SetStateAction<number>>,
+    emissive: boolean,
+    setEmissive: React.Dispatch<React.SetStateAction<boolean>>,
+}> = ({ position, scale, deleteImage, index, roughness, setRoughness, emissive, setEmissive }) => {
 
     function handleRoughnessChange(e: React.ChangeEvent<HTMLInputElement>) {
         setRoughness(Number(e.target.value) / 100);
@@ -18,13 +20,29 @@ const ImageUI: React.FC<{
 
     return (
         <group scale={scale} position={position}>
-                <Html scale={0.1} transform >
-                    <div className='imageUI'>
-                        <button onClick={() => (deleteImage(index))} >x</button>
-                        <input type="range" min={0} max={100} onChange={(e) => handleRoughnessChange(e)} />
+            <Html scale={0.1} transform >
+            <div className='imageUI'>
+                <section className='surfaceFeatures'>
+                    <h1>Surface Features</h1>
+                    <div className='option'>
+                        <div className='title'>Smoothness</div>
+                        <div className='content'>
+                            <input id='slider' type="range" min={0} max={100} onChange={(e) => handleRoughnessChange(e)} />
+                        </div>
                     </div>
-                </Html>
-        </group>
+                    <div className='option'>
+                        <div className='title'>Emissive</div>
+                        <div className='content'>
+                            {/* <button onClick={() => (setEmissive(!emissive))} >Toggle Emissive</button> */}
+                            <input type='checkbox' />
+                        </div>
+                    </div>
+                </section>
+                <button onClick={() => (deleteImage(index))} >x</button>
+
+            </div>
+        </Html>
+        </group >
     )
 }
 

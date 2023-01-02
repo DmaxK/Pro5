@@ -133,6 +133,7 @@ const Image: React.FC<{
 
     const [position, setPosition] = useState<Vector3>(spawnPosition);
     const [roughness, setRoughness] = useState<number>(1);
+    const [emissive, setEmissive] = useState<boolean>(false);
     const [meshScale, setMeshScale] = useState<Vector3>(new Vector3(1, 1, 1));
     const [groupScale, setGroupScale] = useState<Vector3>(new Vector3(1, 1, 1));
     const [cornerPivotPositions, setCornerPivotPositions] = useState<Array<THREE.Vector3>>([]);
@@ -172,9 +173,9 @@ const Image: React.FC<{
                 material.map = texture;
                 material.roughness = roughness;
                 material.metalness = 0;
-                // material.emissiveMap = texture;
-                // material.emissive = new THREE.Color('#414141')
-                // material.emissiveIntensity = 1;
+                material.emissiveMap = texture;
+                material.emissive = new THREE.Color('#414141')
+                material.emissiveIntensity = 0;
                 meshRef.current.material = material;
 
                 meshRef.current.visible = true;
@@ -216,6 +217,17 @@ const Image: React.FC<{
             meshRef.current.material.roughness = roughness;
         }
     }, [roughness]);
+
+    // change material when emissive is enabled/disabled
+    useEffect(() => {
+        if (meshRef.current) {
+            if(emissive) {
+                meshRef.current.material.emissiveIntensity = 5;
+            } else {
+                meshRef.current.material.emissiveIntensity = 0;
+            }
+        }
+    }, [emissive]);
 
     function handleImageUp() {
         if (!pointerMoved) {
@@ -319,6 +331,8 @@ const Image: React.FC<{
                             index={index}
                             roughness={roughness}
                             setRoughness={setRoughness}
+                            emissive={emissive}
+                            setEmissive={setEmissive}
                         />
                         <ImageDimension 
                             text={(groupScale.x * Math.abs(heightPosition.x) * 2).toFixed(2) + " m"}
