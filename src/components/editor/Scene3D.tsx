@@ -51,13 +51,13 @@ const Scene3D: React.FC<{
     const [cameraPosition, setCameraPosition] = useState<Vector3>(new Vector3(0, 2, 0));
 
     interface ImageData {
+        id: string;
         position: Vector3;
         pivotEnabled: boolean;
         sessionStorageKey: string;
         spawnLookAtPoint: Vector3;
         spawnNormal: Vector3;
         distanceFromWall: number;
-        roughness: number;
     }
 
     const [images, setImages] = useState<Array<ImageData>>([]);
@@ -91,20 +91,36 @@ const Scene3D: React.FC<{
                 const d = randFloat(0.01, 0.02);
                 newPosition.add(normalClone.multiplyScalar(d));
                 lookAt.add(normalClone.multiplyScalar(50));
+                const newID = (newPosition.x * newPosition.y).toString();
 
                 const newImage = {
+                    id: newID,
                     position: newPosition,
                     pivotEnabled: false,
                     sessionStorageKey: selectedImageKey,
                     spawnLookAtPoint: lookAt,
                     spawnNormal: normal,
                     distanceFromWall: d,
-                    roughness: 1
                 }
 
                 setImages([...images, newImage]);
+                // const temp = [...images];
+                // temp.unshift(newImage);
+                // setImages(temp);
             }
         }
+    }
+
+    const deleteImage = (thisIndex: number) => {
+        // const temp = [...images]
+        // temp.splice(thisIndex, 1);
+        // setImages(temp);
+
+        setImages([
+            ...images.slice(0, thisIndex),
+            ...images.slice(thisIndex + 1)
+          ]);
+
     }
 
     const printVector = (text: string, v: Vector3) => {
@@ -177,7 +193,7 @@ const Scene3D: React.FC<{
 
                     {images.map((image, i) => (
                         <Image
-                            key={i}
+                            key={image.id}
                             index={i}
                             spawnPosition={image.position}
                             editorState={editorState}
@@ -188,7 +204,7 @@ const Scene3D: React.FC<{
                             spawnLookAtPoint={image.spawnLookAtPoint}
                             spawnNormal={image.spawnNormal}
                             distanceFromWall={image.distanceFromWall}
-                            roughness={image.roughness} />
+                            deleteImage={deleteImage} />
                     ))}
                     <PreviewImage
                         // enabled={true}

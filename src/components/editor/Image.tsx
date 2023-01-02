@@ -3,6 +3,8 @@ import * as THREE from 'three'
 import { DoubleSide, MeshStandardMaterial, Vector3 } from 'three'
 import { ThreeEvent, useThree } from '@react-three/fiber'
 import { useDrag } from '@use-gesture/react'
+import { EffectComposer, Outline } from '@react-three/postprocessing';
+import ImageUI from './ImageUI';
 
 const CornerPivot: React.FC<{
     spawnPosition: THREE.Vector3,
@@ -13,8 +15,11 @@ const CornerPivot: React.FC<{
     scale: Vector3,
     setCornerPivotScale: Dispatch<SetStateAction<THREE.Vector3>>,
     groupScale: THREE.Vector3,
-    setGroupScale: Dispatch<SetStateAction<THREE.Vector3>>
-}> = ({ spawnPosition, enabled, editorState, setEditorState, imagePos, scale, setCornerPivotScale, groupScale, setGroupScale }) => {
+    setGroupScale: Dispatch<SetStateAction<THREE.Vector3>>,
+    UIScale: THREE.Vector3,
+    setUIScale: Dispatch<SetStateAction<THREE.Vector3>>,
+
+}> = ({ spawnPosition, enabled, editorState, setEditorState, imagePos, scale, setCornerPivotScale, groupScale, setGroupScale, UIScale, setUIScale }) => {
 
     const meshRef = useRef<THREE.Mesh>(null);
 
@@ -22,6 +27,8 @@ const CornerPivot: React.FC<{
     const [latestCorner, setLatestCorner] = useState<THREE.Vector3>(new Vector3(0, 0, 0));
     const [latestGroupScale, setLatestGroupScale] = useState<THREE.Vector3>(new Vector3(1, 1, 1));
     const [latestCornerPivotScale, setLatestCornerPivotScale] = useState<THREE.Vector3>(new Vector3(1, 1, 1));
+    const [latestUIScale, setLatestUIScale] = useState<THREE.Vector3>(new Vector3(1, 1, 1));
+
 
     const { camera } = useThree();
 
@@ -63,6 +70,7 @@ const CornerPivot: React.FC<{
 
                 setLatestGroupScale(groupScale);
                 setLatestCornerPivotScale(scale);
+                setLatestUIScale(UIScale);
             }
 
             const distanceCenterCorner = Math.sqrt(Math.pow(latestCenter.x - latestCorner.x, 2) + Math.pow(latestCenter.y - latestCorner.y, 2))
@@ -76,7 +84,10 @@ const CornerPivot: React.FC<{
             // the following if fixes the problem that latestGroupScale isnt updated in the same frame as setLatestGroupScale is called 
             if (!first) {
                 setGroupScale(new Vector3(latestGroupScale.x * scaleFactor, latestGroupScale.y * scaleFactor, latestGroupScale.z));
+
                 setCornerPivotScale(new Vector3(latestCornerPivotScale.x * invScaleFactor, latestCornerPivotScale.y * invScaleFactor, latestCornerPivotScale.z)); // resize corner pivots so that they stay constant in size when parent group is scaled
+
+                setUIScale(new Vector3(latestCornerPivotScale.x * invScaleFactor, latestCornerPivotScale.y * invScaleFactor, latestCornerPivotScale.z)); // rezize UI for the same reason as above
             }
 
         } else {
@@ -86,7 +97,7 @@ const CornerPivot: React.FC<{
 
     return (
         <mesh {...bind()} scale={scale} ref={meshRef} visible={enabled}>
-            <planeGeometry args={[0.1, 0.1]} />
+            <planeGeometry args={[0.05, 0.05]} />
             <meshBasicMaterial color={'#f88dd5'} />
         </mesh>
     )
@@ -113,15 +124,17 @@ const Image: React.FC<{
     spawnLookAtPoint: THREE.Vector3,
     spawnNormal: THREE.Vector3,
     distanceFromWall: number,
-    roughness: number
-}> = ({ index, spawnPosition, editorState, setEditorState, pivotEnabled, enableThisPivot, sessionStorageKey, spawnLookAtPoint, spawnNormal, distanceFromWall, roughness }) => {
+    deleteImage: (thisIndex: number) => void
+}> = ({ index, spawnPosition, editorState, setEditorState, pivotEnabled, enableThisPivot, sessionStorageKey, spawnLookAtPoint, spawnNormal, distanceFromWall, deleteImage }) => {
 
-    // const [isDragging, setIsDragging] = useState<boolean>(false); // is the gizmo currently being interacted with?
     const [position, setPosition] = useState<Vector3>(spawnPosition);
+    const [roughness, setRoughness] = useState<number>(1);
     const [meshScale, setMeshScale] = useState<Vector3>(new Vector3(1, 1, 1));
     const [groupScale, setGroupScale] = useState<Vector3>(new Vector3(1, 1, 1));
     const [cornerPivotPositions, setCornerPivotPositions] = useState<Array<THREE.Vector3>>([]);
     const [cornerPivotScale, setCornerPivotScale] = useState<THREE.Vector3>(new Vector3(1, 1, 1));
+    const [UIPosition, setUIPosition] = useState<THREE.Vector3>(new Vector3(0, 0, 0));
+    const [UIScale, setUIScale] = useState<THREE.Vector3>(new Vector3(1, 1, 1));
 
     const [pointerMoved, setPointerMoved] = useState<boolean>(false);
 
@@ -173,10 +186,23 @@ const Image: React.FC<{
                 const br = new Vector3(scaledWidth * 0.5, scaledHeight * -0.5, 0);
                 setCornerPivotPositions([tl, tr, bl, br]);
 
+                // set position for ImageUI
+                const p = new Vector3();
+                p.copy(tr);
+                // p.add(new Vector3(0.1,0,0))
+                setUIPosition(p);
+
             };
             img.src = (sessionStorage.getItem(sessionStorageKey) || '');
         }
     }, []);
+
+    // change material when roughness is adjusted
+    useEffect(() => {
+        if (meshRef.current) {
+            meshRef.current.material.roughness = roughness;
+        }
+    }, [roughness]);
 
     function handleImageUp() {
         if (!pointerMoved) {
@@ -264,9 +290,37 @@ const Image: React.FC<{
                             scale={cornerPivotScale}
                             setCornerPivotScale={setCornerPivotScale}
                             groupScale={groupScale}
-                            setGroupScale={setGroupScale} />
+                            setGroupScale={setGroupScale}
+                            UIScale={UIScale}
+                            setUIScale={setUIScale}
+                        />
                     ))
                 }
+                {/* {pivotEnabled &&
+                    <ImageUI 
+                    position={UIPosition}
+                    scale={UIScale}
+                    deleteImage={deleteImage}
+                    index={index}
+                    roughness={roughness}
+                    setRoughness={setRoughness}
+                    />
+                } */}
+
+            </group>
+            <group position={new Vector3(0.05, 0, 0)}>
+                <group scale={groupScale} position={position}>
+                    {pivotEnabled &&
+                        <ImageUI
+                            position={UIPosition}
+                            scale={UIScale}
+                            deleteImage={deleteImage}
+                            index={index}
+                            roughness={roughness}
+                            setRoughness={setRoughness}
+                        />
+                    }
+                </group>
             </group>
             <raycaster ref={raycasterRef} />
         </>
