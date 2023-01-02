@@ -10,7 +10,7 @@ const PreviewImage: React.FC<{
 
     const [position, setPosition] = useState<THREE.Vector3>(new THREE.Vector3(0, 0, 0));
     const [pointer, setPointer] = useState<THREE.Vector2>(new THREE.Vector2(0, 0));
-    const [distanceFromWall, setDistanceFromWall] = useState<number>(randFloat(0.01, 0.02)) 
+    const [distanceFromWall, setDistanceFromWall] = useState<number>(randFloat(0.01, 0.02))
 
     const meshRef = useRef<THREE.Mesh>(null!);
     const raycasterRef = useRef<THREE.Raycaster>(null!);
@@ -67,7 +67,7 @@ const PreviewImage: React.FC<{
             img.src = (sessionStorage.getItem(selectedImageKey) || '');
         }
 
-    },[selectedImageKey]);
+    }, [selectedImageKey]);
 
     // perform positioning and rotation of preview image
     useFrame(() => {
@@ -100,15 +100,12 @@ const PreviewImage: React.FC<{
 
     return (
         <>
-            {
-                
-                <mesh
-                    ref={meshRef}
-                    position={position}
-                    scale={1}
-                >
-                </mesh>
-            }
+            <mesh
+                ref={meshRef}
+                position={position}
+                scale={1}
+                visible={enabled}
+            />
             <raycaster ref={raycasterRef} />
         </>
     );
