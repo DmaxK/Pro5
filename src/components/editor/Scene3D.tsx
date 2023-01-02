@@ -193,6 +193,7 @@ const Scene3D: React.FC<{
                     <PreviewImage
                         // enabled={true}
                         enabled={editorState === 'place'}
+                        selectedImageKey={selectedImageKey}
                     />
 
 
