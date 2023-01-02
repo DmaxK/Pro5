@@ -5,6 +5,7 @@ import { ThreeEvent, useThree } from '@react-three/fiber'
 import { useDrag } from '@use-gesture/react'
 import { EffectComposer, Outline } from '@react-three/postprocessing';
 import ImageUI from './ImageUI';
+import ImageDimension from './ImageDimension';
 
 const CornerPivot: React.FC<{
     spawnPosition: THREE.Vector3,
@@ -16,10 +17,11 @@ const CornerPivot: React.FC<{
     setCornerPivotScale: Dispatch<SetStateAction<THREE.Vector3>>,
     groupScale: THREE.Vector3,
     setGroupScale: Dispatch<SetStateAction<THREE.Vector3>>,
-    UIScale: THREE.Vector3,
     setUIScale: Dispatch<SetStateAction<THREE.Vector3>>,
+    setWidthScale: Dispatch<SetStateAction<THREE.Vector3>>,
+    setHeightScale: Dispatch<SetStateAction<THREE.Vector3>>
 
-}> = ({ spawnPosition, enabled, editorState, setEditorState, imagePos, scale, setCornerPivotScale, groupScale, setGroupScale, UIScale, setUIScale }) => {
+}> = ({ spawnPosition, enabled, editorState, setEditorState, imagePos, scale, setCornerPivotScale, groupScale, setGroupScale, setUIScale, setWidthScale, setHeightScale }) => {
 
     const meshRef = useRef<THREE.Mesh>(null);
 
@@ -27,7 +29,6 @@ const CornerPivot: React.FC<{
     const [latestCorner, setLatestCorner] = useState<THREE.Vector3>(new Vector3(0, 0, 0));
     const [latestGroupScale, setLatestGroupScale] = useState<THREE.Vector3>(new Vector3(1, 1, 1));
     const [latestCornerPivotScale, setLatestCornerPivotScale] = useState<THREE.Vector3>(new Vector3(1, 1, 1));
-    const [latestUIScale, setLatestUIScale] = useState<THREE.Vector3>(new Vector3(1, 1, 1));
 
 
     const { camera } = useThree();
@@ -70,7 +71,6 @@ const CornerPivot: React.FC<{
 
                 setLatestGroupScale(groupScale);
                 setLatestCornerPivotScale(scale);
-                setLatestUIScale(UIScale);
             }
 
             const distanceCenterCorner = Math.sqrt(Math.pow(latestCenter.x - latestCorner.x, 2) + Math.pow(latestCenter.y - latestCorner.y, 2))
@@ -88,6 +88,10 @@ const CornerPivot: React.FC<{
                 setCornerPivotScale(new Vector3(latestCornerPivotScale.x * invScaleFactor, latestCornerPivotScale.y * invScaleFactor, latestCornerPivotScale.z)); // resize corner pivots so that they stay constant in size when parent group is scaled
 
                 setUIScale(new Vector3(latestCornerPivotScale.x * invScaleFactor, latestCornerPivotScale.y * invScaleFactor, latestCornerPivotScale.z)); // rezize UI for the same reason as above
+
+                setWidthScale(new Vector3(latestCornerPivotScale.x * invScaleFactor, latestCornerPivotScale.y * invScaleFactor, latestCornerPivotScale.z));
+
+                setHeightScale(new Vector3(latestCornerPivotScale.x * invScaleFactor, latestCornerPivotScale.y * invScaleFactor, latestCornerPivotScale.z));
             }
 
         } else {
@@ -135,7 +139,11 @@ const Image: React.FC<{
     const [cornerPivotScale, setCornerPivotScale] = useState<THREE.Vector3>(new Vector3(1, 1, 1));
     const [UIPosition, setUIPosition] = useState<THREE.Vector3>(new Vector3(0, 0, 0));
     const [UIScale, setUIScale] = useState<THREE.Vector3>(new Vector3(1, 1, 1));
-
+    const [widthPosition, setWidthPosition] = useState<THREE.Vector3>(new Vector3(0, 0, 0));
+    const [widthScale, setwidthScale] = useState<THREE.Vector3>(new Vector3(1, 1, 1));
+    const [heightPosition, setHeightPosition] = useState<THREE.Vector3>(new Vector3(0, 0, 0));
+    const [heightScale, setHeightScale] = useState<THREE.Vector3>(new Vector3(1, 1, 1));
+    
     const [pointerMoved, setPointerMoved] = useState<boolean>(false);
 
     const groupRef = useRef<THREE.Group>(null!);
@@ -189,8 +197,13 @@ const Image: React.FC<{
                 // set position for ImageUI
                 const p = new Vector3();
                 p.copy(tr);
-                // p.add(new Vector3(0.1,0,0))
                 setUIPosition(p);
+
+                // set positions for image dimensions
+                const w = new Vector3(0, scaledHeight * -0.5, 0)
+                setWidthPosition(w);
+                const h = new Vector3(scaledWidth * -0.5, 0, 0)
+                setHeightPosition(h);
 
             };
             img.src = (sessionStorage.getItem(sessionStorageKey) || '');
@@ -291,20 +304,35 @@ const Image: React.FC<{
                             setCornerPivotScale={setCornerPivotScale}
                             groupScale={groupScale}
                             setGroupScale={setGroupScale}
-                            UIScale={UIScale}
                             setUIScale={setUIScale}
+                            setWidthScale={setwidthScale}
+                            setHeightScale={setHeightScale}
                         />
                     ))
                 }
                 {pivotEnabled &&
-                    <ImageUI 
-                    position={UIPosition}
-                    scale={UIScale}
-                    deleteImage={deleteImage}
-                    index={index}
-                    roughness={roughness}
-                    setRoughness={setRoughness}
-                    />
+                    <>
+                        <ImageUI
+                            position={UIPosition}
+                            scale={UIScale}
+                            deleteImage={deleteImage}
+                            index={index}
+                            roughness={roughness}
+                            setRoughness={setRoughness}
+                        />
+                        <ImageDimension 
+                            text={(groupScale.x * Math.abs(heightPosition.x) * 2).toFixed(2) + " m"}
+                            position={widthPosition}
+                            rotation={0}
+                            scale={widthScale}
+                        />
+                        <ImageDimension 
+                            text={(groupScale.x * Math.abs(widthPosition.y) * 2).toFixed(2) + " m"}
+                            position={heightPosition}
+                            rotation={- Math.PI / 2}
+                            scale={heightScale}
+                        />
+                    </>
                 }
 
             </group>

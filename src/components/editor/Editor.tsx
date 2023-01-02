@@ -38,11 +38,11 @@ function Editor() {
             <div className='UIbottom'>
                 <Help />
             </div>
-            <div className='UIdebug'>
+            {/* <div className='UIdebug'>
                 --- DEBUG --- <br/><br/>
                 editorState = {editorState} <br/>
                 selectedImageKey = {selectedImageKey}
-            </div>
+            </div> */}
             <Scene3D editorState={editorState} setEditorState={setEditorState} selectedImageKey={selectedImageKey} lighting={lighting} POIsEnabled={POIsEnabled} scene={scene}/>
         </div>
 

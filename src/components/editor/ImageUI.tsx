@@ -12,27 +12,15 @@ const ImageUI: React.FC<{
     setRoughness: React.Dispatch<React.SetStateAction<number>>
 }> = ({ position, scale, deleteImage, index, roughness, setRoughness }) => {
 
-    const [offset, setOffset] = useState<THREE.Vector3>(new THREE.Vector3(0, 0, 0));
-
     function handleRoughnessChange(e: React.ChangeEvent<HTMLInputElement>) {
         setRoughness(Number(e.target.value) / 100);
     }
 
-    // useEffect(() => {
-    //     const temp = new THREE.Vector3(1, 0, 0);
-    //     temp.multiplyScalar(scale.x * 0.01);
-    //     setOffset(temp);
-
-    // }, [scale]);
-
     return (
         <group scale={scale} position={position}>
-                <Html scale={0.1} rotation={[0, 0, 0]} position={offset} transform >
+                <Html scale={0.1} transform >
                     <div className='imageUI'>
-                        <div >index: {index}</div>
-                        <button onClick={() => (deleteImage(index))} >delete</button>
-                        <div>roughness: {roughness} </div>
-
+                        <button onClick={() => (deleteImage(index))} >x</button>
                         <input type="range" min={0} max={100} onChange={(e) => handleRoughnessChange(e)} />
                     </div>
                 </Html>
