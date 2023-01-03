@@ -7,6 +7,7 @@ import { Canvas, ThreeEvent } from '@react-three/fiber';
 import POI from './POI.js';
 import Camera from './Camera.js';
 import Image from './Image.js'
+import PreviewImage from './PreviewImage.js';
 
 import Noon from './lighting/noon.js';
 import Goldenhour from './lighting/golden-hour.js';
@@ -50,18 +51,16 @@ const Scene3D: React.FC<{
     const [cameraPosition, setCameraPosition] = useState<Vector3>(new Vector3(0, 2, 0));
 
     interface ImageData {
+        id: string;
         position: Vector3;
         pivotEnabled: boolean;
         sessionStorageKey: string;
         spawnLookAtPoint: Vector3;
         spawnNormal: Vector3;
         distanceFromWall: number;
-        roughness: number;
     }
 
     const [images, setImages] = useState<Array<ImageData>>([]);
-
-    const [outlinedObjects, setOutlinedObjects] = useState<any>(null!);
 
     const outlineRef = useRef<THREE.Mesh>(null);
 
@@ -79,6 +78,8 @@ const Scene3D: React.FC<{
     }
 
     const addImage = (e: ThreeEvent<MouseEvent>) => {
+
+        console.log(e.intersections[0].object.name)
         if (e.intersections[0].object.name === 'scene') {
             disableAllPivots();
             const intersection = e.intersections[0];
@@ -90,20 +91,36 @@ const Scene3D: React.FC<{
                 const d = randFloat(0.01, 0.02);
                 newPosition.add(normalClone.multiplyScalar(d));
                 lookAt.add(normalClone.multiplyScalar(50));
+                const newID = (newPosition.x * newPosition.y).toString();
 
                 const newImage = {
+                    id: newID,
                     position: newPosition,
                     pivotEnabled: false,
                     sessionStorageKey: selectedImageKey,
                     spawnLookAtPoint: lookAt,
                     spawnNormal: normal,
                     distanceFromWall: d,
-                    roughness: 0.5
                 }
 
                 setImages([...images, newImage]);
+                // const temp = [...images];
+                // temp.unshift(newImage);
+                // setImages(temp);
             }
         }
+    }
+
+    const deleteImage = (thisIndex: number) => {
+        // const temp = [...images]
+        // temp.splice(thisIndex, 1);
+        // setImages(temp);
+
+        setImages([
+            ...images.slice(0, thisIndex),
+            ...images.slice(thisIndex + 1)
+          ]);
+
     }
 
     const printVector = (text: string, v: Vector3) => {
@@ -127,6 +144,8 @@ const Scene3D: React.FC<{
                         <meshStandardMaterial color='grey' />
                     </mesh>
                     */
+
+
 
     return (
         <div className="scene3D">
@@ -174,7 +193,7 @@ const Scene3D: React.FC<{
 
                     {images.map((image, i) => (
                         <Image
-                            key={i}
+                            key={image.id}
                             index={i}
                             spawnPosition={image.position}
                             editorState={editorState}
@@ -185,8 +204,14 @@ const Scene3D: React.FC<{
                             spawnLookAtPoint={image.spawnLookAtPoint}
                             spawnNormal={image.spawnNormal}
                             distanceFromWall={image.distanceFromWall}
-                            roughness={image.roughness} />
+                            deleteImage={deleteImage} />
                     ))}
+                    <PreviewImage
+                        // enabled={true}
+                        enabled={editorState === 'place'}
+                        selectedImageKey={selectedImageKey}
+                    />
+
 
                     {/* <EffectComposer multisampling={8} autoClear={false}>
                         <Outline
@@ -195,10 +220,8 @@ const Scene3D: React.FC<{
                             visibleEdgeColor={0xf88dd5}
                             edgeStrength={2}
                             blur={true}
-                             />
-    
+                        />
                     </EffectComposer> */}
-
 
                     <mesh castShadow name='scene' position={[-2, 2, -2.5]} scale={1} onClick={(e) => handleSceneClicked(e)}>
                         <sphereGeometry />
@@ -209,11 +232,10 @@ const Scene3D: React.FC<{
                         <meshPhongMaterial color='grey' flatShading={true} />
                     </mesh>
 
-                    <mesh ref={outlineRef} castShadow name='scene' position={[0, 2, -1]} scale={2} >
+                    {/* <mesh ref={outlineRef} castShadow name='scene' position={[0, 2, -1]} scale={2} >
                         <planeGeometry />
                         <meshPhongMaterial color='grey' flatShading={true} />
-                    </mesh>
-
+                    </mesh> */}
 
 
                 </Suspense>

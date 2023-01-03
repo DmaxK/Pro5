@@ -5,11 +5,11 @@ import DropDownArrow from '../../assets/svgs/DropDownArrow.svg';
 import TestPosterThumbnail from '../../assets/images/testPosterThumbnail.jpg';
 import { getStaticContextFromError } from '@remix-run/router';
 
-const PlaceImage: React.FC<{ 
-    selectedImageKey: string, 
+const PlaceImage: React.FC<{
+    selectedImageKey: string,
     setSelectedImageKey: Dispatch<React.SetStateAction<string>>,
     setEditorState: Dispatch<React.SetStateAction<string>>
- }> = ({ selectedImageKey, setSelectedImageKey, setEditorState }) => {
+}> = ({ selectedImageKey, setSelectedImageKey, setEditorState}) => {
     const [expanded, setExpanded] = useState(false);
     const [loading, setLoading] = useState(false);
     const [keys, setKeys] = useState<Array<string>>([])
@@ -52,7 +52,7 @@ const PlaceImage: React.FC<{
                 <div onClick={() => keys.length > 0 ? setEditorState('place') : alert('Please upload an Image first.')}>
                     Place
                 </div>
-                {keys.length > 0 ?  
+                {keys.length > 0 ?
                     <div className='imageContainer' onClick={() => keys.length > 0 ? alert('Placing Image!!') : alert('Please upload an Image first.')}>
                         {
                             getImage(selectedImageKey) !== '' &&
@@ -80,7 +80,10 @@ const PlaceImage: React.FC<{
                                     keys.map((key, item) =>
                                         <div
                                             key={key}
-                                            onClick={() => { setSelectedImageKey(key); setExpanded(!expanded) }}
+                                            onClick={() => {
+                                                setSelectedImageKey(key);
+                                                setExpanded(!expanded)
+                                            }}
                                             className={'imageContainer ' + (key == selectedImageKey ? 'selected' : '')} >
                                             <img key={key} src={getImage(key)}></img>
                                         </div>
