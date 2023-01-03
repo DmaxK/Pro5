@@ -6,6 +6,7 @@
     flex-direction: row;
     justify-content: flex-start;
     align-items: flex-end;
+    z-index: 1000;
 
     .helpButton {
         width: 38px;
@@ -37,16 +38,33 @@
         border-radius: $border-radius;
         filter: $drop-shadow;
         border: $border-grey;
-    
-        ol{
-            // list-style: none;
-            padding: 10px 15px 10px 30px;;
-            margin: 0;
+        padding: 16px 16px 6px 20px;
 
-            li {
-                padding: 0;
-                margin: 10px;
+        section {
+
+            .title {
+                font-size: 1.3em;
             }
-        }    
+
+            .content {
+                ul {
+                    // list-style: none;
+                    padding: 0;
+                    margin-top: 9px;
+                    margin-left: 20px;
+                    font-size: 0.9em;
+        
+                    li {
+                        padding: 0;
+                        margin-top: 3px;
+                    }
+                }
+            }
+        }
+
+    }
+
+    span {
+        color: $primaryPink;
     }
 }

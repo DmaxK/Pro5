@@ -4,15 +4,12 @@
     box-sizing: border-box;
     position: fixed;
     margin-left: 20px;
-    padding: 20px;
-    border-radius: $border-radius;
     width: 330px;
-
-    // background-color: rgb(248, 141, 213, 1);
-    background-color: rgb(20, 20, 20, 0.9);
     font-size: 0.7em;
 
     // color: black;
+
+
 
     section {
 
@@ -36,21 +33,190 @@
             .content {
 
                 color: black;
+                max-width: 100px;
 
-                input[type="range"] {
-                    width: 100px;
+
+                input[type=range] {
+                    width: 100%;
+                    margin: 5.8px 0;
+                    background-color: transparent;
+                    -webkit-appearance: none;
                 }
 
-                // input[type=”range”]::-webkit-slider-thumb,
-                // input[type=”range”]::-moz-range-thumb,
-                // input[type=”range”]::-ms-thumb {
-                // }
+                input[type=range]:focus {
+                    outline: none;
+                }
 
-                input[type="checkbox"] {
+                input[type=range]::-webkit-slider-runnable-track {
+                    background: #ffe3f6;
+                    border: 0;
+                    border-radius: 25px;
+                    width: 100%;
+                    height: 8.4px;
+                    cursor: pointer;
+                }
+
+                input[type=range]::-webkit-slider-thumb {
+                    margin-top: -5.8px;
+                    width: 20px;
+                    height: 20px;
+                    background: #f88dd5;
+                    border: 0px solid rgba(0, 0, 0, 0);
+                    border: 0;
+                    border-radius: 100px;
+                    cursor: pointer;
+                    -webkit-appearance: none;
+                }
+
+                input[type=range]:focus::-webkit-slider-runnable-track {
+                    background: #ffe3f6;
+                }
+
+                input[type=range]::-moz-range-track {
+                    background: #ffe3f6;
+                    border: 0;
+                    border-radius: 25px;
+                    width: 100%;
+                    height: 8.4px;
+                    cursor: pointer;
+                }
+
+                input[type=range]::-moz-range-thumb {
+                    width: 20px;
+                    height: 20px;
+                    background: #f88dd5;
+                    border: 0px solid rgba(0, 0, 0, 0);
+                    border: 0;
+                    border-radius: 100px;
+                    cursor: pointer;
+                }
+
+                input[type=range]::-ms-track {
+                    background: transparent;
+                    border-color: transparent;
+                    border-width: 5.8px 0;
+                    color: transparent;
+                    width: 100%;
+                    height: 8.4px;
+                    cursor: pointer;
+                }
+
+                input[type=range]::-ms-fill-lower {
+                    background: #ffc9ee;
+                    border: 0;
+                    border-radius: 50px;
+                }
+
+                input[type=range]::-ms-fill-upper {
+                    background: #ffe3f6;
+                    border: 0;
+                    border-radius: 50px;
+                }
+
+                input[type=range]::-ms-thumb {
+                    width: 20px;
+                    height: 20px;
+                    background: #f88dd5;
+                    border: 0px solid rgba(0, 0, 0, 0);
+                    border: 0;
+                    border-radius: 100px;
+                    cursor: pointer;
+                    margin-top: 0px;
+                    /*Needed to keep the Edge thumb centred*/
+                }
+
+                input[type=range]:focus::-ms-fill-lower {
+                    background: #ffe3f6;
+                }
+
+                input[type=range]:focus::-ms-fill-upper {
+                    background: #fffdfe;
+                }
+
+                /*TODO: Use one of the selectors from https://stackoverflow.com/a/20541859/7077589 and figure out
+                  how to remove the virtical space around the range input in IE*/
+                @supports (-ms-ime-align:auto) {
+
+                    /* Pre-Chromium Edge only styles, selector taken from hhttps://stackoverflow.com/a/32202953/7077589 */
+                    input[type=range] {
+                        margin: 0;
+                        /*Edge starts the margin from the thumb, not the track as other browsers do*/
+                    }
+                }
+
+                .toggleWrapper {
+                    cursor: pointer;
+
+                    width: min-content;
+
+                    .toggleBG {
+                        height: 24px;
+                        width: 40px;
+                        padding: 2px;
+
+                        background-color: $primaryGrey;
+                        border-radius: 100px;
+
+                        .toggleKnob {
+                            height: 20px;
+                            width: 20px;
+                            border-radius: 100%;
+
+                            background-color: $primaryWhite;
+
+                            transform: translateX(0px);
+                            transition: transform 0.2s;
+                        }
+
+
+                    }
 
                 }
+
+                .enabled {
+
+                    .toggleBG {
+                        background-color: $primaryPink;
+
+                        .toggleKnob {
+                            transform: translateX(16px);
+                            transition: transform 0.2s;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .delete {
+        margin-bottom: 10px;
+        background-color: transparent;
+        border: none;
+        display: flex;
+        justify-content: left;
+        align-items: center;
+        width: 100%;
+
+        .deleteWrapper {
+            height: 56px;
+            width: 56px;
+            padding: 11px 14px 14px 14px;
+            border-radius: $border-radius;
+            cursor: pointer;
+            background-color:  rgb(20, 20, 20, 0.7);
+
+            img {
+                // filter:brightness(0)
 
             }
         }
+
+
+    }
+
+    .surfaceFeatures {
+        background-color: rgb(20, 20, 20, 0.7);
+        padding: 20px;
+        border-radius: $border-radius;
     }
 }

@@ -19,9 +19,9 @@ const CornerPivot: React.FC<{
     setGroupScale: Dispatch<SetStateAction<THREE.Vector3>>,
     setUIScale: Dispatch<SetStateAction<THREE.Vector3>>,
     setWidthScale: Dispatch<SetStateAction<THREE.Vector3>>,
-    setHeightScale: Dispatch<SetStateAction<THREE.Vector3>>
-
-}> = ({ spawnPosition, enabled, editorState, setEditorState, imagePos, scale, setCornerPivotScale, groupScale, setGroupScale, setUIScale, setWidthScale, setHeightScale }) => {
+    setHeightScale: Dispatch<SetStateAction<THREE.Vector3>>,
+    imageHighlighted: boolean,
+}> = ({ spawnPosition, enabled, editorState, setEditorState, imagePos, scale, setCornerPivotScale, groupScale, setGroupScale, setUIScale, setWidthScale, setHeightScale, imageHighlighted }) => {
 
     const meshRef = useRef<THREE.Mesh>(null);
 
@@ -29,15 +29,27 @@ const CornerPivot: React.FC<{
     const [latestCorner, setLatestCorner] = useState<THREE.Vector3>(new Vector3(0, 0, 0));
     const [latestGroupScale, setLatestGroupScale] = useState<THREE.Vector3>(new Vector3(1, 1, 1));
     const [latestCornerPivotScale, setLatestCornerPivotScale] = useState<THREE.Vector3>(new Vector3(1, 1, 1));
-
+    const [highlighted, setHighlighted] = useState<boolean>(false);
 
     const { camera } = useThree();
 
+    // set potition at start
     useEffect(() => {
         if (meshRef.current) {
-            meshRef.current.position.set(spawnPosition.x, spawnPosition.y, spawnPosition.z + 0.01);
+            meshRef.current.position.set(spawnPosition.x, spawnPosition.y, spawnPosition.z + 0.02);
         }
     }, []);
+
+    // set pointer when being hovered
+    useEffect(() => {
+        if(highlighted){
+            document.body.style.cursor = 'pointer';
+        } else {
+            if(!imageHighlighted) {
+                document.body.style.cursor = 'auto'
+            }
+        }
+    }, [highlighted]);
 
     const bind = useDrag(({ active, first, xy: [x, y], event }) => {
         if (active) {
@@ -100,9 +112,16 @@ const CornerPivot: React.FC<{
     })
 
     return (
-        <mesh {...bind()} scale={scale} ref={meshRef} visible={enabled}>
+        <mesh
+            {...bind()}
+            scale={scale}
+            ref={meshRef}
+            visible={enabled}
+            onPointerEnter={() => setHighlighted(true)}
+            onPointerLeave={() => setHighlighted(false)}
+        >
             <planeGeometry args={[0.05, 0.05]} />
-            <meshBasicMaterial color={'#f88dd5'} />
+            <meshBasicMaterial color={highlighted ? '#FF31BB' : '#FF62CB'} />
         </mesh>
     )
 }
@@ -144,7 +163,7 @@ const Image: React.FC<{
     const [widthScale, setwidthScale] = useState<THREE.Vector3>(new Vector3(1, 1, 1));
     const [heightPosition, setHeightPosition] = useState<THREE.Vector3>(new Vector3(0, 0, 0));
     const [heightScale, setHeightScale] = useState<THREE.Vector3>(new Vector3(1, 1, 1));
-    
+    const [highlighted, setHighlighted] = useState<boolean>(false);
     const [pointerMoved, setPointerMoved] = useState<boolean>(false);
 
     const groupRef = useRef<THREE.Group>(null!);
@@ -221,13 +240,18 @@ const Image: React.FC<{
     // change material when emissive is enabled/disabled
     useEffect(() => {
         if (meshRef.current) {
-            if(emissive) {
+            if (emissive) {
                 meshRef.current.material.emissiveIntensity = 5;
             } else {
                 meshRef.current.material.emissiveIntensity = 0;
             }
         }
     }, [emissive]);
+
+    // set pointer when being hovered
+    useEffect(() => {
+        document.body.style.cursor = highlighted ? 'pointer' : 'auto'
+    }, [highlighted]);
 
     function handleImageUp() {
         if (!pointerMoved) {
@@ -242,7 +266,7 @@ const Image: React.FC<{
     }
 
     function handleImageDown() {
-        setPointerMoved(false)
+        setPointerMoved(false);
     }
 
     function handleImageMissed(e: Event) {
@@ -294,10 +318,17 @@ const Image: React.FC<{
 
     return (
         <>
-            <group scale={groupScale} ref={groupRef} position={position} {...bind()}>
+            <group
+                scale={groupScale}
+                ref={groupRef}
+                position={position} {...bind()}
+
+                >
                 <mesh
                     scale={meshScale}
                     ref={meshRef}
+                    onPointerOver={() => setHighlighted(true)}
+                    onPointerOut={() => setHighlighted(false)}
                     onPointerDown={() => handleImageDown()}
                     onPointerMove={() => setPointerMoved(true)}
                     onPointerUp={() => handleImageUp()}
@@ -319,6 +350,7 @@ const Image: React.FC<{
                             setUIScale={setUIScale}
                             setWidthScale={setwidthScale}
                             setHeightScale={setHeightScale}
+                            imageHighlighted={highlighted}
                         />
                     ))
                 }
@@ -334,13 +366,13 @@ const Image: React.FC<{
                             emissive={emissive}
                             setEmissive={setEmissive}
                         />
-                        <ImageDimension 
+                        <ImageDimension
                             text={(groupScale.x * Math.abs(heightPosition.x) * 2).toFixed(2) + " m"}
                             position={widthPosition}
                             rotation={0}
                             scale={widthScale}
                         />
-                        <ImageDimension 
+                        <ImageDimension
                             text={(groupScale.x * Math.abs(widthPosition.y) * 2).toFixed(2) + " m"}
                             position={heightPosition}
                             rotation={- Math.PI / 2}

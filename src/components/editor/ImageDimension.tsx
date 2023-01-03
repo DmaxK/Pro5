@@ -13,7 +13,7 @@ const ImageDimension: React.FC<{
     return (
         <group scale={scale} position={position} rotation={[0, 0, rotation]}>
             <group >
-                <Html scale={0.1} transform >
+                <Html scale={0.1} transform zIndexRange={[100, 0]}>
                     <div className='imageDimension'>
                         <div>
                             {text}
