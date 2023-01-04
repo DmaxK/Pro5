@@ -2,7 +2,7 @@ import { Canvas } from '@react-three/fiber';
 import { Color, DoubleSide, MeshPhongMaterial, Vector3 } from 'three';
 import React, { Dispatch, useEffect, useRef, useState } from 'react';
 
-const POI: React.FC<{position: Vector3, setCameraPosition: Dispatch<React.SetStateAction<Vector3>>}> = ({position, setCameraPosition}) => {
+const POI: React.FC<{position: Vector3, lookAt: Vector3, setCameraPosition: Dispatch<React.SetStateAction<Vector3>>, setCameraRotation: Dispatch<React.SetStateAction<Vector3>>}> = ({position, lookAt, setCameraPosition, setCameraRotation}) => {
 	const [hovered, setHovered] = useState(false)
 	const mat = useRef<MeshPhongMaterial | null>(null);
 
@@ -14,7 +14,7 @@ const POI: React.FC<{position: Vector3, setCameraPosition: Dispatch<React.SetSta
 		}
 	}, [hovered])
     return(
-    <mesh onPointerOver={() => setHovered(true)} onPointerOut={() => setHovered(false)} position={position} scale={[0.5,0.5,0.5]} onClick={() => setCameraPosition(new Vector3(position.x, position.y + 2, position.z))}>
+    <mesh onPointerOver={() => setHovered(true)} onPointerOut={() => setHovered(false)} position={position} scale={[0.5,0.5,0.5]} onClick={() => {setCameraPosition(new Vector3(position.x, position.y + 2, position.z)); setCameraRotation(new Vector3(lookAt.x, lookAt.y, lookAt.z))}}>
         <sphereBufferGeometry attach={"geometry"} args={[1, 32, 32, 0, 2*Math.PI, 0, Math.PI/2]}/>
         <meshPhongMaterial ref={mat} color={"#F88DD5"} opacity={0.5} emissive={"#F88DD5"} emissiveIntensity={1} transparent/>
     </mesh>
