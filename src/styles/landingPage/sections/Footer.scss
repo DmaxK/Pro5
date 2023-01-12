@@ -5,3 +5,11 @@ footer {
   font-size: calc(12px + 0.8vmin);
   text-align: center;
 }
+
+hr {
+  width: 75%;
+  height: 2px;
+  border-width: 0;
+  background-color: $primaryGrey;
+  margin-bottom: 1.5%;
+}

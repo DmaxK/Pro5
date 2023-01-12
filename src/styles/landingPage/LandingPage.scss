@@ -3,6 +3,17 @@
   display: flex;
   flex-direction: column;
   padding: 2% 3%;
+
+  ::-moz-selection {
+    /* Code for Firefox */
+    color: $primaryWhite;
+    background: $primaryPink;
+  }
+
+  ::selection {
+    color: $primaryWhite;
+    background: $primaryPink;
+  }
 }
 
 .content-limiter {

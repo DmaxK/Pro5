@@ -4,6 +4,7 @@
   }
 
   font-size: calc(18px + 7vmin);
+  z-index: 1;
 }
 
 @media only screen and (min-width: 1024px) {
@@ -14,7 +15,7 @@
 
 @media only screen and (min-width: 1440px) {
   .headline {
-    max-width: 100%;
+    max-width: 60%;
   }
 }
 

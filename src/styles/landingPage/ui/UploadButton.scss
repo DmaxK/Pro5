@@ -17,11 +17,13 @@ input[type='file'] {
   transition-duration: 0.3s;
 
   &:hover {
+    // hover color maybe not the best atm
     @include hover($button-upload-bg-color);
   }
 
   &:active {
-    border-color: $body-bg-color;
+    //border-color: $body-bg-color;
+    border-color: $primaryPink;
   }
 }
 

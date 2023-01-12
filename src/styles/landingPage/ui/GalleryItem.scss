@@ -2,25 +2,27 @@
 .galleryItem {
   margin: 1%;
   border-radius: 1.5vmin;
-  max-width: 350px;
+  max-width: 30%;
   border: 2px solid $body-bg-color;
   cursor: pointer;
 
   &:hover {
-    box-shadow: 0 4px 8px 0 rgba($secondaryWhite, 0.2), 0 6px 20px 0 rgba($tertiaryWhite, 0.19);
+    box-shadow: 0 4px 8px 0 rgba($primaryPink, 0.2), 0 6px 20px 0 rgba($primaryPink, 0.19);
     border: none;
   }
 
   &:active {
     //border: 2px solid rgba($primaryGrey, 0.6);
-    border-left: 2px solid rgba($primaryGrey, 0.6);
-    border-right: 2px solid rgba($primaryGrey, 0.6);
-    border-bottom: 2px solid rgba($primaryGrey, 0.6);
+    border-left: 2px solid rgba($primaryPink, 0.6);
+    border-right: 2px solid rgba($primaryPink, 0.6);
+    border-bottom: 2px solid rgba($primaryPink, 0.6);
   }
 }
 
-@media only screen and (max-width: 969px) {
+@media only screen and (max-width: 1023px) {
   .galleryItem {
-    margin: 3% 1%;
+    margin: 3% 2%;
+
+    max-width: 60%;
   }
 }
