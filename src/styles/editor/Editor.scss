@@ -15,7 +15,6 @@
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
-  /* overflow: hidden; */
   background: #272727;
 }
 
@@ -25,13 +24,29 @@
     top: 0;
     z-index: 2;
     pointer-events: none;
+    width: 100vw;
 
     .logo {
+        padding: 5px 0 5px 12px;
         pointer-events: auto;
+        cursor: pointer;
         font-size: 0.6em;
         width: min-content;
-        margin: 0;
         filter: $drop-shadow;
+        border-radius: 10px;
+        // background-color: $primaryBlack;
+        background-color: transparent;
+    
+
+        img {
+            height: 40px;
+            margin-bottom: -8px;
+        }
+    }
+
+    .logo:active {
+
+        color: $primaryPink;
     }
 }
 
@@ -41,5 +56,18 @@
     padding: 10px;
     z-index: 2;
     pointer-events: none;
+}
+
+.UIdebug {
+    pointer-events: auto;
+    position: fixed;
+    top: 0;
+    right: 0;
+    padding: 10px;
+    color: rgb(255, 255, 255);
+    background-color: #00000073;
+    font-size: 0.35em;
+    z-index: 100;
+    font-family: monospace;
 }
 

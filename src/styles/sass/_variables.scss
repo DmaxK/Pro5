@@ -3,6 +3,7 @@
 
 // Colors
 $primaryPink: #f88dd5;
+$secondaryPink: #ffe3f6;
 $primaryWhite: #f4f4f4;
 $primaryBlack: #1a1a1a;
 $secondaryWhite: #f6f6f6;
@@ -33,3 +34,4 @@ $border-radius: 12px;
 $border-radius-small: 4px;
 $drop-shadow: drop-shadow(0 0 10px $shadowCol);
 $border-grey: 2px solid #272727;
+$svg-pink-filter: invert(70%) sepia(78%) saturate(626%) hue-rotate(284deg) brightness(106%) contrast(94%);
