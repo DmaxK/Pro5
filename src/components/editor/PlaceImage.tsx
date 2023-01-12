@@ -10,7 +10,7 @@ const PlaceImage: React.FC<{
     setSelectedImageKey: Dispatch<React.SetStateAction<string>>,
     editorState: string,
     setEditorState: Dispatch<React.SetStateAction<string>>
-}> = ({ selectedImageKey, setSelectedImageKey, editorState, setEditorState}) => {
+}> = ({ selectedImageKey, setSelectedImageKey, editorState, setEditorState }) => {
     const [expanded, setExpanded] = useState(false);
     const [loading, setLoading] = useState(false);
     const [keys, setKeys] = useState<Array<string>>([])
@@ -71,8 +71,10 @@ const PlaceImage: React.FC<{
             </button>
             {keys.length > 0 &&
                 <button className="dropDown" >
-                    <div className='dropDownContainer'>
-                        <img src={DropDownArrow} className={expanded ? 'left' : 'right'} onClick={() => setExpanded(!expanded)} />
+                    <div className='dropDownContainer' onClick={() => setExpanded(!expanded)}>
+
+                        <img src={DropDownArrow} className={expanded ? 'left' : 'right'}  />
+
                     </div>
                     {expanded &&
                         <>

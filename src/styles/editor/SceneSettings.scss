@@ -43,7 +43,7 @@
 
     }
 
-    .settingsButton:active {
+    .settingsButton:hover {
         color: $primaryPink;
 
         img {
@@ -157,6 +157,12 @@
                         border-radius: 100px;
                     }
                 }
+
+                .outer:hover{
+                    transform: scale(1.05);
+                }
+
+        
                 .outer.enabled {
                     background-color: $primaryPink;
 
@@ -165,6 +171,8 @@
                     }
                 }     
             }
+
+   
 
         }
     }
