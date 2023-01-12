@@ -1,4 +1,4 @@
-import { Environment, Sky, Cloud } from '@react-three/drei'
+import { Cloud, Environment, Sky } from '@react-three/drei';
 
 const Goldenhour = () => {
   //        < Sky inclination={0.4} turbidity={0.3} azimuth={-180} rayleigh={1.5} sunPosition={[5, 0.3, 6]}/>
@@ -8,7 +8,7 @@ const Goldenhour = () => {
           <orthographicCamera attach={"shadow-camera"} args={[-30,30,30,-30]}/>
         </directionalLight>
         <hemisphereLight color={"#f5ad6e"} intensity={0.03}/>
-        <Environment files="/images/sunset5.hdr" background/>
+        <Environment files="./images/sunset5.hdr" background/>
         </>
   )
 }

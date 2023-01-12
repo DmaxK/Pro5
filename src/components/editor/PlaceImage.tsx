@@ -1,9 +1,9 @@
 import React, { Dispatch, useEffect, useState } from 'react';
-import '../../styles/editor/PlaceImage.scss';
 import DropDownArrow from '../../assets/svgs/DropDownArrow.svg';
+import '../../styles/editor/PlaceImage.scss';
 // import Plus from '../../assets/svgs/Plus.svg';
-import TestPosterThumbnail from '../../assets/images/testPosterThumbnail.jpg';
 import { getStaticContextFromError } from '@remix-run/router';
+import TestPosterThumbnail from '../../assets/images/testPosterThumbnail.jpg';
 
 const PlaceImage: React.FC<{
     selectedImageKey: string,
@@ -38,7 +38,7 @@ const PlaceImage: React.FC<{
 
 
     function updateKeys() {
-        let temp = [];
+        const temp = [];
         for (let i = 0; i < sessionStorage.length; i++) {
             temp.push((sessionStorage.key(i) || ''));
         }
@@ -62,7 +62,7 @@ const PlaceImage: React.FC<{
                     :
                     <>
                         <label htmlFor="file-upload-editor" >
-                            <img src={'/images/Plus.svg'} className='plus' />
+                            <img src={'./images/Plus.svg'} className='plus' />
                         </label>
                         <input id='file-upload-editor' type={'file'} onChange={(event) => (event.target.files ? setData(event.target.files[0]) : console.log(event))} />
                     </>
@@ -91,7 +91,7 @@ const PlaceImage: React.FC<{
                                 }
                             </div>
                             <label htmlFor="file-upload-editor">
-                                <img src={'/images/Plus.svg'} className='plus' />
+                                <img src={'./images/Plus.svg'} className='plus' />
                             </label>
                             <input id='file-upload-editor' type={'file'} onChange={(event) => (event.target.files ? setData(event.target.files[0]) : console.log(event))} />
                         </>
