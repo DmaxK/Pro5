@@ -8,8 +8,9 @@ import { getStaticContextFromError } from '@remix-run/router';
 const PlaceImage: React.FC<{
     selectedImageKey: string,
     setSelectedImageKey: Dispatch<React.SetStateAction<string>>,
+    editorState: string,
     setEditorState: Dispatch<React.SetStateAction<string>>
-}> = ({ selectedImageKey, setSelectedImageKey, setEditorState}) => {
+}> = ({ selectedImageKey, setSelectedImageKey, editorState, setEditorState}) => {
     const [expanded, setExpanded] = useState(false);
     const [loading, setLoading] = useState(false);
     const [keys, setKeys] = useState<Array<string>>([])
@@ -48,7 +49,7 @@ const PlaceImage: React.FC<{
     // sessionStorage.clear();
     return (
         <div className="placeImage" >
-            <button className={(keys.length === 0 ? 'noImages' : 'images') + " place"} >
+            <button className={(keys.length === 0 ? 'noImages ' : 'images ') + (editorState === 'place' ? 'activelyPlacing' : ' ') + " place"} >
                 <div onClick={() => keys.length > 0 ? setEditorState('place') : alert('Please upload an Image first.')}>
                     Place
                 </div>

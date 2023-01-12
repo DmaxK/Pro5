@@ -8,6 +8,15 @@
     width: min-content;
     // position: relative;
 
+    .place:focus {
+        outline: none;
+    }
+
+    .place.activelyPlacing {
+        // background-color: $primaryPink;
+        border: solid $primaryPink 2px;
+    }
+
     .place {
         display: flex;
         flex-direction: row;
@@ -18,7 +27,6 @@
         background-color: $primaryBlack;
         color: $primaryWhite;
         border-radius: $border-radius $border-radius-small $border-radius-small $border-radius;
-        border: none;
         filter: $drop-shadow;
         border: $border-grey;
 

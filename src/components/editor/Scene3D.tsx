@@ -1,4 +1,4 @@
-import React, { SetStateAction, useState, Suspense, useRef } from 'react';
+import React, { SetStateAction, useState, Suspense, useRef, useEffect } from 'react';
 import { Vector3 } from 'three';
 import { EffectComposer, Outline } from '@react-three/postprocessing'
 import { randFloat } from 'three/src/math/MathUtils.js';
@@ -36,6 +36,32 @@ function Plane() {
             <TestMesh />
         </>
     );
+}
+
+function useKeyPress(targetCode: string) {
+    const [keyPressed, setKeyPressed] = useState<boolean>(false);
+
+    function downHandler(e: KeyboardEvent) {
+        if (e.code === targetCode) {
+            setKeyPressed(true);
+        }
+    }
+
+    const upHandler = (e: KeyboardEvent) => {
+        if (e.code === targetCode) {
+            setKeyPressed(false);
+        }
+    };
+
+    useEffect(() => {
+        window.addEventListener("keydown", downHandler);
+        window.addEventListener("keyup", upHandler);
+        return () => {
+            window.removeEventListener("keydown", downHandler);
+            window.removeEventListener("keyup", upHandler);
+        };
+    }, []);
+    return keyPressed;
 }
 
 
@@ -120,7 +146,7 @@ const Scene3D: React.FC<{
         setImages([
             ...images.slice(0, thisIndex),
             ...images.slice(thisIndex + 1)
-          ]);
+        ]);
 
     }
 
@@ -134,6 +160,19 @@ const Scene3D: React.FC<{
             setEditorState('navigate');
         }
     }
+
+    const escapePressed = useKeyPress("Escape");
+
+    useEffect(() => {
+        if (escapePressed) {
+            if(editorState === 'place'){
+                setEditorState('navigate');
+            }
+            if(editorState === 'navigate'){
+                disableAllPivots();
+            }
+        }
+    }, [escapePressed]);
 
     /*
     <mesh castShadow name='scene' position={[0, 2, -4]} scale={[3, 3, 3]} onClick={(e) => handleSceneClicked(e)}>
