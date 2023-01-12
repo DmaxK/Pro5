@@ -72,6 +72,8 @@ const Camera: React.FC<{
     useEffect(() => {
         if (cameraControls.current) {
             cameraControls.current.setLookAt(cameraPosition.x, cameraPosition.y, cameraPosition.z, cameraLookAt.x, cameraLookAt.y, cameraLookAt.z, true);
+            console.log(cameraLookAt.x + " look at")
+            console.log(cameraPosition.x + " pos")
         }
     }, [cameraLookAt, cameraPosition])
 

@@ -210,7 +210,8 @@ const Scene3D: React.FC<{
                             distanceFromWall={image.distanceFromWall}
                             deleteImage={deleteImage} 
                             setCameraPosition={setCameraPosition}
-                            setCameraRotation={setCameraRotation}/>
+                            setCameraRotation={setCameraRotation}
+                            />
                     ))}
                     <PreviewImage
                         // enabled={true}

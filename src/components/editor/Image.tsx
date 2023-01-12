@@ -328,10 +328,11 @@ const Image: React.FC<{
   function handleImageDoubleClicked(){
     if(meshRef.current){
       const normal = new Vector3();
-      meshRef.current.getWorldDirection(normal);
-      const pos = meshRef.current.position;
+      groupRef.current.getWorldDirection(normal);
+      const pos = position;
       const camPivot = normal.add(pos);
-      const camPos = camPivot.add(normal.clampLength(0.01,0.02));
+      const camPos = camPivot.add(normal);
+      console.log(normal)
       setCameraPosition(camPos);
       setCameraRotation(camPivot);
     }
