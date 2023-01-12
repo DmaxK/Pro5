@@ -172,7 +172,7 @@ const Scene3D: React.FC<{
                         <group>
                             <POI
                                 position={new Vector3(4, 0, 1)}
-                                lookAt={new Vector3(4, 4, 4)}
+                                lookAt={new Vector3(4.05, 0, 1.05)}
                                 setCameraPosition={setCameraPosition}
                                 setCameraRotation={setCameraRotation}
                             />

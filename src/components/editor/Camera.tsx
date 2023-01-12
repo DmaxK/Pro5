@@ -67,18 +67,20 @@ const Camera: React.FC<{
         }
     }, [editorState]);
 
-    useEffect(() => {
-        if (cameraControls.current) {
-            cameraControls.current.moveTo(cameraPosition.x, cameraPosition.y, cameraPosition.z, true);
-            cameraControls.current.dolly(0.01, true);
-        }
-    }, [])
+    
 
     useEffect(() => {
         if (cameraControls.current) {
             cameraControls.current.setLookAt(cameraPosition.x, cameraPosition.y, cameraPosition.z, cameraLookAt.x, cameraLookAt.y, cameraLookAt.z, true);
         }
     }, [cameraLookAt, cameraPosition])
+
+    useEffect(() => {
+        if (cameraControls.current) {
+            cameraControls.current.setTarget(0.1,2,0.1);
+            cameraControls.current.dolly(0.01, true);
+        }
+    }, [])
 
     useEffect(() => {
         if(cameraControls.current){
