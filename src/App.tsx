@@ -7,12 +7,12 @@ import LandingPage from './components/landingPage/LandingPage';
 
 const router = createBrowserRouter([
   {
-    path: '/Pro5/',
+    path: '/',
     element: <LandingPage />,
     errorElement: <ErrorPage />,
   },
   {
-    path: '/Pro5/editor',
+    path: '/editor',
     element: <Editor />,
   },
 ]);
