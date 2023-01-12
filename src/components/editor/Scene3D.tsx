@@ -14,6 +14,7 @@ import Goldenhour from './lighting/golden-hour.js';
 import Midnight from './lighting/midnight.js';
 import { Scene1 } from './Scenes/Scene_1_comp.js';
 import { TestMesh } from './Scenes/TestMeshes.js';
+import {Scene1_2} from './Scenes/scene_1_80mb-processed.js';
 
 import '../../styles/editor/Scene3D.scss';
 
@@ -160,7 +161,7 @@ const Scene3D: React.FC<{
                     }
                     {scene == 'scene2' &&
                         <>
-                            <Box />
+                            <Scene1_2 />
                         </>
                     }
                     {scene == 'scene3' &&
@@ -207,7 +208,9 @@ const Scene3D: React.FC<{
                             spawnLookAtPoint={image.spawnLookAtPoint}
                             spawnNormal={image.spawnNormal}
                             distanceFromWall={image.distanceFromWall}
-                            deleteImage={deleteImage} />
+                            deleteImage={deleteImage} 
+                            setCameraPosition={setCameraPosition}
+                            setCameraRotation={setCameraRotation}/>
                     ))}
                     <PreviewImage
                         // enabled={true}

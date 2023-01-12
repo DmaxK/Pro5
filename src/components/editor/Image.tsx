@@ -181,6 +181,8 @@ const Image: React.FC<{
   spawnNormal: THREE.Vector3;
   distanceFromWall: number;
   deleteImage: (thisIndex: number) => void;
+  setCameraPosition: Dispatch<React.SetStateAction<Vector3>>;
+  setCameraRotation: Dispatch<React.SetStateAction<Vector3>>;
 }> = ({
   index,
   spawnPosition,
@@ -193,6 +195,8 @@ const Image: React.FC<{
   spawnNormal,
   distanceFromWall,
   deleteImage,
+  setCameraPosition,
+  setCameraRotation
 }) => {
   const [position, setPosition] = useState<Vector3>(spawnPosition);
   const [roughness, setRoughness] = useState<number>(1);
@@ -292,7 +296,9 @@ const Image: React.FC<{
 
   // set pointer when being hovered
   useEffect(() => {
-    document.body.style.cursor = highlighted ? 'pointer' : 'auto';
+    if(!editorState === 'place'){
+      document.body.style.cursor = highlighted ? 'pointer' : 'auto';
+    }
   }, [highlighted]);
 
   function handleImageUp() {
@@ -317,6 +323,18 @@ const Image: React.FC<{
     // }
     // console.log(e)
     // FIX THIS!!!
+  }
+
+  function handleImageDoubleClicked(){
+    if(meshRef.current){
+      const normal = new Vector3();
+      meshRef.current.getWorldDirection(normal);
+      const pos = meshRef.current.position;
+      const camPivot = normal.add(pos);
+      const camPos = camPivot.add(normal.clampLength(0.01,0.02));
+      setCameraPosition(camPos);
+      setCameraRotation(camPivot);
+    }
   }
 
   const bind = useDrag(({ active, movement: [x, y], timeStamp, event }) => {
@@ -367,6 +385,7 @@ const Image: React.FC<{
           onPointerMove={() => setPointerMoved(true)}
           onPointerUp={() => handleImageUp()}
           onPointerMissed={(e) => handleImageMissed(e)}
+          onDoubleClick={() => handleImageDoubleClicked()}
         />
         {pivotEnabled &&
           cornerPivotPositions.map((pos, i) => (
