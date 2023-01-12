@@ -18,56 +18,70 @@
   background: #272727;
 }
 
+.loader {
+  position: absolute !important;
+  top: 50%;
+  left: 50%;
+  transform: translate(-150px, -6px);
+  z-index: 1;
+}
+
+.logo-loadingscreen {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  max-width: 100%;
+  opacity: calc(5%);
+}
+
 .UItop {
-    position: fixed;
-    padding: 10px;
-    top: 0;
-    z-index: 2;
-    pointer-events: none;
-    width: 100vw;
+  position: fixed;
+  padding: 10px;
+  top: 0;
+  z-index: 2;
+  pointer-events: none;
+  width: 100vw;
 
-    .logo {
-        padding: 5px 0 5px 12px;
-        pointer-events: auto;
-        cursor: pointer;
-        font-size: 0.6em;
-        width: min-content;
-        filter: $drop-shadow;
-        border-radius: 10px;
-        // background-color: $primaryBlack;
-        background-color: transparent;
-    
+  .logo {
+    padding: 5px 0 5px 12px;
+    pointer-events: auto;
+    cursor: pointer;
+    font-size: 0.6em;
+    width: min-content;
+    filter: $drop-shadow;
+    border-radius: 10px;
+    // background-color: $primaryBlack;
+    background-color: transparent;
 
-        img {
-            height: 40px;
-            margin-bottom: -8px;
-        }
+    img {
+      height: 40px;
+      margin-bottom: -8px;
     }
+  }
 
-    .logo:active {
-
-        color: $primaryPink;
-    }
+  .logo:active {
+    color: $primaryPink;
+  }
 }
 
 .UIbottom {
-    position: fixed;
-    bottom: 0;
-    padding: 10px;
-    z-index: 2;
-    pointer-events: none;
+  position: fixed;
+  bottom: 0;
+  padding: 10px;
+  z-index: 2;
+  pointer-events: none;
 }
 
 .UIdebug {
-    pointer-events: auto;
-    position: fixed;
-    top: 0;
-    right: 0;
-    padding: 10px;
-    color: rgb(255, 255, 255);
-    background-color: #00000073;
-    font-size: 0.35em;
-    z-index: 100;
-    font-family: monospace;
+  pointer-events: auto;
+  position: fixed;
+  top: 0;
+  right: 0;
+  padding: 10px;
+  color: rgb(255, 255, 255);
+  background-color: #00000073;
+  font-size: 0.35em;
+  z-index: 100;
+  font-family: monospace;
 }
-
