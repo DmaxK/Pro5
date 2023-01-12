@@ -7,7 +7,7 @@ import { useGLTF } from '@react-three/drei';
 import React, { useRef } from 'react';
 
 export function TestMesh() {
-  const { nodes, materials } = useGLTF('/models/testMeshes.glb');
+  const { nodes, materials } = useGLTF('./models/testMeshes.glb');
   return (
     <group dispose={null}>
       <mesh receiveShadow castShadow geometry={nodes.Cube.geometry} material={nodes.Cube.material} />
@@ -26,4 +26,4 @@ export function TestMesh() {
   );
 }
 
-useGLTF.preload('/models/testMeshes.glb');
+useGLTF.preload('./models/testMeshes.glb');
