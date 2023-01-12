@@ -1,5 +1,6 @@
 import React, { useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
+import logo from '../../assets/svgs/logoBright.svg';
 import '../../styles/landingPage/LandingPage.scss';
 import Description from './sections/Description';
 import Footer from './sections/Footer';
@@ -46,6 +47,13 @@ function LandingPage() {
   return (
     <div className="content-wrapper">
       <BtnEditor onClick={routeChange} />
+      <img
+        src={logo}
+        id="logo-lp"
+        onClick={() => {
+          navigate('/');
+        }}
+      />
       <div className="content-limiter">
         <Headline />
         <Description />
