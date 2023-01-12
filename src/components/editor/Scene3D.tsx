@@ -49,6 +49,7 @@ const Scene3D: React.FC<{
 }> = ({ editorState, setEditorState, selectedImageKey, lighting, POIsEnabled, scene }) => {
 
     const [cameraPosition, setCameraPosition] = useState<Vector3>(new Vector3(0, 2, 0));
+    const [cameraRotation, setCameraRotation] = useState<Vector3>(new Vector3(0, 2, 0));
 
     interface ImageData {
         id: string;
@@ -151,7 +152,7 @@ const Scene3D: React.FC<{
         <div className="scene3D">
             <Canvas shadows >
                 <Suspense fallback={null}>
-                    <Camera cameraPosition={cameraPosition} editorState={editorState} scene={scene} />
+                    <Camera cameraPosition={cameraPosition} cameraLookAt={cameraRotation} editorState={editorState} scene={scene} />
                     {scene == 'scene1' &&
                         <>
                             <Scene1 />
@@ -171,7 +172,9 @@ const Scene3D: React.FC<{
                         <group>
                             <POI
                                 position={new Vector3(4, 0, 1)}
+                                lookAt={new Vector3(4.05, 0, 1.05)}
                                 setCameraPosition={setCameraPosition}
+                                setCameraRotation={setCameraRotation}
                             />
                         </group>
                     }

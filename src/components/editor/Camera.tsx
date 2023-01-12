@@ -8,10 +8,11 @@ import { Mesh, Vector3 } from 'three';
 
 const Camera: React.FC<{ 
     cameraPosition: Vector3, 
+    cameraLookAt: Vector3,
     editorState: string,
     scene: string 
     }> = 
-    ({ cameraPosition, editorState, scene }) => {
+    ({ cameraPosition, cameraLookAt, editorState, scene }) => {
 
     const meshesScene1:Mesh[] = [];
     const meshesScene2:Mesh[] = [];
@@ -66,11 +67,20 @@ const Camera: React.FC<{
         }
     }, [editorState]);
 
+    
+
     useEffect(() => {
         if (cameraControls.current) {
-            cameraControls.current.moveTo(cameraPosition.x, cameraPosition.y, cameraPosition.z, true);
+            cameraControls.current.setLookAt(cameraPosition.x, cameraPosition.y, cameraPosition.z, cameraLookAt.x, cameraLookAt.y, cameraLookAt.z, true);
         }
-    }, [cameraPosition])
+    }, [cameraLookAt, cameraPosition])
+
+    useEffect(() => {
+        if (cameraControls.current) {
+            cameraControls.current.setTarget(0.1,2,0.1);
+            cameraControls.current.dolly(0.01, true);
+        }
+    }, [])
 
     useEffect(() => {
         if(cameraControls.current){
