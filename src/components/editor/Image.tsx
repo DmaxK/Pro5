@@ -161,7 +161,7 @@ const CornerPivot: React.FC<{
       onPointerEnter={() => setHighlighted(true)}
       onPointerLeave={() => setHighlighted(false)}
     >
-      <planeGeometry args={[0.05, 0.05]} />
+      <planeGeometry args={[0.1, 0.1]} />
       <meshBasicMaterial color={highlighted ? '#FF31BB' : '#FF62CB'} />
     </mesh>
   );

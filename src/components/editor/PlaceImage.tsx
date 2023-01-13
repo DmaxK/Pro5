@@ -54,7 +54,7 @@ const PlaceImage: React.FC<{
                     Place
                 </div>
                 {keys.length > 0 ?
-                    <div className='imageContainer' onClick={() => keys.length > 0 ? alert('Placing Image!!') : alert('Please upload an Image first.')}>
+                    <div className='imageContainer' onClick={() => keys.length > 0 ? setEditorState('place') : alert('Please upload an Image first.')}>
                         {
                             getImage(selectedImageKey) !== '' &&
                             <img src={getImage(selectedImageKey)} />

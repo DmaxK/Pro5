@@ -14,6 +14,7 @@
         color: $primaryWhite;
         filter: $drop-shadow;
         border: $border-grey;
+        outline: none;
 
         font-family: $body-font-family;
         font-size: 0.45em;
@@ -48,6 +49,14 @@
 
         img {
             filter: $svg-pink-filter;
+        }
+    }
+
+    .settingsButton:active {
+        color: $darkPink;
+
+        img {
+            filter: $svg-pinkDark-filter;
         }
     }
 

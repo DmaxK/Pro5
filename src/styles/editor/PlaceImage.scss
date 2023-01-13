@@ -15,6 +15,7 @@
     .place.activelyPlacing {
         // background-color: $primaryPink;
         border: solid $primaryPink 2px;
+        color: $primaryPink;
     }
 
     .place {
@@ -68,21 +69,51 @@
         }
     }
 
+    .place.images:hover {
+        color: $primaryPink;
+
+    }
+
+    .place.images:active {
+        div {
+            color: $darkPink;
+        }
+
+
+    }
+
     .place.noImages {
         border-radius: $border-radius;
         padding-right: 6px;
+        cursor: auto;
+
+        div {
+            color: $tertiaryBlack
+        }
 
         label {
             margin-left: 4px;
+            cursor: pointer;
         }
+
+        div:active {
+            color: $tertiaryBlack;
+        }
+
+
+
     }
 
     .place div:active {
         color: $primaryPink;
     }
 
-    .place label:active {
+    .place label:hover {
         filter: $svg-pink-filter;
+    }
+
+    .place label:active {
+        filter: $svg-pinkDark-filter;
     }
 
     .dropDown {
@@ -100,6 +131,7 @@
         border-radius: $border-radius-small $border-radius $border-radius $border-radius-small;
         filter: $drop-shadow;
         border: $border-grey;
+        outline: none;
 
         .dropDownContainer {
             cursor: pointer;
@@ -129,6 +161,12 @@
         .dropDownContainer:hover {
             img {
                 filter: $svg-pink-filter;
+            }
+        }
+
+        .dropDownContainer:active {
+            img {
+                filter: $svg-pinkDark-filter;
             }
         }
 
@@ -195,8 +233,15 @@
         }
 
         label:hover {
-            img {
+            img.plus {
                 filter: $svg-pink-filter
+            }
+        }
+
+
+        label:active {
+            img.plus {
+                filter: $svg-pinkDark-filter
             }
         }
     }

@@ -3,12 +3,9 @@
 .imageUI {
     box-sizing: border-box;
     position: fixed;
-    margin-left: 20px;
+    margin-left: 30px;
     width: 330px;
     font-size: 0.7em;
-
-    // color: black;
-
 
 
     section {
@@ -34,7 +31,6 @@
 
                 color: black;
                 max-width: 100px;
-
 
                 input[type=range] {
                     width: 100%;
@@ -133,14 +129,10 @@
                     background: #fffdfe;
                 }
 
-                /*TODO: Use one of the selectors from https://stackoverflow.com/a/20541859/7077589 and figure out
-                  how to remove the virtical space around the range input in IE*/
                 @supports (-ms-ime-align:auto) {
 
-                    /* Pre-Chromium Edge only styles, selector taken from hhttps://stackoverflow.com/a/32202953/7077589 */
                     input[type=range] {
                         margin: 0;
-                        /*Edge starts the margin from the thumb, not the track as other browsers do*/
                     }
                 }
 
@@ -167,8 +159,6 @@
                             transform: translateX(0px);
                             transition: transform 0.2s;
                         }
-
-
                     }
 
                 }
@@ -204,11 +194,6 @@
             border-radius: $border-radius;
             cursor: pointer;
             background-color:  rgb(20, 20, 20, 0.7);
-
-            img {
-                // filter:brightness(0)
-
-            }
         }
 
 
