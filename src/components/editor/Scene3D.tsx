@@ -64,8 +64,8 @@ const Scene3D: React.FC<{
     const [images, setImages] = useState<Array<ImageData>>([]);
 
     const outlineRef = useRef<THREE.Mesh>(null);
-    const POIPositionsScene1 = [];
-    const POILookAtsScene1 = [];
+    const POIPositionsScene1:Vector3[] = [new Vector3(4, 0, 1)];
+    const POILookAtsScene1:Vector3[] = [new Vector3(4.05, 0, 1.05)];
 
     const enableThisPivot = (thisIndex: number, enabled: boolean) => {
         const temp = [...images];
@@ -155,11 +155,22 @@ const Scene3D: React.FC<{
             <Canvas shadows >
                 <Suspense fallback={null}>
                     <Camera cameraPosition={cameraPosition} cameraLookAt={cameraRotation} editorState={editorState} scene={scene} />
-                    
                     {scene == 'scene1'&&
                         <>
                             <Scene1 />
                         </>
+                    }
+                    {scene == 'scene1' && POIsEnabled &&
+                        for(i = 0; i < POIPositionsScene1.length; i++){
+                            <>
+                                <POI
+                                position={POIPositionsScene1[i]}
+                                lookAt={POILookAtsScene1[i]}
+                                setCameraPosition={setCameraPosition}
+                                setCameraRotation={setCameraRotation}
+                                />
+                            </>
+                        }
                     }
                     {scene == 'scene2' &&
                         <>
