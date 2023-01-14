@@ -12,7 +12,7 @@ import PreviewImage from './PreviewImage.js';
 import Noon from './lighting/noon.js';
 import Goldenhour from './lighting/golden-hour.js';
 import Midnight from './lighting/midnight.js';
-import { Scene1 } from './Scenes/Scene_1_comp.js';
+import { Scene1 } from './Scenes/Scene1.js';
 import { TestMesh } from './Scenes/TestMeshes.js';
 
 import '../../styles/editor/Scene3D.scss';
@@ -64,6 +64,8 @@ const Scene3D: React.FC<{
     const [images, setImages] = useState<Array<ImageData>>([]);
 
     const outlineRef = useRef<THREE.Mesh>(null);
+    const POIPositionsScene1 = [];
+    const POILookAtsScene1 = [];
 
     const enableThisPivot = (thisIndex: number, enabled: boolean) => {
         const temp = [...images];
@@ -153,7 +155,8 @@ const Scene3D: React.FC<{
             <Canvas shadows >
                 <Suspense fallback={null}>
                     <Camera cameraPosition={cameraPosition} cameraLookAt={cameraRotation} editorState={editorState} scene={scene} />
-                    {scene == 'scene1' &&
+                    
+                    {scene == 'scene1'&&
                         <>
                             <Scene1 />
                         </>
@@ -168,7 +171,8 @@ const Scene3D: React.FC<{
                             <Plane />
                         </>
                     }
-                    {POIsEnabled &&
+                    {
+                    /*POIsEnabled &&
                         <group>
                             <POI
                                 position={new Vector3(4, 0, 1)}
@@ -177,6 +181,7 @@ const Scene3D: React.FC<{
                                 setCameraRotation={setCameraRotation}
                             />
                         </group>
+                        */
                     }
                     {lighting == 'noon' &&
                         <>
