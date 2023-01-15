@@ -5,7 +5,7 @@ const Goldenhour = () => {
   return (
     <>
         <directionalLight color={"#f5ad6e"} castShadow={true} position={[50, 40, 60]} intensity={0.2}>
-          <orthographicCamera attach={"shadow-camera"} args={[-30,30,30,-30]}/>
+          <orthographicCamera attach={"shadow-camera"} args={[-40,40,40,-40]}/>
         </directionalLight>
         <hemisphereLight color={"#f5ad6e"} intensity={0.03}/>
         <Environment files="./images/sunset5.hdr" background/>
