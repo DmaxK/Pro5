@@ -17,28 +17,6 @@ import { TestMesh } from './Scenes/TestMeshes.js';
 
 import '../../styles/editor/Scene3D.scss';
 
-function Box() {
-    return (
-        <mesh>
-            <boxBufferGeometry attach="geometry" />
-            <meshLambertMaterial attach="material" color="FireBrick" />
-        </mesh>
-    );
-}
-
-function Plane() {
-    return (
-        <>
-            <mesh receiveShadow position={[0, -1, 0]} rotation={[-Math.PI / 2, 0, 0]}>
-                <boxBufferGeometry attach="geometry" args={[25, 25]} />
-                <meshLambertMaterial attach="material" color="LightSlateGrey" />
-            </mesh>
-            <TestMesh />
-        </>
-    );
-}
-
-
 const Scene3D: React.FC<{
     editorState: string,
     setEditorState: React.Dispatch<SetStateAction<string>>,
@@ -64,7 +42,12 @@ const Scene3D: React.FC<{
     const [images, setImages] = useState<Array<ImageData>>([]);
 
     const outlineRef = useRef<THREE.Mesh>(null);
-    const POIPositionsScene1:Vector3[][] = [[new Vector3(4, 0, 1), new Vector3(4.05, 0, 1.05)]];
+    const POIPositionsScene1:Vector3[][] = [[new Vector3(8.25, 0, 0), new Vector3(8.25, -0.01, 0.05)], 
+        [new Vector3(11.6, 0, 16.4), new Vector3(11.55, 0, 16.35)], 
+        [new Vector3(22.17, 0, 13.5), new Vector3(22.17, -0.01, 13.55)],
+        [new Vector3(24.5, 0, -9), new Vector3(24.5, -0.02, -9.05)],
+        [new Vector3(11.5, 0, 11.2), new Vector3(11.55, 0.03, 11.2)]
+    ];
     const POIsScene1 = POIPositionsScene1.map(poi => 
         <POI
         position={poi[0]}
