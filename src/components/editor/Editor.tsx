@@ -35,6 +35,14 @@ function Editor() {
     }, 3000); // Loading Time
   }, []);
 
+  useEffect(() => {
+    if(editorState === 'place'){
+        document.body.style.cursor = 'crosshair'
+    } else {
+        document.body.style.cursor = 'auto';
+    }
+  }, [editorState]);
+
   return (
     <div className="Editor">
       {loading ? (
@@ -63,6 +71,7 @@ function Editor() {
             <PlaceImage
               selectedImageKey={selectedImageKey}
               setSelectedImageKey={setSelectedImageKey}
+              editorState={editorState}
               setEditorState={setEditorState}
             />
             <SceneSettings
@@ -77,11 +86,11 @@ function Editor() {
           <div className="UIbottom">
             <Help />
           </div>
-          {/* <div className='UIdebug'>
+          <div className='UIdebug'>
                 --- DEBUG --- <br/><br/>
                 editorState = {editorState} <br/>
                 selectedImageKey = {selectedImageKey}
-            </div> */}
+            </div>
           <Scene3D
             editorState={editorState}
             setEditorState={setEditorState}

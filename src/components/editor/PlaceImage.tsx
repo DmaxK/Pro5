@@ -8,8 +8,9 @@ import TestPosterThumbnail from '../../assets/images/testPosterThumbnail.jpg';
 const PlaceImage: React.FC<{
     selectedImageKey: string,
     setSelectedImageKey: Dispatch<React.SetStateAction<string>>,
+    editorState: string,
     setEditorState: Dispatch<React.SetStateAction<string>>
-}> = ({ selectedImageKey, setSelectedImageKey, setEditorState}) => {
+}> = ({ selectedImageKey, setSelectedImageKey, editorState, setEditorState }) => {
     const [expanded, setExpanded] = useState(false);
     const [loading, setLoading] = useState(false);
     const [keys, setKeys] = useState<Array<string>>([])
@@ -48,12 +49,12 @@ const PlaceImage: React.FC<{
     // sessionStorage.clear();
     return (
         <div className="placeImage" >
-            <button className={(keys.length === 0 ? 'noImages' : 'images') + " place"} >
+            <button className={(keys.length === 0 ? 'noImages ' : 'images ') + (editorState === 'place' ? 'activelyPlacing' : ' ') + " place"} >
                 <div onClick={() => keys.length > 0 ? setEditorState('place') : alert('Please upload an Image first.')}>
                     Place
                 </div>
                 {keys.length > 0 ?
-                    <div className='imageContainer' onClick={() => keys.length > 0 ? alert('Placing Image!!') : alert('Please upload an Image first.')}>
+                    <div className='imageContainer' onClick={() => keys.length > 0 ? setEditorState('place') : alert('Please upload an Image first.')}>
                         {
                             getImage(selectedImageKey) !== '' &&
                             <img src={getImage(selectedImageKey)} />
@@ -70,8 +71,10 @@ const PlaceImage: React.FC<{
             </button>
             {keys.length > 0 &&
                 <button className="dropDown" >
-                    <div className='dropDownContainer'>
-                        <img src={DropDownArrow} className={expanded ? 'left' : 'right'} onClick={() => setExpanded(!expanded)} />
+                    <div className='dropDownContainer' onClick={() => setExpanded(!expanded)}>
+
+                        <img src={DropDownArrow} className={expanded ? 'left' : 'right'}  />
+
                     </div>
                     {expanded &&
                         <>

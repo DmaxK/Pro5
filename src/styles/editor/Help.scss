@@ -25,15 +25,18 @@
         border: $border-grey;
     }
 
-    .helpButton:active {
+    .helpButton:hover {
         color: $primaryPink;
+    }
+    .helpButton:active {
+        color: $darkPink;
     }
 
     .helpContent {
         margin-left: 2px;
         max-width: 50vw;
-        font-size: 0.4em;
-        font-weight: 100;
+        font-size: 0.45em;
+        font-weight: 300;
         background-color: $primaryBlack;
         border-radius: $border-radius;
         filter: $drop-shadow;
@@ -44,6 +47,7 @@
 
             .title {
                 font-size: 1.3em;
+                font-weight: 400;
             }
 
             .content {

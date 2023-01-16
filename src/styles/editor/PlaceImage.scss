@@ -8,6 +8,16 @@
     width: min-content;
     // position: relative;
 
+    .place:focus {
+        outline: none;
+    }
+
+    .place.activelyPlacing {
+        // background-color: $primaryPink;
+        border: solid $primaryPink 2px;
+        color: $primaryPink;
+    }
+
     .place {
         display: flex;
         flex-direction: row;
@@ -18,7 +28,6 @@
         background-color: $primaryBlack;
         color: $primaryWhite;
         border-radius: $border-radius $border-radius-small $border-radius-small $border-radius;
-        border: none;
         filter: $drop-shadow;
         border: $border-grey;
 
@@ -60,21 +69,51 @@
         }
     }
 
+    .place.images:hover {
+        color: $primaryPink;
+
+    }
+
+    .place.images:active {
+        div {
+            color: $darkPink;
+        }
+
+
+    }
+
     .place.noImages {
         border-radius: $border-radius;
         padding-right: 6px;
+        cursor: auto;
+
+        div {
+            color: $tertiaryBlack
+        }
 
         label {
             margin-left: 4px;
+            cursor: pointer;
         }
+
+        div:active {
+            color: $tertiaryBlack;
+        }
+
+
+
     }
 
     .place div:active {
         color: $primaryPink;
     }
 
-    .place label:active {
+    .place label:hover {
         filter: $svg-pink-filter;
+    }
+
+    .place label:active {
+        filter: $svg-pinkDark-filter;
     }
 
     .dropDown {
@@ -92,6 +131,7 @@
         border-radius: $border-radius-small $border-radius $border-radius $border-radius-small;
         filter: $drop-shadow;
         border: $border-grey;
+        outline: none;
 
         .dropDownContainer {
             cursor: pointer;
@@ -100,10 +140,10 @@
             width: 26px;
 
             img {
-                height: 100%; 
+                height: 20px;
             }
 
-            img:active {
+            img:hover {
                 filter: $svg-pink-filter;
             }
 
@@ -118,6 +158,18 @@
             }
         }
 
+        .dropDownContainer:hover {
+            img {
+                filter: $svg-pink-filter;
+            }
+        }
+
+        .dropDownContainer:active {
+            img {
+                filter: $svg-pinkDark-filter;
+            }
+        }
+
         .images {
             height: 100%;
             display: flex;
@@ -125,7 +177,7 @@
             align-items: center;
             margin-left: 8px;
             width: min-content;
- 
+
 
             .imageContainer {
                 box-sizing: content-box;
@@ -134,7 +186,7 @@
                 border-radius: 1px;
                 // height: 80%;
                 width: -moz-min-content;
-                
+
 
                 cursor: pointer;
                 opacity: 0.4;
@@ -153,6 +205,18 @@
                 filter: drop-shadow(0 0 5px $tertiaryBlack);
                 opacity: 1;
             }
+
+            .imageContainer:hover {
+                img {
+                    transform: scale(1.1);
+                }
+            }
+
+            .imageContainer.selected:hover {
+                img {
+                    transform: none;
+                }
+            }
         }
 
         label {
@@ -165,12 +229,19 @@
             .plus {
                 padding: 12px 0px;
                 height: 100%;
-            } 
+            }
         }
 
-        label:active {
-            img {
+        label:hover {
+            img.plus {
                 filter: $svg-pink-filter
+            }
+        }
+
+
+        label:active {
+            img.plus {
+                filter: $svg-pinkDark-filter
             }
         }
     }

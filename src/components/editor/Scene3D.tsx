@@ -1,4 +1,4 @@
-import React, { SetStateAction, useState, Suspense, useRef } from 'react';
+import React, { SetStateAction, useState, Suspense, useRef, useEffect } from 'react';
 import { Vector3 } from 'three';
 import { EffectComposer, Outline } from '@react-three/postprocessing'
 import { randFloat } from 'three/src/math/MathUtils.js';
@@ -16,6 +16,53 @@ import { Scene1 } from './Scenes/Scene1.js';
 import { TestMesh } from './Scenes/TestMeshes.js';
 
 import '../../styles/editor/Scene3D.scss';
+
+function Box() {
+    return (
+        <mesh>
+            <boxBufferGeometry attach="geometry" />
+            <meshLambertMaterial attach="material" color="FireBrick" />
+        </mesh>
+    );
+}
+
+function Plane() {
+    return (
+        <>
+            <mesh receiveShadow position={[0, -1, 0]} rotation={[-Math.PI / 2, 0, 0]}>
+                <boxBufferGeometry attach="geometry" args={[25, 25]} />
+                <meshLambertMaterial attach="material" color="LightSlateGrey" />
+            </mesh>
+            <TestMesh />
+        </>
+    );
+}
+
+function useKeyPress(targetCode: string) {
+    const [keyPressed, setKeyPressed] = useState<boolean>(false);
+
+    function downHandler(e: KeyboardEvent) {
+        if (e.code === targetCode) {
+            setKeyPressed(true);
+        }
+    }
+
+    const upHandler = (e: KeyboardEvent) => {
+        if (e.code === targetCode) {
+            setKeyPressed(false);
+        }
+    };
+
+    useEffect(() => {
+        window.addEventListener("keydown", downHandler);
+        window.addEventListener("keyup", upHandler);
+        return () => {
+            window.removeEventListener("keydown", downHandler);
+            window.removeEventListener("keyup", upHandler);
+        };
+    }, []);
+    return keyPressed;
+}
 
 const Scene3D: React.FC<{
     editorState: string,
@@ -40,6 +87,7 @@ const Scene3D: React.FC<{
     }
 
     const [images, setImages] = useState<Array<ImageData>>([]);
+
 
     const outlineRef = useRef<THREE.Mesh>(null);
     const POIPositionsScene1:Vector3[][] = [[new Vector3(8.25, 0, 0), new Vector3(8.25, -0.01, 0.05)], 
@@ -98,22 +146,15 @@ const Scene3D: React.FC<{
                 }
 
                 setImages([...images, newImage]);
-                // const temp = [...images];
-                // temp.unshift(newImage);
-                // setImages(temp);
             }
         }
     }
 
     const deleteImage = (thisIndex: number) => {
-        // const temp = [...images]
-        // temp.splice(thisIndex, 1);
-        // setImages(temp);
-
         setImages([
             ...images.slice(0, thisIndex),
             ...images.slice(thisIndex + 1)
-          ]);
+        ]);
 
     }
 
@@ -128,22 +169,22 @@ const Scene3D: React.FC<{
         }
     }
 
-    /*
-    <mesh castShadow name='scene' position={[0, 2, -4]} scale={[3, 3, 3]} onClick={(e) => handleSceneClicked(e)}>
-                        <boxGeometry />
-                        <meshStandardMaterial color='grey' />
-                    </mesh> 
-                    <mesh castShadow receiveShadow position={[0, 1, -4]} scale={[5, 5, 5]} rotation={[-90,0,0]}>
-                        <planeGeometry/>
-                        <meshStandardMaterial color='grey' />
-                    </mesh>
-                    */
+    const escapePressed = useKeyPress("Escape");
 
-
+    useEffect(() => {
+        if (escapePressed) {
+            if(editorState === 'place'){
+                setEditorState('navigate');
+            }
+            if(editorState === 'navigate'){
+                disableAllPivots();
+            }
+        }
+    }, [escapePressed]);
 
     return (
         <div className="scene3D">
-            <Canvas shadows >
+            <Canvas shadows dpr={window.devicePixelRatio * 0.85}>
                 <Suspense fallback={null}>
                     <Camera cameraPosition={cameraPosition} cameraLookAt={cameraRotation} editorState={editorState} scene={scene} />
                     {scene == 'scene1'&&
@@ -215,17 +256,6 @@ const Scene3D: React.FC<{
                         selectedImageKey={selectedImageKey}
                     />
 
-
-                    {/* <EffectComposer multisampling={8} autoClear={false}>
-                        <Outline
-                            selection={outlineRef}
-                            selectionLayer={10}
-                            visibleEdgeColor={0xf88dd5}
-                            edgeStrength={2}
-                            blur={true}
-                        />
-                    </EffectComposer> */}
-
                     <mesh castShadow name='scene' position={[-2, 2, -2.5]} scale={1} onClick={(e) => handleSceneClicked(e)}>
                         <sphereGeometry />
                         <meshPhongMaterial color='grey' flatShading={true} />
@@ -234,12 +264,6 @@ const Scene3D: React.FC<{
                         <sphereGeometry />
                         <meshPhongMaterial color='grey' flatShading={true} />
                     </mesh>
-
-                    {/* <mesh ref={outlineRef} castShadow name='scene' position={[0, 2, -1]} scale={2} >
-                        <planeGeometry />
-                        <meshPhongMaterial color='grey' flatShading={true} />
-                    </mesh> */}
-
 
                 </Suspense>
             </Canvas>
