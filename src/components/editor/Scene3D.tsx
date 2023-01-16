@@ -89,8 +89,6 @@ const Scene3D: React.FC<{
 
     const [images, setImages] = useState<Array<ImageData>>([]);
 
-    const outlineRef = useRef<THREE.Mesh>(null);
-
     const enableThisPivot = (thisIndex: number, enabled: boolean) => {
         const temp = [...images];
         temp.forEach((image) => image.pivotEnabled = false);
@@ -131,18 +129,11 @@ const Scene3D: React.FC<{
                 }
 
                 setImages([...images, newImage]);
-                // const temp = [...images];
-                // temp.unshift(newImage);
-                // setImages(temp);
             }
         }
     }
 
     const deleteImage = (thisIndex: number) => {
-        // const temp = [...images]
-        // temp.splice(thisIndex, 1);
-        // setImages(temp);
-
         setImages([
             ...images.slice(0, thisIndex),
             ...images.slice(thisIndex + 1)
@@ -174,22 +165,9 @@ const Scene3D: React.FC<{
         }
     }, [escapePressed]);
 
-    /*
-    <mesh castShadow name='scene' position={[0, 2, -4]} scale={[3, 3, 3]} onClick={(e) => handleSceneClicked(e)}>
-                        <boxGeometry />
-                        <meshStandardMaterial color='grey' />
-                    </mesh> 
-                    <mesh castShadow receiveShadow position={[0, 1, -4]} scale={[5, 5, 5]} rotation={[-90,0,0]}>
-                        <planeGeometry/>
-                        <meshStandardMaterial color='grey' />
-                    </mesh>
-                    */
-
-
-
     return (
         <div className="scene3D">
-            <Canvas shadows >
+            <Canvas shadows dpr={window.devicePixelRatio * 0.85}>
                 <Suspense fallback={null}>
                     <Camera cameraPosition={cameraPosition} cameraLookAt={cameraRotation} editorState={editorState} scene={scene} />
                     {scene == 'scene1' &&
@@ -254,17 +232,6 @@ const Scene3D: React.FC<{
                         selectedImageKey={selectedImageKey}
                     />
 
-
-                    {/* <EffectComposer multisampling={8} autoClear={false}>
-                        <Outline
-                            selection={outlineRef}
-                            selectionLayer={10}
-                            visibleEdgeColor={0xf88dd5}
-                            edgeStrength={2}
-                            blur={true}
-                        />
-                    </EffectComposer> */}
-
                     <mesh castShadow name='scene' position={[-2, 2, -2.5]} scale={1} onClick={(e) => handleSceneClicked(e)}>
                         <sphereGeometry />
                         <meshPhongMaterial color='grey' flatShading={true} />
@@ -273,12 +240,6 @@ const Scene3D: React.FC<{
                         <sphereGeometry />
                         <meshPhongMaterial color='grey' flatShading={true} />
                     </mesh>
-
-                    {/* <mesh ref={outlineRef} castShadow name='scene' position={[0, 2, -1]} scale={2} >
-                        <planeGeometry />
-                        <meshPhongMaterial color='grey' flatShading={true} />
-                    </mesh> */}
-
 
                 </Suspense>
             </Canvas>

@@ -84,10 +84,11 @@ const PreviewImage: React.FC<{
                             const normal = intersect.face?.normal.clone();
                             const normalClone = normal.clone();
                             setPosition(point.add(normal.multiplyScalar(distanceFromWall)));
+                            console.log("setting position")
 
                             const newLookAt = intersect.point.clone();
                             newLookAt.add(normalClone.multiplyScalar(10));
-                            if (meshRef.current) {
+                            if (meshRef.current) {  
                                 meshRef.current.lookAt(newLookAt);
                             }
                         }
