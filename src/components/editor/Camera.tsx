@@ -100,9 +100,6 @@ const Camera: React.FC<{
     return (
         <>
         <CameraControlsWrapper ref={cameraControls} />
-        <mesh ref={meshRef} position={[0, 2, -4]} scale={[3, 3, 3]}>
-            <boxGeometry />
-        </mesh> 
         </>
     );
 }
