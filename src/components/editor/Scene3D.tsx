@@ -46,7 +46,8 @@ const Scene3D: React.FC<{
         [new Vector3(11.6, 0, 16.4), new Vector3(11.55, 0, 16.35)], 
         [new Vector3(22.17, 0, 13.5), new Vector3(22.17, -0.01, 13.55)],
         [new Vector3(24.5, 0, -9), new Vector3(24.5, -0.02, -9.05)],
-        [new Vector3(11.5, 0, 11.2), new Vector3(11.55, 0.03, 11.2)]
+        [new Vector3(11.5, 0, 11.2), new Vector3(11.55, 0.03, 11.2)],
+        [new Vector3(-7.1, 0, 7), new Vector3(-7.15, 0.04, 7)]
     ];
     const POIsScene1 = POIPositionsScene1.map(poi => 
         <POI
@@ -158,12 +159,12 @@ const Scene3D: React.FC<{
                     }
                     {scene == 'scene2' &&
                         <>
-                            <Box />
+                            <Scene1 />
                         </>
                     }
                     {scene == 'scene3' &&
                         <>
-                            <Plane />
+                            <Scene1 />
                         </>
                     }
                     {
