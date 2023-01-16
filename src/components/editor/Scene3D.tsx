@@ -17,27 +17,6 @@ import { TestMesh } from './Scenes/TestMeshes.js';
 
 import '../../styles/editor/Scene3D.scss';
 
-function Box() {
-    return (
-        <mesh>
-            <boxBufferGeometry attach="geometry" />
-            <meshLambertMaterial attach="material" color="FireBrick" />
-        </mesh>
-    );
-}
-
-function Plane() {
-    return (
-        <>
-            <mesh receiveShadow position={[0, -1, 0]} rotation={[-Math.PI / 2, 0, 0]}>
-                <boxBufferGeometry attach="geometry" args={[25, 25]} />
-                <meshLambertMaterial attach="material" color="LightSlateGrey" />
-            </mesh>
-            <TestMesh />
-        </>
-    );
-}
-
 function useKeyPress(targetCode: string) {
     const [keyPressed, setKeyPressed] = useState<boolean>(false);
 
@@ -99,6 +78,7 @@ const Scene3D: React.FC<{
     ];
     const POIsScene1 = POIPositionsScene1.map(poi => 
         <POI
+        key={poi[0].x}
         position={poi[0]}
         lookAt={poi[1]}
         setCameraPosition={setCameraPosition}
@@ -130,7 +110,7 @@ const Scene3D: React.FC<{
                 const lookAt = intersection.point.clone();
                 const normal = intersection.face.normal.clone();
                 const normalClone = normal.clone();
-                const d = randFloat(0.01, 0.02);
+                const d = randFloat(0.03, 0.05);
                 newPosition.add(normalClone.multiplyScalar(d));
                 lookAt.add(normalClone.multiplyScalar(50));
                 const newID = (newPosition.x * newPosition.y).toString();
@@ -189,7 +169,7 @@ const Scene3D: React.FC<{
                     <Camera cameraPosition={cameraPosition} cameraLookAt={cameraRotation} editorState={editorState} scene={scene} />
                     {scene == 'scene1'&&
                         <>
-                            <Scene1 />
+                            <Scene1 handleSceneClicked={handleSceneClicked}/>
                         </>
                     }
                     {scene == 'scene1' && POIsEnabled &&
@@ -206,18 +186,6 @@ const Scene3D: React.FC<{
                         <>
                             <Scene1 />
                         </>
-                    }
-                    {
-                    /*POIsEnabled &&
-                        <group>
-                            <POI
-                                position={new Vector3(4, 0, 1)}
-                                lookAt={new Vector3(4.05, 0, 1.05)}
-                                setCameraPosition={setCameraPosition}
-                                setCameraRotation={setCameraRotation}
-                            />
-                        </group>
-                        */
                     }
                     {lighting == 'noon' &&
                         <>
@@ -256,14 +224,14 @@ const Scene3D: React.FC<{
                         selectedImageKey={selectedImageKey}
                     />
 
-                    <mesh castShadow name='scene' position={[-2, 2, -2.5]} scale={1} onClick={(e) => handleSceneClicked(e)}>
+                    {/* <mesh castShadow name='scene' position={[-2, 2, -2.5]} scale={1} onClick={(e) => handleSceneClicked(e)}>
                         <sphereGeometry />
                         <meshPhongMaterial color='grey' flatShading={true} />
                     </mesh>
                     <mesh castShadow name='scene' position={[0, 2, -3]} scale={2} onClick={(e) => handleSceneClicked(e)}>
                         <sphereGeometry />
                         <meshPhongMaterial color='grey' flatShading={true} />
-                    </mesh>
+                    </mesh> */}
 
                 </Suspense>
             </Canvas>
