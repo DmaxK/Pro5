@@ -7,7 +7,7 @@ import { useGLTF } from '@react-three/drei';
 import React, { useRef } from 'react';
 
 export function Scene1() {
-  const { nodes, materials } = useGLTF('/models/scene_1_comp.glb');
+  const { nodes, materials } = useGLTF('./models/scene_1_comp.glb');
   return (
     <group dispose={null}>
       <mesh
@@ -157,4 +157,4 @@ export function Scene1() {
   );
 }
 
-useGLTF.preload('/models/scene_1_comp.glb');
+useGLTF.preload('./models/scene_1_comp.glb');

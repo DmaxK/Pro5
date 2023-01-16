@@ -43,13 +43,37 @@ h2 {
 
 #logo-lp {
   max-width: 5%;
-  position: absolute;
+  position: fixed;
   cursor: pointer;
+  z-index: 1;
 
   @media only screen and (max-width: 1023px) {
-    max-width: 10%;
+    max-width: 7%;
   }
 }
+
+// /* width */
+// ::-webkit-scrollbar {
+//   width: 10px;
+//   background-color: $secondaryBlack;
+// }
+
+// /* Track */
+// ::-webkit-scrollbar-track {
+//   box-shadow: inset 0 0 5px $primaryBlack;
+//   border-radius: 6px;
+// }
+
+// /* Handle */
+// ::-webkit-scrollbar-thumb {
+//   background: rgba($primaryPink, 0.7);
+//   border-radius: 10px;
+// }
+
+// /* Handle on hover */
+// ::-webkit-scrollbar-thumb:hover {
+//   background: $primaryPink;
+// }
 
 /* .scene {
     width: 80vw;

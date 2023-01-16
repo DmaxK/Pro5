@@ -12,7 +12,7 @@ import PreviewImage from './PreviewImage.js';
 import Noon from './lighting/noon.js';
 import Goldenhour from './lighting/golden-hour.js';
 import Midnight from './lighting/midnight.js';
-import { Scene1 } from './Scenes/Scene_1_comp.js';
+import { Scene1 } from './Scenes/Scene1.js';
 import { TestMesh } from './Scenes/TestMeshes.js';
 
 import '../../styles/editor/Scene3D.scss';
@@ -64,7 +64,6 @@ function useKeyPress(targetCode: string) {
     return keyPressed;
 }
 
-
 const Scene3D: React.FC<{
     editorState: string,
     setEditorState: React.Dispatch<SetStateAction<string>>,
@@ -88,6 +87,24 @@ const Scene3D: React.FC<{
     }
 
     const [images, setImages] = useState<Array<ImageData>>([]);
+
+
+    const outlineRef = useRef<THREE.Mesh>(null);
+    const POIPositionsScene1:Vector3[][] = [[new Vector3(8.25, 0, 0), new Vector3(8.25, -0.01, 0.05)], 
+        [new Vector3(11.6, 0, 16.4), new Vector3(11.55, 0, 16.35)], 
+        [new Vector3(22.17, 0, 13.5), new Vector3(22.17, -0.01, 13.55)],
+        [new Vector3(24.5, 0, -9), new Vector3(24.5, -0.02, -9.05)],
+        [new Vector3(11.5, 0, 11.2), new Vector3(11.55, 0.03, 11.2)],
+        [new Vector3(-7.1, 0, 7), new Vector3(-7.15, 0.04, 7)]
+    ];
+    const POIsScene1 = POIPositionsScene1.map(poi => 
+        <POI
+        position={poi[0]}
+        lookAt={poi[1]}
+        setCameraPosition={setCameraPosition}
+        setCameraRotation={setCameraRotation}
+        />
+        );
 
     const enableThisPivot = (thisIndex: number, enabled: boolean) => {
         const temp = [...images];
@@ -170,22 +187,28 @@ const Scene3D: React.FC<{
             <Canvas shadows dpr={window.devicePixelRatio * 0.85}>
                 <Suspense fallback={null}>
                     <Camera cameraPosition={cameraPosition} cameraLookAt={cameraRotation} editorState={editorState} scene={scene} />
-                    {scene == 'scene1' &&
+                    {scene == 'scene1'&&
                         <>
                             <Scene1 />
                         </>
                     }
+                    {scene == 'scene1' && POIsEnabled &&
+                        <>
+                        {POIsScene1}
+                        </>
+                    }
                     {scene == 'scene2' &&
                         <>
-                            <Box />
+                            <Scene1 />
                         </>
                     }
                     {scene == 'scene3' &&
                         <>
-                            <Plane />
+                            <Scene1 />
                         </>
                     }
-                    {POIsEnabled &&
+                    {
+                    /*POIsEnabled &&
                         <group>
                             <POI
                                 position={new Vector3(4, 0, 1)}
@@ -194,6 +217,7 @@ const Scene3D: React.FC<{
                                 setCameraRotation={setCameraRotation}
                             />
                         </group>
+                        */
                     }
                     {lighting == 'noon' &&
                         <>

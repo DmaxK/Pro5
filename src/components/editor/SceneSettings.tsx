@@ -1,10 +1,10 @@
+import { PivotControls } from '@react-three/drei';
 import React, { Dispatch, SetStateAction, useState } from 'react';
-import '../../styles/editor/SceneSettings.scss';
 import DropDownArrow from '../../assets/svgs/DropDownArrow.svg';
-import noon from '../../assets/svgs/noon.svg';
 import goldenHour from '../../assets/svgs/goldenHour.svg';
 import midnight from '../../assets/svgs/midnight.svg';
-import { PivotControls } from '@react-three/drei';
+import noon from '../../assets/svgs/noon.svg';
+import '../../styles/editor/SceneSettings.scss';
 
 
 const SceneSettings: React.FC<{
@@ -30,9 +30,9 @@ const SceneSettings: React.FC<{
                     <div className='section scene' >
                         <div className='title'>Scene</div>
                         <div className='scenes'>
-                            <div className='thumbnail'><img className={scene === 'scene1' ? 'selected' : ''} src='/images/summonersrift.jpg' onClick={() => setScene('scene1')}></img></div>
-                            <div className='thumbnail'><img className={scene === 'scene2' ? 'selected' : ''} src='/images/rocketleague.jpg' onClick={() => setScene('scene2')}></img></div>
-                            <div className='thumbnail'><img className={scene === 'scene3' ? 'selected' : ''} src='/images/kingsrow.jpg' onClick={() => setScene('scene3')}></img></div>
+                            <div className='thumbnail'><img className={scene === 'scene1' ? 'selected' : ''} src='./images/summonersrift.jpg' onClick={() => setScene('scene1')}></img></div>
+                            <div className='thumbnail'><img className={scene === 'scene2' ? 'selected' : ''} src='./images/rocketleague.jpg' onClick={() => setScene('scene2')}></img></div>
+                            <div className='thumbnail'><img className={scene === 'scene3' ? 'selected' : ''} src='./images/kingsrow.jpg' onClick={() => setScene('scene3')}></img></div>
                         </div>
                     </div>
                     <div className='section lighting' >
