@@ -57,7 +57,6 @@ const Scene3D: React.FC<{
         setCameraRotation={setCameraRotation}
         />
         );
-    //const POILookAtsScene1:Vector3[] = [new Vector3(4.05, 0, 1.05)];
 
     const enableThisPivot = (thisIndex: number, enabled: boolean) => {
         const temp = [...images];
