@@ -1,17 +1,17 @@
-import React, { SetStateAction, useState, Suspense, useRef, useEffect } from 'react';
-import { Vector3 } from 'three';
-import { EffectComposer, Outline } from '@react-three/postprocessing'
-import { randFloat } from 'three/src/math/MathUtils.js';
 import { Canvas, ThreeEvent } from '@react-three/fiber';
+import { EffectComposer, Outline } from '@react-three/postprocessing';
+import React, { SetStateAction, Suspense, useEffect, useRef, useState } from 'react';
+import { Vector3 } from 'three';
+import { randFloat } from 'three/src/math/MathUtils.js';
 
-import POI from './POI.js';
 import Camera from './Camera.js';
-import Image from './Image.js'
+import Image from './Image.js';
+import POI from './POI.js';
 import PreviewImage from './PreviewImage.js';
 
-import Noon from './lighting/noon.js';
 import Goldenhour from './lighting/golden-hour.js';
 import Midnight from './lighting/midnight.js';
+import Noon from './lighting/noon.js';
 import { Scene1 } from './Scenes/Scene1.js';
 import { TestMesh } from './Scenes/TestMeshes.js';
 
@@ -179,12 +179,12 @@ const Scene3D: React.FC<{
                     }
                     {scene == 'scene2' &&
                         <>
-                            <Scene1 />
+                            <Scene1 handleSceneClicked={handleSceneClicked}/>
                         </>
                     }
                     {scene == 'scene3' &&
                         <>
-                            <Scene1 />
+                            <Scene1 handleSceneClicked={handleSceneClicked}/>
                         </>
                     }
                     {lighting == 'noon' &&

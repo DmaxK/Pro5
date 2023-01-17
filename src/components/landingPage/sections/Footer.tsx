@@ -6,7 +6,7 @@ function Footer() {
     <footer>
       <hr />
       Copyright &copy; 2023 <br />
-      <span className="authors">Hartl Nico, Hochreiter Michael, Thayer Philipp, Pulter Maximilian</span>
+      <span className="authors">Hartl Nico, Hochreiter Michael, Pulter Maximilian, Thayer Philipp</span>
     </footer>
   );
 }
