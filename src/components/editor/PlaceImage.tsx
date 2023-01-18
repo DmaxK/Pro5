@@ -28,13 +28,12 @@ const PlaceImage: React.FC<{
     function setData(file: File) {
         const reader = new FileReader();
 
-        setSelectedImageKey(file.name)
-
         reader.addEventListener('load', () => {
             sessionStorage.setItem(file.name, typeof reader.result === 'string' ? reader.result : '');
+            setSelectedImageKey(file.name)
             updateKeys();
         });
-        reader.readAsDataURL(file);
+        reader.readAsDataURL(file);        
     }
 
 
@@ -46,7 +45,6 @@ const PlaceImage: React.FC<{
         setKeys(temp);
     }
 
-    // sessionStorage.clear();
     return (
         <div className="placeImage" >
             <button className={(keys.length === 0 ? 'noImages ' : 'images ') + (editorState === 'place' ? 'activelyPlacing' : ' ') + " place"} >

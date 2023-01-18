@@ -38,8 +38,14 @@ const PreviewImage: React.FC<{
 
     // update the image and size of PreviewImage, whenever selectedImageKey changes
     useEffect(() => {
-        // make new mesh
-        // update material map probably
+        updatePreviewImage();
+    }, [selectedImageKey]);
+
+    useEffect(() => {
+        updatePreviewImage();
+    }, []);
+
+    function updatePreviewImage() {
         if (meshRef.current) {
             const material = new THREE.MeshStandardMaterial({ side: THREE.DoubleSide });
 
@@ -52,7 +58,7 @@ const PreviewImage: React.FC<{
                 material.roughness = 0.6;
                 material.metalness = 0;
                 material.transparent = true;
-                material.opacity = 0.3;
+                material.opacity = 0.7;
                 meshRef.current.material = material;
 
                 const imageWidth = texture.image.width;
@@ -65,9 +71,9 @@ const PreviewImage: React.FC<{
 
             };
             img.src = (sessionStorage.getItem(selectedImageKey) || '');
+            console.log("updated!")
         }
-
-    }, [selectedImageKey]);
+    }
 
     // perform positioning and rotation of preview image
     useFrame(() => {
