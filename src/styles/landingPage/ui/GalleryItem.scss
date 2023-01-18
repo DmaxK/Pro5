@@ -2,7 +2,8 @@
 .galleryItem {
   margin: 1%;
   border-radius: 1.5vmin;
-  max-width: 30%;
+  // max-width: 30%; // for 3 galleryItems
+  max-width: 48%;
   border: 2px solid $body-bg-color;
   cursor: pointer;
 

@@ -8,6 +8,7 @@
   //background-color: rgba(red, 0.2);
 
   &:nth-child(1) {
+    top: -30px;
     right: 1px;
   }
   &:nth-child(2) {
@@ -54,6 +55,7 @@
 
 .rotatingImg {
   max-width: 60%;
+  max-height: 60%;
   pointer-events: none;
 }
 

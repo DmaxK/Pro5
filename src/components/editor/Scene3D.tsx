@@ -49,8 +49,9 @@ const Scene3D: React.FC<{
     selectedImageKey: string,
     lighting: string,
     POIsEnabled: boolean,
-    scene: string
-}> = ({ editorState, setEditorState, selectedImageKey, lighting, POIsEnabled, scene }) => {
+    scene: string,
+    setLoading: React.Dispatch<SetStateAction<boolean>>
+}> = ({ editorState, setEditorState, selectedImageKey, lighting, POIsEnabled, scene, setLoading }) => {
 
     const [cameraPosition, setCameraPosition] = useState<Vector3>(new Vector3(0, 2, 0));
     const [cameraRotation, setCameraRotation] = useState<Vector3>(new Vector3(0, 2, 0));
@@ -164,7 +165,7 @@ const Scene3D: React.FC<{
 
     return (
         <div className="scene3D">
-            <Canvas shadows dpr={window.devicePixelRatio * 0.85}>
+            <Canvas shadows dpr={window.devicePixelRatio * 0.85} onCreated={()=>setLoading(false)} >
                 <Suspense fallback={null}>
                     <Camera cameraPosition={cameraPosition} cameraLookAt={cameraRotation} editorState={editorState} scene={scene} />
                     {scene == 'scene1'&&

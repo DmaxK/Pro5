@@ -1,13 +1,21 @@
 .rotatingImages {
   position: absolute;
-  height: 500px;
+  // height: 500px; // for 3 rotatingImages
+  height: 400px;
   width: 100%;
   right: 12%;
-  top: 15%;
+  // top: 15%; // for 3 rotatingImages
+  top: 22%;
 }
 
 @media only screen and (max-width: 1023px) {
   .rotatingImages {
     position: static;
+  }
+}
+
+@media only screen and (min-width: 1600px) {
+  .rotatingImages {
+    right: 20%;
   }
 }

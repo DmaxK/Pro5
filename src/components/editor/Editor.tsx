@@ -1,8 +1,8 @@
 /* eslint-disable react/no-unknown-property */
 
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { BarLoader } from 'react-spinners';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { MoonLoader } from 'react-spinners';
 import logo from '../../assets/svgs/logoBright.svg';
 import '../../styles/editor/Editor.scss';
 import Help from './Help';
@@ -23,16 +23,18 @@ function Editor() {
 
   const [POIsEnabled, setPOIsEnabled] = useState<boolean>(true);
 
+  // location gets the stores the states that were passed when routing to this component
+  const location = useLocation();
+
   const [scene, setScene] = useState<string>('scene1');
 
   const navigate = useNavigate();
 
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
-    setTimeout(() => {
-      setLoading(false);
-    }, 3000); // Loading Time
+    //check if a state was passed through routing -> if thats the case, set Scene to respective state
+    if (location.state !== null) setScene(location.state.scene);
   }, []);
 
   useEffect(() => {
@@ -45,19 +47,21 @@ function Editor() {
 
   return (
     <div className="Editor">
-      {loading ? (
-        <div className="LoadingScreen">
-          <BarLoader
-            loading={loading}
-            height={12}
-            width={300}
-            color={'#f88dd5'}
-            speedMultiplier={0.7} // matches good with the bar loading time to get 1 full cycle through
-            className="loader"
-          />
-          <img src={logo} className="logo-loadingscreen" />
-        </div>
-      ) : (
+        {loading && 
+          <div className="LoadingScreen">
+            <img src={logo} className="logo-loadingscreen" />
+            <div className='loadingContent'>
+              <MoonLoader
+                loading={loading}
+                size={28}
+                color={'#f4f4f4'}
+                speedMultiplier={0.7} // matches good with the bar loading time to get 1 full cycle through
+                className="loader"
+              />
+              <span className='text-loadingscreen'>Loading Editor</span>
+            </div>
+          </div>
+        }
         <div className="Content">
           <div className="UItop">
             <div
@@ -98,9 +102,9 @@ function Editor() {
             lighting={lighting}
             POIsEnabled={POIsEnabled}
             scene={scene}
+            setLoading={setLoading}
           />
         </div>
-      )}
     </div>
   );
 }

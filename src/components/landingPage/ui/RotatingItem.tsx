@@ -2,8 +2,10 @@ import React, { useEffect, useRef } from 'react';
 import '../../../styles/landingPage/ui/RotatingItem.scss';
 
 interface RotatingItemProps {
-  URL: string;
-  alt: string;
+  URL_Front: string;
+  URL_Back: string;
+  alt_Front: string;
+  alt_Back: string;
 }
 
 function RotatingItem(props: RotatingItemProps) {
@@ -76,8 +78,8 @@ function RotatingItem(props: RotatingItemProps) {
       }}
     >
       <div className="rotatingItem">
-        <img className="bg" src={props.URL} alt={props.alt} ref={bgRef} />
-        <img className="rotatingImg" src={props.URL} alt={props.alt} ref={imgRef} />
+        <img className="bg" src={props.URL_Back} alt={props.alt_Back} ref={bgRef} />
+        <img className="rotatingImg" src={props.URL_Front} alt={props.alt_Front} ref={imgRef} />
       </div>
     </div>
   );
