@@ -69,7 +69,7 @@
         border-radius: $border-radius;
         filter: $drop-shadow;
         border: $border-grey;
-            max-width: 35vw;
+        max-width: 28vw;
 
         .section {
             margin: 20px 20px 30px 20px;
@@ -90,7 +90,7 @@
                 justify-content: space-between;
 
                 .thumbnail {
-                    width: 31%;
+                    width: 49%;
 
                     img {
                         width: 100%;
@@ -99,12 +99,13 @@
                         cursor: pointer;
                     }
 
- 
+
 
                     img.selected {
                         border: solid $primaryPink 1px;
                     }
                 }
+
                 .thumbnail:hover {
                     transform: scale(1.015);
                 }
@@ -115,18 +116,20 @@
             .modes {
                 line-height: 0.00;
                 margin-left: 3px;
+
                 .mode {
                     font-size: 0.35em;
                     line-height: 1;
                     display: inline-block;
                     margin: 5px 20px 0px 0;
-                
+
                     img {
                         height: 30px;
                         transition: transform 0.15s;
                         cursor: pointer;
                     }
                 }
+
                 .mode.selected {
                     img {
                         transform: scale(1.4);
@@ -135,7 +138,8 @@
                         transition: transform 0.15s;
                     }
                 }
-                .mode:hover{
+
+                .mode:hover {
                     transform: scale(1.04);
                 }
             }
@@ -144,6 +148,7 @@
         .POI {
             line-height: 0;
             margin-bottom: 12px;
+
             .title {
                 display: inline-block;
                 line-height: 1;
@@ -156,6 +161,7 @@
                 margin-left: 20px;
                 transform: translateY(2px);
                 cursor: pointer;
+
                 .outer {
                     background-color: $tertiaryBlack;
                     height: 15px;
@@ -163,7 +169,7 @@
                     border-radius: 100px;
                     padding: 2px;
 
-                   .pin {
+                    .pin {
                         background-color: $secondaryWhite;
                         width: 11px;
                         height: 11px;
@@ -171,21 +177,21 @@
                     }
                 }
 
-                .outer:hover{
+                .outer:hover {
                     transform: scale(1.05);
                 }
 
-        
+
                 .outer.enabled {
                     background-color: $primaryPink;
 
                     .pin {
                         transform: translateX(14px);
                     }
-                }     
+                }
             }
 
-   
+
 
         }
     }

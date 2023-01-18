@@ -46,7 +46,6 @@ const PlaceImage: React.FC<{
         setKeys(temp);
     }
 
-    // sessionStorage.clear();
     return (
         <div className="placeImage" >
             <button className={(keys.length === 0 ? 'noImages ' : 'images ') + (editorState === 'place' ? 'activelyPlacing' : ' ') + " place"} >

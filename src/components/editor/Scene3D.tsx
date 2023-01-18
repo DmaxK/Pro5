@@ -69,7 +69,10 @@ const Scene3D: React.FC<{
     const [images, setImages] = useState<Array<ImageData>>([]);
 
 
-    const outlineRef = useRef<THREE.Mesh>(null);
+    useEffect(() => {
+        setImages([]);
+    },[scene]);
+
     const POIPositionsScene1:Vector3[][] = [[new Vector3(8.25, 0, 0), new Vector3(8.25, -0.01, 0.05)], 
         [new Vector3(11.6, 0, 16.4), new Vector3(11.55, 0, 16.35)], 
         [new Vector3(22.17, 0, 13.5), new Vector3(22.17, -0.01, 13.55)],
