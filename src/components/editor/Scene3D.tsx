@@ -73,12 +73,13 @@ const Scene3D: React.FC<{
         setImages([]);
     },[scene]);
 
-    const POIPositionsScene1:Vector3[][] = [[new Vector3(9.25, 0, 0), new Vector3(8.25, -0.01, 0.05)], 
+    const POIPositionsScene1:Vector3[][] = [[new Vector3(8.25, 0, 0), new Vector3(8.25, -0.01, 0.05)], 
         [new Vector3(6.5, 0, 11.2), new Vector3(6.55, -0.01, 11.25)], 
         [new Vector3(22.17, 0, 13.5), new Vector3(22.17, -0.01, 13.55)],
         [new Vector3(24.5, 0, -9), new Vector3(24.5, -0.02, -9.05)],
         [new Vector3(11.5, 0, 11.2), new Vector3(11.55, 0.03, 11.2)],
-        [new Vector3(-7.1, 0, 7), new Vector3(-7.15, 0.04, 7)]
+        [new Vector3(-7.1, 0, 7), new Vector3(-7.15, 0.04, 7)], 
+        [new Vector3(4.25, 0, 5), new Vector3(4.3, -0.01, 4.98)]
     ];
     const POIsScene1 = POIPositionsScene1.map(poi => 
         <POI
