@@ -168,7 +168,7 @@ const Scene3D: React.FC<{
 
     return (
         <div className="scene3D">
-            <Canvas shadows dpr={window.devicePixelRatio * 0.85} onCreated={()=>setLoading(false)} >
+            <Canvas shadows dpr={window.devicePixelRatio * 1} onCreated={()=>setLoading(false)} >
                 <Suspense fallback={null}>
                     <Camera cameraPosition={cameraPosition} cameraLookAt={cameraRotation} editorState={editorState} scene={scene} />
                     {scene == 'scene1'&&
