@@ -28,13 +28,12 @@ const PlaceImage: React.FC<{
     function setData(file: File) {
         const reader = new FileReader();
 
-        setSelectedImageKey(file.name)
-
         reader.addEventListener('load', () => {
             sessionStorage.setItem(file.name, typeof reader.result === 'string' ? reader.result : '');
+            setSelectedImageKey(file.name)
             updateKeys();
         });
-        reader.readAsDataURL(file);
+        reader.readAsDataURL(file);        
     }
 
 

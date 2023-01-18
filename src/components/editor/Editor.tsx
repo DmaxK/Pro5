@@ -15,7 +15,7 @@ function Editor() {
   // editorState can be either:
   // - 'navigate' -> looking around and moving through scene
   // - 'place'    -> actively placing an image
-  // - 'edit'     -> actively editing an images position or scale (when you are dragging along the gizmo)
+  // - 'edit'     -> actively editing an images position or scale (when user is dragging along the gizmo)
 
   const [selectedImageKey, setSelectedImageKey] = useState<string>((sessionStorage.key(0) || '').toString());
 
