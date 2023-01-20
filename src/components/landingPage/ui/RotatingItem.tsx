@@ -9,17 +9,12 @@ interface RotatingItemProps {
 }
 
 function RotatingItem(props: RotatingItemProps) {
-  //const [mousePos, setMousePos] = useState({});
   const constrain = 20;
   const imgRef = useRef<HTMLImageElement>(null);
   const bgRef = useRef<HTMLImageElement>(null);
 
-  //const [isHovered, setHovered] = useState(false);
-  //let fadeOutTimer: number | undefined;
-
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
-      //setMousePos({ x: e.clientX, y: e.clientY });
       const img = imgRef.current as HTMLImageElement;
       const bg = bgRef.current as HTMLImageElement;
 
@@ -42,8 +37,6 @@ function RotatingItem(props: RotatingItemProps) {
     const box = el.getBoundingClientRect();
     const calcX = -(y - box.y - box.height / 2) / constrain;
     const calcY = (x - box.x - box.width / 2) / constrain;
-    //console.log('x: ' + calcX);
-    //console.log('y: ' + calcY);
 
     return 'perspective(100px) ' + ' rotateX(' + calcX + 'deg)' + ' rotateY(' + calcY + 'deg)';
   }
