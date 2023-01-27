@@ -9,7 +9,7 @@ import React, { useEffect, useRef } from 'react';
 import { Color, DoubleSide, Mesh, MeshStandardMaterial, Vector3 } from 'three';
 
 export function Scene2() {
-  const { nodes, materials } = useGLTF('/models/scene2.glb')
+  const { nodes, materials } = useGLTF('./models/scene2.glb')
   const windowRef1 = useRef<Mesh | null>(null);
 
   const glassMat = new MeshStandardMaterial();
@@ -97,4 +97,4 @@ export function Scene2() {
   )
 }
 
-useGLTF.preload('/models/scene2.glb')
+useGLTF.preload('./models/scene2.glb')
