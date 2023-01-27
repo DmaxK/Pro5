@@ -13,6 +13,7 @@ import Goldenhour from './lighting/golden-hour.js';
 import Midnight from './lighting/midnight.js';
 import Noon from './lighting/noon.js';
 import { Scene1 } from './Scenes/Scene1.js';
+import { Scene2 } from './Scenes/Scene2.js';
 import { TestMesh } from './Scenes/TestMeshes.js';
 
 import '../../styles/editor/Scene3D.scss';
@@ -81,6 +82,13 @@ const Scene3D: React.FC<{
         [new Vector3(-7.1, 0, 7), new Vector3(-7.15, 0.04, 7)], 
         [new Vector3(4.25, 0, 5), new Vector3(4.3, -0.01, 4.98)]
     ];
+    const POIPositionsScene2:Vector3[][] = [[new Vector3(0, 0, 5.1), new Vector3(-0.01, 0, 5.1)],
+        [new Vector3(24, 0, -0.5), new Vector3(24, -0.003, -0.51)],
+        [new Vector3(8.5, 0, -0.5), new Vector3(8.505, -0.003, -0.51)],
+        [new Vector3(25, 0, 10.6), new Vector3(24.997, 0.001, 10.61)],
+        [new Vector3(30.8, 4.3, 8.13), new Vector3(30.801, 4.3003, 8.129)],
+        [new Vector3(-1.2, 3.3, 10.75), new Vector3(-1.199, 3.3001, 10.751)]
+    ];
     const POIsScene1 = POIPositionsScene1.map(poi => 
         <POI
         key={poi[0].x}
@@ -89,7 +97,16 @@ const Scene3D: React.FC<{
         setCameraPosition={setCameraPosition}
         setCameraRotation={setCameraRotation}
         />
-        );
+    );
+    const POIsScene2 = POIPositionsScene2.map(poi => 
+        <POI
+        key={poi[0].x}
+        position={poi[0]}
+        lookAt={poi[1]}
+        setCameraPosition={setCameraPosition}
+        setCameraRotation={setCameraRotation}
+        />
+    );
 
     const enableThisPivot = (thisIndex: number, enabled: boolean) => {
         const temp = [...images];
@@ -184,12 +201,12 @@ const Scene3D: React.FC<{
                     }
                     {scene == 'scene2' &&
                         <>
-                            <Scene1 handleSceneClicked={handleSceneClicked}/>
+                            <Scene2/>
                         </>
                     }
-                    {scene == 'scene3' &&
+                    {scene == 'scene2' && POIsEnabled &&
                         <>
-                            <Scene1 handleSceneClicked={handleSceneClicked}/>
+                        {POIsScene2}
                         </>
                     }
                     {lighting == 'noon' &&

@@ -14,7 +14,7 @@ const POI: React.FC<{position: Vector3, lookAt: Vector3, setCameraPosition: Disp
 		}
 	}, [hovered])
     return(
-    <mesh onPointerOver={() => setHovered(true)} onPointerOut={() => setHovered(false)} position={position} scale={[0.5,0.5,0.5]} onClick={() => {setCameraPosition(new Vector3(position.x, position.y + 2, position.z)); setCameraRotation(new Vector3(lookAt.x, lookAt.y + 2, lookAt.z))}}>
+    <mesh onPointerOver={() => setHovered(true)} onPointerOut={() => setHovered(false)} position={position} scale={[0.3,0.3,0.3]} onClick={() => {setCameraPosition(new Vector3(position.x, position.y + 2, position.z)); setCameraRotation(new Vector3(lookAt.x, lookAt.y + 2, lookAt.z))}}>
         <sphereBufferGeometry attach={"geometry"} args={[1, 32, 32, 0, 2*Math.PI, 0, Math.PI/2]}/>
         <meshPhongMaterial ref={mat} color={"#F88DD5"} opacity={0.5} emissive={"#F88DD5"} emissiveIntensity={1} transparent/>
     </mesh>
