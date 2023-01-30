@@ -2,7 +2,17 @@ import { Canvas } from '@react-three/fiber';
 import React, { Dispatch, useEffect, useRef, useState } from 'react';
 import { Color, DoubleSide, MeshPhongMaterial, Vector3 } from 'three';
 
-const POI: React.FC<{position: Vector3, lookAt: Vector3, setCameraPosition: Dispatch<React.SetStateAction<Vector3>>, setCameraRotation: Dispatch<React.SetStateAction<Vector3>>}> = ({position, lookAt, setCameraPosition, setCameraRotation}) => {
+const POI: React.FC<{
+	position: Vector3, 
+	lookAt: Vector3, 
+	setCameraPosition: Dispatch<React.SetStateAction<Vector3>>,
+	setCameraRotation: Dispatch<React.SetStateAction<Vector3>>
+	}> = ({
+		position, 
+		lookAt, 
+		setCameraPosition, 
+		setCameraRotation
+	}) => {
 	const [hovered, setHovered] = useState(false)
 	const mat = useRef<MeshPhongMaterial | null>(null);
 

@@ -1,7 +1,11 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { CameraControlsWrapper } from './camera-controls';
 import CameraControls from 'camera-controls';
-import { Mesh, Vector3 } from 'three';
+import { Mesh, Vector3, Object3D, Event, BoxGeometry } from 'three';
+import { useGLTF } from '@react-three/drei'
+import { useLoader } from '@react-three/fiber'
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
+
 
 
 //CameraControls.install( { THREE: THREE } );
@@ -15,28 +19,22 @@ const Camera: React.FC<{
     }> = 
     ({ cameraPosition, cameraLookAt, cameraPositionReset, editorState, scene }) => {
 
-    const meshesScene1:Mesh[] = [];
-    const meshesScene2:Mesh[] = [];
-    const meshesScene3:Mesh[] = [];
+    const ColliderScene1 = useLoader(GLTFLoader, './models/scene_1_colliderMesh.glb')
+    const ColliderScene2 = useLoader(GLTFLoader, './models/scene_2_colliderMesh.glb')
 
     const cameraControls = useRef<CameraControls | null>(null);
-    const meshRef = useRef<Mesh | null>(null);
-
-    if(meshRef.current){
-        meshesScene1.push(meshRef.current);
-    }
 
     useEffect(() => {
         if (cameraControls.current) {
             if (editorState === 'navigate') {
                 // this enables the camera:
                 cameraControls.current.dollyToCursor = true;
-                cameraControls.current.infinityDolly = true;
+                //cameraControls.current.infinityDolly = true;
                 cameraControls.current.minDistance = cameraControls.current.maxDistance = 0.3;
                 cameraControls.current.azimuthRotateSpeed = - 0.3; // negative value to invert rotation direction
                 cameraControls.current.polarRotateSpeed = - 0.3; // negative value to invert rotation direction
                 cameraControls.current.truckSpeed = 20;
-                cameraControls.current.dollySpeed = 1.0;
+                cameraControls.current.dollySpeed = 0.1;
                 cameraControls.current.dampingFactor = 0.18;
                 cameraControls.current.draggingDampingFactor = 0.8;
                 cameraControls.current.mouseButtons.wheel = CameraControls.ACTION.DOLLY;
@@ -91,17 +89,19 @@ const Camera: React.FC<{
         }
     }, [])
 
+    /*
+    useEffect(() => {
+        meshesScene1.push(colliderScene1)
+    }, [colliderScene1])
+*/
     useEffect(() => {
         if(cameraControls.current){
             cameraControls.current.colliderMeshes = [];
             if(scene === 'scene1'){
-                cameraControls.current.colliderMeshes = meshesScene1;
+                cameraControls.current.colliderMeshes.push(ColliderScene1.scene.children[0]);
             }
             if(scene === 'scene2'){
-                cameraControls.current.colliderMeshes = meshesScene2;
-            }
-            if(scene === 'scene2'){
-                cameraControls.current.colliderMeshes = meshesScene3;
+                cameraControls.current.colliderMeshes.push(ColliderScene2.scene.children[0]);
             }
         }
     }, [scene])
