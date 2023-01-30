@@ -13,7 +13,7 @@ import Goldenhour from './lighting/golden-hour.js';
 import Midnight from './lighting/midnight.js';
 import Noon from './lighting/noon.js';
 import { Scene1 } from './Scenes/Scene1.js';
-import { Scene2 } from './Scenes/Scene2.js';
+import { Scene2 } from './Scenes/Scene2_new.js';
 import { TestMesh } from './Scenes/TestMeshes.js';
 
 import '../../styles/editor/Scene3D.scss';
