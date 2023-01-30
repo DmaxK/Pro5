@@ -203,7 +203,7 @@ const Scene3D: React.FC<{
                     }
                     {scene == 'scene2' &&
                         <>
-                            <Scene2/>
+                            <Scene2 handleSceneClicked={handleSceneClicked}/>
                         </>
                     }
                     {scene == 'scene2' && POIsEnabled &&
