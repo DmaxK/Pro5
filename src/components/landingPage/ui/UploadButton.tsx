@@ -7,8 +7,15 @@ function UploadButton() {
 
     reader.addEventListener('load', () => {
       //const result: string = reader.result as string;
-      sessionStorage.setItem('myImage', typeof reader.result === 'string' ? reader.result : '');
-      getData();
+      try {
+        sessionStorage.setItem('myImage', typeof reader.result === 'string' ? reader.result : '');
+        getData();
+      }
+      catch (err) {
+        // console.log(err);
+        // console.log(file.size);
+        alert("File size exceeds the Upload Limit (About 4 MB).");
+      } 
     });
 
     reader.readAsDataURL(file);

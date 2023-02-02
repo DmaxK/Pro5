@@ -29,9 +29,14 @@ const PlaceImage: React.FC<{
         const reader = new FileReader();
 
         reader.addEventListener('load', () => {
-            sessionStorage.setItem(file.name, typeof reader.result === 'string' ? reader.result : '');
-            setSelectedImageKey(file.name)
-            updateKeys();
+            try {
+                sessionStorage.setItem(file.name, typeof reader.result === 'string' ? reader.result : '');
+                setSelectedImageKey(file.name)
+                updateKeys();
+            }
+            catch (err) {
+                alert("File size exceeds the Upload Limit (About 4 MB) or Session Storage is full.");
+            }
         });
         reader.readAsDataURL(file);        
     }
