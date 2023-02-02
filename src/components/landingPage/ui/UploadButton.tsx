@@ -32,6 +32,7 @@ function UploadButton() {
       <input
         id="file-upload"
         type={'file'}
+        accept={'image/*'}
         onChange={(event) => (event.target.files ? setData(event.target.files[0]) : '')}
       />
     </div>

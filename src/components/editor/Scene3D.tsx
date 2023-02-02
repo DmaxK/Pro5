@@ -127,7 +127,7 @@ const Scene3D: React.FC<{
 
     const addImage = (e: ThreeEvent<MouseEvent>) => {
 
-        console.log(e.intersections[0].object.name)
+        //console.log(e.intersections[0].object.name)
         if (e.intersections[0].object.name === 'scene') {
             disableAllPivots();
             const intersection = e.intersections[0];
@@ -189,7 +189,7 @@ const Scene3D: React.FC<{
     }, [escapePressed]);
 
     const handleLoad = () => {
-        console.log("Objects loaded!");
+        //console.log("Objects loaded!");
         setLoadObjects(false);
     }
 

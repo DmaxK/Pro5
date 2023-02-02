@@ -63,7 +63,7 @@ const PlaceImage: React.FC<{
                         <label htmlFor="file-upload-editor" >
                             <img src={'./images/Plus.svg'} className='plus' />
                         </label>
-                        <input id='file-upload-editor' type={'file'} onChange={(event) => (event.target.files ? setData(event.target.files[0]) : console.log(event))} />
+                        <input id='file-upload-editor' type={'file'} accept={'image/*'} onChange={(event) => (event.target.files ? setData(event.target.files[0]) : console.log(event))} />
                     </>
                 }
             </button>
@@ -94,7 +94,7 @@ const PlaceImage: React.FC<{
                             <label htmlFor="file-upload-editor">
                                 <img src={'./images/Plus.svg'} className='plus' />
                             </label>
-                            <input id='file-upload-editor' type={'file'} onChange={(event) => (event.target.files ? setData(event.target.files[0]) : console.log(event))} />
+                            <input id='file-upload-editor' type={'file'} accept={'image/*'} onChange={(event) => (event.target.files ? setData(event.target.files[0]) : console.log(event))} />
                         </>
                     }
 

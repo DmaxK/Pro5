@@ -1,5 +1,5 @@
-import React, { useRef, useState, useEffect } from 'react'
-import { ThreeEvent, useThree, useFrame } from '@react-three/fiber'
+import { ThreeEvent, useFrame, useThree } from '@react-three/fiber';
+import React, { useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
 import { randFloat } from 'three/src/math/MathUtils';
 
@@ -71,7 +71,7 @@ const PreviewImage: React.FC<{
 
             };
             img.src = (sessionStorage.getItem(selectedImageKey) || '');
-            console.log("updated!")
+            //console.log("updated!")
         }
     }
 
