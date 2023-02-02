@@ -30,8 +30,8 @@ const SceneSettings: React.FC<{
                     <div className='section scene' >
                         <div className='title'>Scene</div>
                         <div className='scenes'>
-                            <div className='thumbnail'><img className={scene === 'scene1' ? 'selected' : ''} src='./images/scene_1_thumbnail.png' onClick={() => setScene('scene1')}></img></div>
-                            <div className='thumbnail'><img className={scene === 'scene2' ? 'selected' : ''} src='./images/scene_2_thumbnail.png' onClick={() => setScene('scene2')}></img></div>
+                            <div className='thumbnail'><img className={scene === 'scene1' ? 'selected' : ''} src='./images/scene_1_thumbnail-min.png' onClick={() => setScene('scene1')}></img></div>
+                            <div className='thumbnail'><img className={scene === 'scene2' ? 'selected' : ''} src='./images/scene_2_thumbnail-min.png' onClick={() => setScene('scene2')}></img></div>
                         </div>
                     </div>
                     <div className='section lighting' >
