@@ -2,10 +2,10 @@
 
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { MoonLoader } from 'react-spinners';
 import logo from '../../assets/svgs/logoBright.svg';
 import '../../styles/editor/Editor.scss';
 import Help from './Help';
+import LoadingScreen from './LoadingScreen';
 import PlaceImage from './PlaceImage';
 import Scene3D from './Scene3D';
 import SceneSettings from './SceneSettings';
@@ -31,6 +31,7 @@ function Editor() {
   const navigate = useNavigate();
 
   const [loading, setLoading] = useState<boolean>(true);
+  const [loadObjects, setLoadObjects] = useState<boolean>(true);
 
   useEffect(() => {
     //check if a state was passed through routing -> if thats the case, set Scene to respective state
@@ -47,20 +48,8 @@ function Editor() {
 
   return (
     <div className="Editor">
-        {loading && 
-          <div className="LoadingScreen">
-            <img src={logo} className="logo-loadingscreen" />
-            <div className='loadingContent'>
-              <MoonLoader
-                loading={loading}
-                size={28}
-                color={'#f4f4f4'}
-                speedMultiplier={0.7} // matches good with the bar loading time to get 1 full cycle through
-                className="loader"
-              />
-              <span className='text-loadingscreen'>Loading Editor</span>
-            </div>
-          </div>
+        {(loading || loadObjects) && 
+          <LoadingScreen />
         }
         <div className="Content">
           <div className="UItop">
@@ -103,6 +92,7 @@ function Editor() {
             POIsEnabled={POIsEnabled}
             scene={scene}
             setLoading={setLoading}
+            setLoadObjects={setLoadObjects}
           />
         </div>
     </div>

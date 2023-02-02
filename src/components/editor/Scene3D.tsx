@@ -17,6 +17,7 @@ import { Scene2 } from './Scenes/Scene2_new.js';
 import { TestMesh } from './Scenes/TestMeshes.js';
 
 import '../../styles/editor/Scene3D.scss';
+import Loader from './Loader.js';
 
 function useKeyPress(targetCode: string) {
     const [keyPressed, setKeyPressed] = useState<boolean>(false);
@@ -51,8 +52,9 @@ const Scene3D: React.FC<{
     lighting: string,
     POIsEnabled: boolean,
     scene: string,
-    setLoading: React.Dispatch<SetStateAction<boolean>>
-}> = ({ editorState, setEditorState, selectedImageKey, lighting, POIsEnabled, scene, setLoading }) => {
+    setLoading: React.Dispatch<SetStateAction<boolean>>,
+    setLoadObjects: React.Dispatch<SetStateAction<boolean>>
+}> = ({ editorState, setEditorState, selectedImageKey, lighting, POIsEnabled, scene, setLoading, setLoadObjects }) => {
 
     const [cameraPosition, setCameraPosition] = useState<Vector3>(new Vector3(0, 2, 0));
     const [cameraPositionReset, setCameraPositionReset] = useState<Vector3>(new Vector3(0, 2, 0));
@@ -186,10 +188,16 @@ const Scene3D: React.FC<{
         }
     }, [escapePressed]);
 
+    const handleLoad = () => {
+        console.log("Objects loaded!");
+        setLoadObjects(false);
+    }
+
     return (
         <div className="scene3D">
-            <Canvas shadows dpr={window.devicePixelRatio * 1} onCreated={()=>setLoading(false)} >
+            <Canvas shadows dpr={window.devicePixelRatio * 1} onCreated={()=>setLoading(false)} > 
                 <Suspense fallback={null}>
+                    <Loader handleLoad={handleLoad} />
                     <Camera cameraPosition={cameraPosition} cameraLookAt={cameraRotation} cameraPositionReset={cameraPositionReset} editorState={editorState} scene={scene} />
                     {scene == 'scene1'&&
                         <>
